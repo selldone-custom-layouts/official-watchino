@@ -16,6 +16,8 @@ const P1 = String(SK.checks.product), P2 = String(SK.checks.product2);
 const CAT = SK.checks.category;
 const THEME_KEY = SK.name + "-theme";
 const BRAND = SK.palettes.brand;
+/* a slow phone: wait for the product's own Add button before the shot (WAIT_BUY) */
+const waitBuy = (pg) /* WAIT_BUY */ => pg.locator("button.btn.add, .qb").filter({ visible: true }).first().waitFor({ timeout: 30000 }).catch(() => {});
 let PLATE = "#f3f3f1";
 fs.mkdirSync(OUT, { recursive: true });
 const push = (pg, to) =>
@@ -85,13 +87,14 @@ async function shoot(phone, mode, jobs, after) {
       [
         [k + "-home", async (pg) => { await push(pg, "/"); await settle(pg); if (!phone) PLATE = (await pg.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--ly-plate").trim())).replace(/^(?!#|rgb).*/, "") || PLATE; }],
         [k + "-category", async (pg) => { await push(pg, CAT); await settle(pg, 3500); }],
-        [k + "-product", async (pg) => { await push(pg, "/product/" + P1); await settle(pg, 4000); }],
+        [k + "-product", async (pg) => { await push(pg, "/product/" + P1); await waitBuy(pg); await settle(pg, 4000); }],
         [
           k + "-cart",
           async (pg) => {
             for (const id of [P1, P2]) {
               await push(pg, "/product/" + id);
-              await pg.waitForTimeout(4000);
+              await waitBuy(pg);
+              await pg.waitForTimeout(1500);
               /* a product with sizes: the first size in stock, then Add to bag */
               const size = pg.locator(".av-g:not(.g-color) .av-o:not(.-out)").filter({ visible: true }).first();
               if (await size.count()) { await size.click(); await pg.waitForTimeout(800); }
@@ -99,6 +102,9 @@ async function shoot(phone, mode, jobs, after) {
               if (await add.count()) {
                 await add.click();
                 await pg.waitForTimeout(2000);
+                /* a drawer the add opened (its scrim would catch the next click) */
+                await pg.keyboard.press("Escape");
+                await pg.waitForTimeout(700);
               }
               /* a shop without guest checkout asks the guest to sign in first: close the sheet, the bag stays as it is */
               if (await pg.locator("#lg-m").filter({ visible: true }).count()) {
@@ -107,7 +113,11 @@ async function shoot(phone, mode, jobs, after) {
                 break;
               }
             }
+            /* a bag drawer or sheet left open would keep the router where it is */
+            await pg.keyboard.press("Escape");
+            await pg.waitForTimeout(600);
             await push(pg, "/basket/PHYSICAL");
+            await pg.waitForFunction(() => location.pathname.includes("/basket/"), null, { timeout: 20000 }).catch(() => {});
             await settle(pg, 4500);
             console.log("  lines in the bag:", await pg.locator(".qb").filter({ visible: true }).count());
           },

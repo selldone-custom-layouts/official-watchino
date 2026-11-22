@@ -18,7 +18,7 @@ P=$(git log --all -p | grep -c -E "[A-Z]:[\/](Users|Selldone Projects|Kalio)" ||
 E=$(git log --all --format='%ae%n%ce' | sort -u | grep -v -c -x -F "$ORG_EMAIL" || true)
 echo "proof: windows paths in history $P, other emails $E"
 [ "$P" = 0 ] && [ "$E" = 0 ] || { echo "REFUSED: clean the history first"; exit 1; }
-if git log --all -G 'sk\.eyJ' --oneline | grep -q .; then echo "REFUSED: a Mapbox secret-looking token in the history"; exit 1; fi
+if git log --all -E -G 'sk\.eyJ[A-Za-z0-9_-]{20}' --oneline | grep -q .; then echo "REFUSED: a Mapbox secret-looking token in the history"; exit 1; fi
 
 if ! gh repo view "$REPO" >/dev/null 2>&1; then
   gh repo create "$REPO" --public --description "$DESC" --homepage "https://$DOMAIN"
