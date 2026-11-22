@@ -100,4 +100,4 @@ The look is `style/ly/*.css` (`base.css`, `pages.css`, `look.css`: the first Lay
 node --use-system-ca scripts/kalio-live-preview.mjs <release-ULID> 9125
 ```
 
-This serves a shop's real HTML with the loader pointed at that release, on `http://localhost:9125`. The ULID is in the release path that `kalio-verify-deploy.mjs` prints. It reads the showcase shop {{shop}} (`https://bakini.selldone.shop`) unless you name yours: `SHOP_URL=https://<your handle>.myselldone.com node --use-system-ca scripts/kalio-live-preview.mjs <release-ULID> 9125`.
+This serves a shop's real HTML with the loader pointed at that release, on `http://localhost:9125`. The ULID is in the release path that `kalio-verify-deploy.mjs` prints. It reads `https://bakini.selldone.shop` (a Selldone showcase shop with a Layout pinned) unless you name yours: `SHOP_URL=https://<your handle>.myselldone.com node --use-system-ca scripts/kalio-live-preview.mjs <release-ULID> 9125`.

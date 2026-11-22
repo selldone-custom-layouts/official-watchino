@@ -10,6 +10,13 @@ const { chromium } = require(process.env.PW || (() => { try { return require.res
 const sharp = require(process.env.SHARP || (() => { try { return require.resolve("sharp"); } catch { return require("path").resolve(__dirname, "../../kalio-marketplace/node_modules/sharp"); } })());
 const base = (process.argv[2] || require("./lib/skin.cjs").shopUrl()).replace(/\/$/, "");
 const OUT = path.resolve(__dirname, "../docs/screenshots");
+/* the skin's own test inputs, theme key and brand palette (not the first Layout's) */
+const SK = JSON.parse(fs.readFileSync(path.join(__dirname, "../skins", require("./lib/skin.cjs").activeName(path.resolve(__dirname, "..")), "skin.json"), "utf8"));
+const P1 = String(SK.checks.product), P2 = String(SK.checks.product2);
+const CAT = SK.checks.category;
+const THEME_KEY = SK.name + "-theme";
+const BRAND = SK.palettes.brand;
+let PLATE = "#f3f3f1";
 fs.mkdirSync(OUT, { recursive: true });
 const push = (pg, to) =>
   pg.evaluate((to) => {
@@ -36,13 +43,13 @@ async function emptyBag(pg) {
   await pg.goto(base + "/basket/PHYSICAL", { waitUntil: "domcontentloaded", timeout: 180000 });
   await pg.waitForSelector(".ly .ftr", { timeout: 180000 });
   await pg.waitForTimeout(4000);
-  for (let i = 0; i < 8; i++) {
-    const rm = pg.locator("button.cr-rm").filter({ visible: true }).first();
-    if (!(await rm.count())) break;
-    await rm.click();
-    await pg.waitForTimeout(2000);
+  /* a line's "−" (the first button of its .qb) takes one out; at 1 it takes the line out */
+  const minus = () => pg.locator(".qb > button:first-child").filter({ visible: true }).first();
+  for (let i = 0; i < 16 && (await minus().count()); i++) {
+    await minus().click();
+    await pg.waitForTimeout(1800);
   }
-  console.log("bag emptied:", (await pg.locator("button.cr-rm").count()) === 0);
+  console.log("bag emptied:", (await pg.locator(".qb").filter({ visible: true }).count()) === 0);
 }
 async function shoot(phone, mode, jobs, after) {
   const browser = await chromium.launch();
@@ -54,9 +61,9 @@ async function shoot(phone, mode, jobs, after) {
   });
   await ctx.addInitScript((m) => {
     try {
-      localStorage.setItem("ly-theme", JSON.stringify({ palette: "tan", mode: m }));
+      localStorage.setItem(m.key, JSON.stringify({ palette: m.palette, mode: m.mode }));
     } catch (e) {}
-  }, mode);
+  }, { key: THEME_KEY, palette: BRAND, mode });
   const pg = await ctx.newPage();
   await pg.goto(base + "/", { waitUntil: "domcontentloaded", timeout: 180000 });
   await pg.waitForSelector(".ly .ftr", { timeout: 180000 });
@@ -76,23 +83,33 @@ async function shoot(phone, mode, jobs, after) {
       phone,
       "light",
       [
-        [k + "-home", async (pg) => { await push(pg, "/"); await settle(pg); }],
-        [k + "-category", async (pg) => { await push(pg, "/croissants-category"); await settle(pg, 3500); }],
-        [k + "-product", async (pg) => { await push(pg, "/product/720375"); await settle(pg, 4000); }],
+        [k + "-home", async (pg) => { await push(pg, "/"); await settle(pg); if (!phone) PLATE = (await pg.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--ly-plate").trim())).replace(/^(?!#|rgb).*/, "") || PLATE; }],
+        [k + "-category", async (pg) => { await push(pg, CAT); await settle(pg, 3500); }],
+        [k + "-product", async (pg) => { await push(pg, "/product/" + P1); await settle(pg, 4000); }],
         [
           k + "-cart",
           async (pg) => {
-            for (const id of [720375, 720385, 720424]) {
+            for (const id of [P1, P2]) {
               await push(pg, "/product/" + id);
               await pg.waitForTimeout(4000);
+              /* a product with sizes: the first size in stock, then Add to bag */
+              const size = pg.locator(".av-g:not(.g-color) .av-o:not(.-out)").filter({ visible: true }).first();
+              if (await size.count()) { await size.click(); await pg.waitForTimeout(800); }
               const add = pg.locator(".pd-buy button.btn.add, button.btn.add").filter({ visible: true }).first();
               if (await add.count()) {
                 await add.click();
                 await pg.waitForTimeout(2000);
               }
+              /* a shop without guest checkout asks the guest to sign in first: close the sheet, the bag stays as it is */
+              if (await pg.locator("#lg-m").filter({ visible: true }).count()) {
+                await pg.keyboard.press("Escape");
+                await pg.waitForTimeout(800);
+                break;
+              }
             }
             await push(pg, "/basket/PHYSICAL");
             await settle(pg, 4500);
+            console.log("  lines in the bag:", await pg.locator(".qb").filter({ visible: true }).count());
           },
         ],
       ],
@@ -107,17 +124,17 @@ async function shoot(phone, mode, jobs, after) {
         await push(pg, "/");
         await settle(pg);
         await pg.evaluate(() => {
-          const r = document.querySelector(".dts-row");
+          const r = document.querySelector(".ftr .ts-row, .dts-row");
           if (r) window.scrollTo(0, r.getBoundingClientRect().top + scrollY - 520);
         });
         await pg.waitForTimeout(800);
       },
     ],
   ]);
-  // the cover: the desktop home and the phone home on the Tan family's plate tint, side by side
+  // the cover: the desktop home and the phone home on the brand family's plate tint, side by side
   const desk = await sharp(path.join(OUT, "desktop-home.jpg")).resize(1760, 1100).toBuffer();
   const ph = await sharp(path.join(OUT, "phone-home.jpg")).resize(476, 1030).toBuffer();
-  await sharp({ create: { width: 2400, height: 1260, channels: 3, background: "#fdf2e7" } })
+  await sharp({ create: { width: 2400, height: 1260, channels: 3, background: PLATE } })
     .composite([{ input: desk, left: 70, top: 80 }, { input: ph, left: 1880, top: 115 }])
     .jpeg({ quality: 84 })
     .toFile(path.join(OUT, "cover.jpg"));

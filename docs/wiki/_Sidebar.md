@@ -11,6 +11,6 @@
 
 ---
 
-- [Live shop](https://watchino.myselldone.com)
+- [Live shop](https://watchino.selldone.shop)
 - [Repository](https://github.com/selldone-custom-layouts/official-watchino)
 - [All custom Layouts](https://github.com/selldone-custom-layouts)

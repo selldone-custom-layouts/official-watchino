@@ -4,9 +4,9 @@ An uploaded version changes nothing until it is **attached** to your shop, or to
 
 Before you go live, check that your shop's **OAuth client id** is set up (see [Shop Requirements](Shop-Requirements)). Without it, sign-in on the Layout leaves for Selldone and shows an error.
 
-## 1. Attach the version to one domain (how {{Name}} runs)
+## 1. Attach the version to one domain (the safe first step)
 
-A shop can show a different Layout on one of its domains. {{Name}} runs on `{{domain}}` alone: one domain of the shop {{shop}} ({{shop_id}}), pinned to its Layout with an exact version. The shop default (`{{xapi}}.myselldone.com`) and {{shop}}'s other domains carry other Layouts and keep their own pins. {{Name}} was put on its one domain only; it is not the shop default.
+A shop can show a different Layout on one of its domains. On the showcase shop {{shop}} ({{shop_id}}), {{Name}} is the **shop default** (section 2): `{{domain}}`, `{{xapi}}.myselldone.com` and every address without a pin of its own show it, while `vino.selldone.shop` and `rino.selldone.shop` keep their own pins to the shop's two other Layouts. For your own shop, start with one domain as below.
 
 **In the dashboard:** shop › **Domains**, open the domain's settings and pick your Layout and the exact version for that domain.
 

@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://watchino.myselldone.com"><img src="https://img.shields.io/badge/live%20shop-watchino.myselldone.com-2F4E8F?style=flat-square" alt="Live shop"></a>
+  <a href="https://watchino.selldone.shop"><img src="https://img.shields.io/badge/live%20shop-watchino.selldone.shop-2F4E8F?style=flat-square" alt="Live shop"></a>
   <a href="https://github.com/selldone-custom-layouts/official-watchino/wiki"><img src="https://img.shields.io/badge/docs-wiki-161F30?style=flat-square" alt="Wiki"></a>
   <a href="https://github.com/selldone-custom-layouts/official-watchino/wiki/Install-with-AI"><img src="https://img.shields.io/badge/set%20up-with%20AI-E9F0FF?style=flat-square" alt="Set up with AI"></a>
   <img src="https://img.shields.io/badge/Selldone-Layout-2B2F7A?style=flat-square" alt="Selldone Layout">
@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <a href="https://watchino.myselldone.com"><b>Open the live shop</b></a> ·
+  <a href="https://watchino.selldone.shop"><b>Open the live shop</b></a> ·
   <a href="https://github.com/selldone-custom-layouts/official-watchino/wiki/Install-with-AI">Set it up with AI</a> ·
   <a href="https://github.com/selldone-custom-layouts/official-watchino/wiki/Manual-Setup">Manual setup</a> ·
   <a href="https://github.com/selldone-custom-layouts/official-watchino/wiki/Shop-Requirements">What your shop needs</a> ·
@@ -40,7 +40,7 @@
 - light by default, with the other mode in the same family; a **Theme** row in the footer on the showcase shop: Blued steel, Racing green, Burgundy, Bronze, a **Custom colour** and Light / Dark;
 - it says **bag**; every word it writes is in English and Arabic (right to left).
 
-It runs on **[watchino.myselldone.com](https://watchino.myselldone.com)**, one domain of the Selldone shop Watchino (Selldone lets each domain of a shop carry its own Layout; the shop's default and its other domains keep theirs).
+It runs on **[watchino.selldone.shop](https://watchino.selldone.shop)**, the shop default of the Selldone shop Watchino; the same shop's [vino.selldone.shop](https://vino.selldone.shop) and [rino.selldone.shop](https://rino.selldone.shop) carry its two other Layouts (Selldone lets each domain of a shop carry its own Layout).
 
 Everything is read live from the shop: its title (drawn as the wordmark), collections, products, prices and savings, delivery ways with their days, fees and time windows, the pickup counter and its hours, the way to pay, the articles. Nothing about Watchino is written in the code, so another shop that imports the Layout gets its own data. Selldone's own bag, checkout, payments and orders keep working underneath.
 
@@ -48,10 +48,7 @@ Everything is read live from the shop: its title (drawn as the wordmark), collec
 
 | # | Section | Variant | What it shows |
 | --- | --- | --- | --- |
-| 1 | `hero` | `split` | The shop's name and line on the left; the counter photo bleeding to the right edge of the frame, a framed inset across the seam with the best seller, the three most-ordered collections set large on the photo's dark corner (from Pralino). |
-| 2 | `about` | `numbers` | The shop in numbers (collections, the saving, days and hours, ways to receive an order) beside its story, photo and Delivery / Pickup / Payment links (from Pralino). |
-| 3 | `collections` | `rows` | The four collections people order most as alternating photo rows: an outlined numeral, the description, three best sellers with prices, 'Shop <collection>' (from Pralino). |
-| 4 | `journal` | `photo` | The four newest posts beside a tall photo with the big word 'Journal' (from Pralino; best last). |
+| 1 | `wt-home` | `static` | Watchino: the static site's home: photo hero, service strip, the collections as a hairline grid of cut-outs, three price registers, the spotlight, new to the vitrine, how a watch reaches you, client care and the journal. |
 
 A section the shop has no data for hides itself; tint bands alternate with white.
 
@@ -71,7 +68,7 @@ Take them from the live shop once it is pinned: `node --use-system-ca scripts/do
 Every check runs one browser at a time against the shop, at 1440px, 1024px and 390px, dark and light, every palette and the custom colours #ffff00, #00ffff and #111111, and Arabic (right to left). Each is delivered at **TOTAL 0**.
 
 <!-- TESTS:START -->
-Not released yet. Before the first upload: `scripts/release.sh` step 5b (the production bundle through the live shop's own HTML). After the pin: the full suite on the live domain (`scripts/run-checks.sh https://watchino.myselldone.com <logs>`, or the fast runner with `scripts/fast-checks.config.mjs`) and the guest checkout walk (`scripts/checkout-walk.mjs`).
+Not released yet. Before the first upload: `scripts/release.sh` step 5b (the production bundle through the live shop's own HTML). After the pin: the full suite on the live domain (`scripts/run-checks.sh https://watchino.selldone.shop <logs>`, or the fast runner with `scripts/fast-checks.config.mjs`) and the guest checkout walk (`scripts/checkout-walk.mjs`).
 <!-- TESTS:END -->
 
 ## Photos

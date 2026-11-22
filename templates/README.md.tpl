@@ -40,7 +40,7 @@
 - {{mode}} by default, with the other mode in the same family; a **Theme** row in the footer on the showcase shop: {{palettes}}, a **Custom colour** and Light / Dark;
 - it says **{{basket}}**; every word it writes is in English and Arabic (right to left).
 
-It runs on **[{{domain}}](https://{{domain}})**, one domain of the Selldone shop {{shop}} (Selldone lets each domain of a shop carry its own Layout; the shop's default and its other domains keep theirs).
+It runs on **[{{domain}}](https://{{domain}})**, the shop default of the Selldone shop {{shop}}; the same shop's [vino.selldone.shop](https://vino.selldone.shop) and [rino.selldone.shop](https://rino.selldone.shop) carry its two other Layouts (Selldone lets each domain of a shop carry its own Layout).
 
 Everything is read live from the shop: its title (drawn as the wordmark), collections, products, prices and savings, delivery ways with their days, fees and time windows, the pickup counter and its hours, the way to pay, the articles. Nothing about {{shop}} is written in the code, so another shop that imports the Layout gets its own data. Selldone's own bag, checkout, payments and orders keep working underneath.
 

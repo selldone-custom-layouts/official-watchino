@@ -4,7 +4,7 @@
   "title": "Watchino Fine Watches",
   "package": "watchino-fine-watches",
   "shop": "watchino",
-  "live": "https://watchino.myselldone.com",
+  "live": "https://watchino.selldone.shop",
   "dev": "http://localhost:9175",
   "root": ".ly",
   "home": ".ly-home",

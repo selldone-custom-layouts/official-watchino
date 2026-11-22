@@ -4,7 +4,7 @@
 
 **Watchino Fine Watches** is a custom storefront **Layout** for Selldone shops: a single pâtisserie dressed as a classic, editorial bakery website. A white page with soft tint bands, near-black ink and one Blued steel accent, Bodoni Moda over Archivo, and big photography in every section. A dark top bar with the counter's hours and contact, a white header with the shop's name as a centred serif wordmark (the city under it), a hero where the counter photo runs to the window's edge with a framed photo across the seam, the shop in numbers beside its story, the best-selling collections as photo rows, how ordering works, an offer card beside the ways to receive an order, a gallery of the collections, today's selection as numbered rows with **Add to bag**, a full-width photo band, a marquee of the collections and the journal; collection pages with a filter panel; a product page with a buy column that stays in view, tabs and Buy together; a bag drawer, the checkout with a delivery sheet, the order page, an account and a 404 inside the Layout. Everything is drawn in **one colour family** (every ground, plate, line and word, the dark top bar and the footer follow the palette's hue) and **one shape language** (a circle for round things, 8 px panels, 4 px inner parts). Light is the default, with a dark mode in the same family. It says **bag**, never cart. Every word it writes is in English and Arabic (right to left).
 
-It runs on **[watchino.myselldone.com](https://watchino.myselldone.com)**, one domain of the Selldone shop Watchino. The shop's default address and its other domains carry other Layouts; Watchino is pinned on its own domain only (see [Go Live](Go-Live)). It is built on the official [selldone/storefront](https://github.com/selldone/storefront), so Selldone's basket, checkout, payments and orders keep working underneath a new design.
+It runs on **[watchino.selldone.shop](https://watchino.selldone.shop)**, the shop default of the Selldone shop Watchino; vino.selldone.shop and rino.selldone.shop carry the shop's two other Layouts on their own pins (see [Go Live](Go-Live)). It is built on the official [selldone/storefront](https://github.com/selldone/storefront), so Selldone's basket, checkout, payments and orders keep working underneath a new design.
 
 ## Start here
 
@@ -85,7 +85,7 @@ Every release is checked before it goes up (the production bundle through the li
 
 ## Links
 
-- Live shop: <https://watchino.myselldone.com>
+- Live shop: <https://watchino.selldone.shop>
 - Repository: <https://github.com/selldone-custom-layouts/official-watchino>
 - What Watchino is, how the mockup became the Layout, the colour family, the shape language, photos, data rules, checks and releases: [`LAYOUT.md`](https://github.com/selldone-custom-layouts/official-watchino/blob/main/LAYOUT.md); the base it is skinned from: [`BASE.md`](https://github.com/selldone-custom-layouts/official-watchino/blob/main/BASE.md)
 - All official custom Layouts: <https://github.com/selldone-custom-layouts>

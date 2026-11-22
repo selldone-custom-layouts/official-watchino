@@ -15,7 +15,7 @@ Nothing was uploaded, and the version number is not used up. The built bundle di
 | Message | Fix |
 | --- | --- |
 | `FAIL home`, then "the home did not draw; the bundle does not start" | The build itself is broken, typically a chunking change (code that runs before what it needs). Undo the last change to `vite.config.ts` or to what the entry imports, rebuild and run `scripts/prod-check.mjs dist/app` again. |
-| `FAIL category: no collection link on the home` / `FAIL product` / `FAIL post` | The page before it drew, but had nothing to follow: the shop in `SHOP_URL` has no collections, products or posts. Use a shop with data (the default `https://watchino.myselldone.com` has them). |
+| `FAIL category: no collection link on the home` / `FAIL product` / `FAIL post` | The page before it drew, but had nothing to follow: the shop in `SHOP_URL` has no collections, products or posts. Use a shop with data (the default `https://watchino.selldone.shop` has them). |
 | "has no private Layout release in its loader" | The `SHOP_URL` domain has no Layout pinned, so there is no loader to point at the build. Use the default, or a domain of yours with a Layout pinned. |
 | `Cannot find module` / an error naming Playwright | `PW` does not point at your Playwright: set `PW=<path>/node_modules/playwright/index.js`, and run `npx playwright install chromium` once. |
 | "no dist/app/shop.js" | Build first (`npm run build-production`, or run the whole `release.sh`). |

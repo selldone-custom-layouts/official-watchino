@@ -1,6 +1,6 @@
 # Shop Requirements
 
-The Layout reads everything from your shop. Nothing about Watchino is hard-coded. Here is what your shop's data needs so that each part looks as it does on [watchino.myselldone.com](https://watchino.myselldone.com). A section with no data folds away or shrinks to what the shop has; it never shows an empty box, and no fact is invented to fill one.
+The Layout reads everything from your shop. Nothing about Watchino is hard-coded. Here is what your shop's data needs so that each part looks as it does on [watchino.selldone.shop](https://watchino.selldone.shop). A section with no data folds away or shrinks to what the shop has; it never shows an empty box, and no fact is invented to fill one.
 
 ## Settings (yours to choose)
 

@@ -18,7 +18,7 @@
     "name": "Watchino",
     "id": 8460,
     "xapi": "watchino",
-    "domain": "watchino.myselldone.com",
+    "domain": "watchino.selldone.shop",
     "currency": "USD",
     "country": "US",
     "language": "en"
@@ -343,5 +343,6 @@
       "bakini.n.unit.piece": "watch"
     },
     "ar": {}
-  }
+  },
+  "status": "live"
 }

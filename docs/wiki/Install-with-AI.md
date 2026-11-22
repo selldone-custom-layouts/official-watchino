@@ -91,7 +91,7 @@ Then:
    PW={PLAYWRIGHT}/node_modules/playwright/index.js SELLDONE_CLI_SRC=<cli clone> \
      bash scripts/release.sh 1.0.0 desk
    Step 5b of release.sh loads the built bundle through a live shop's own HTML
-   (SHOP_URL, by default https://watchino.myselldone.com) and walks home, a collection, a
+   (SHOP_URL, by default https://watchino.selldone.shop) and walks home, a collection, a
    product, the journal, a post, the bag and the checkout; it must print PROD-CHECK OK, or
    nothing is uploaded. Read my new Layout id (printed after this first upload), then verify
    with node --use-system-ca scripts/kalio-verify-deploy.mjs <cli root> <layout id> dist/app:

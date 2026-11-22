@@ -3,7 +3,7 @@
   "deploy_path": "",
   "package": "watchino-fine-watches",
   "name": "Watchino Fine Watches",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "storefront": true,
   "backoffice": false,
   "description": "A Layout for a fine-watch shop drawn like a watch dial: graphite ink on cool dial white with heat-blued steel. Its signature is a fixed chapter-ring index rail down the left edge that doubles as scroll progress, with section dividers made of minute markers. A dark announcement bar over a centred Bodoni Moda wordmark, with Collections (a mega menu of the collections' cut-outs), the top collection, Journal and Client care. The home: a photo hero with the words on its dark side, a service strip read from the shop's own delivery and payment settings, the collections as a hairline grid of cut-outs, three price registers, a spotlight on the most precious reference on graphite, new arrivals in a hairline rail, how a watch reaches you beside the shop's photos, client care and the journal. A collection page with a filter column (collection, brand, a logarithmic price track and the watches' real specification) and a hairline grid; a product page with a thumbnail column, a sticky details column, finish swatches and the specification table; compare, the bag drawer and the whole checkout. A gallery, not a funnel: no badges, no timers, a reduced price shown as a muted struck-through figure. One colour family from the chosen palette (Blued steel by default; Racing green, Burgundy, Bronze or any colour), light by default with a dark mode; Bodoni Moda over Archivo with Azeret Mono figures; hairline rules and 4 px corners. English, German, Spanish, French and Arabic."

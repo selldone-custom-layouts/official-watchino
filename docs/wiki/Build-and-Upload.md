@@ -47,7 +47,7 @@ The variables:
 - `SELLDONE_CLI`: the installed CLI, by default `$(npm root -g)/selldone-cli`;
 - `LAYOUT_ID`: with it, the script also checks the upload on the server;
 - `PW`: the `index.js` of your Playwright install, for step 5b;
-- `SHOP_URL`: the shop address whose own HTML step 5b loads the build into, by default `https://watchino.myselldone.com`. It must be a domain that already has a Layout pinned (any Layout); the showcase shop's address works for everyone, and so does your own domain once a Layout is live on it.
+- `SHOP_URL`: the shop address whose own HTML step 5b loads the build into, by default `https://watchino.selldone.shop`. It must be a domain that already has a Layout pinned (any Layout); the showcase shop's address works for everyone, and so does your own domain once a Layout is live on it.
 
 ## What the script does, and why
 
@@ -100,4 +100,4 @@ The look is `style/ly/*.css` (`base.css`, `pages.css`, `look.css`: the first Lay
 node --use-system-ca scripts/kalio-live-preview.mjs <release-ULID> 9125
 ```
 
-This serves a shop's real HTML with the loader pointed at that release, on `http://localhost:9125`. The ULID is in the release path that `kalio-verify-deploy.mjs` prints. It reads the showcase shop Watchino (`https://bakini.selldone.shop`) unless you name yours: `SHOP_URL=https://<your handle>.myselldone.com node --use-system-ca scripts/kalio-live-preview.mjs <release-ULID> 9125`.
+This serves a shop's real HTML with the loader pointed at that release, on `http://localhost:9125`. The ULID is in the release path that `kalio-verify-deploy.mjs` prints. It reads `https://bakini.selldone.shop` (a Selldone showcase shop with a Layout pinned) unless you name yours: `SHOP_URL=https://<your handle>.myselldone.com node --use-system-ca scripts/kalio-live-preview.mjs <release-ULID> 9125`.
