@@ -194,7 +194,8 @@
   },
   "loading": {
     "art": "none",
-    "sub": "none"
+    "sub": "none",
+    "bg": "#e9edf5"
   },
   "splash": {
     "art": "none"

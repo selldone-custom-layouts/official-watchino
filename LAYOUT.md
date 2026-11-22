@@ -42,3 +42,4 @@
 
 | Version | Date | Layout | Deploy | What |
 | --- | --- | --- | --- | --- |
+| 1.0.0 | 2026-11-22 | 50 | 787 | First release: the static Watchino site's look on the base (dial ground, index rail, minute markers, header with the collections mega menu, the home, badge-free cards, footer, product details column); en, de, es, fr and ar. 279 files; PROD-CHECK OK through rino.selldone.shop (same shop 8460); server extracting:false, error:null, js/css match. Not pinned yet. |
