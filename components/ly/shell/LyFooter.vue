@@ -77,6 +77,7 @@ import SFooterSectionSelldone from "@selldone/components-vue/storefront/footer/s
 import { catTitle, catTo, loadDm, openLine as openLineOf, ly, shopFacts } from "../ly";
 import { journalRoute } from "../../kalio/pages/kalio-journal";
 import { t } from "../../kalio/i18n/kalio-i18n";
+import { wtPayNames } from "../watchino/wt";
 
 /* A US state's two letters for the address line ("CA"). */
 const US = { California: "CA", "New York": "NY", Texas: "TX", Washington: "WA", Illinois: "IL", Florida: "FL", Massachusetts: "MA", Oregon: "OR" };
@@ -130,7 +131,7 @@ export default {
       return [street, cityLine, f.country].filter(Boolean);
     },
     payNames() {
-      return [...new Set((this.facts.gateways || []).map((g) => g.name).filter(Boolean))].slice(0, 4).join(" · ");
+      return wtPayNames(this.facts.gateways, 4).join(" · ");
     },
     openLine() {
       return openLineOf(this.facts);

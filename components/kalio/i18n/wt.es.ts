@@ -50,6 +50,7 @@ const es: Record<string, string> = {
   "wt.sal.sendT": "Enviado a ti",
   "wt.spot.eb": "La referencia más preciosa",
   "wt.spot.view": "Ver la referencia",
+  "wt.ls.log": "Escala logarítmica",
 };
 
 export default es;

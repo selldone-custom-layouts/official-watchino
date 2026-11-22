@@ -86,7 +86,7 @@ const body =
   '<circle class="ld-base" cx="60" cy="60" r="56"/><circle class="ld-arc" cx="60" cy="60" r="56"/>' +
   (art ? `<g class="ld-art" transform="translate(18 14) scale(.7)">${art.replace(/<(path|circle) /g, '<$1 pathLength="1" ')}</g>` : "") +
   "</svg>" +
-  `<div class="ld-brand" aria-hidden="true">${brand}${c.sub ? `<span class="ld-sub" dir="auto">${esc(c.sub)}</span>` : ""}</div>` +
+  `<div class="ld-brand" aria-hidden="true">${brand}${c.sub && String(c.sub).trim() && String(c.sub).trim().toLowerCase() !== "none" ? `<span class="ld-sub" dir="auto">${esc(c.sub)}</span>` : ""}</div>` +
   "</div>";
 
 const hb = Buffer.byteLength(head, "utf8");

@@ -26,7 +26,7 @@ const PAGES = (process.env.PAGES || "home=/,category=/croissants-category,produc
   });
 const WIDTHS = (process.env.WIDTHS || "1440,1100,390").split(",").map(Number);
 const VERBOSE = !!process.env.V;
-const SCALE = [8, 4];
+const SCALE = [4, 2]; /* the skin's shape: panel, inner (skins/watchino/skin.json) */
 
 /* runs in the page: every edge on the scale; nothing past the window */
 function audit(SCALE) {
@@ -54,8 +54,8 @@ function audit(SCALE) {
   };
   const same = (a, b) => Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) + Math.abs(a[2] - b[2]) < 6;
   const W = document.documentElement.clientWidth;
-  const rail = null; /* the Layout has no side rail */
-  const rr = rail && innerWidth >= 1100 ? rail.getBoundingClientRect() : null;
+  const rail = document.querySelector(".wt-rail"); /* Watchino: the index rail, from 1024 px */
+  const rr = rail && rail.offsetWidth ? rail.getBoundingClientRect() : null;
   const pageL = rr && rr.width ? (rr.left < W / 2 ? rr.right : 0) : 0;
   const pageR = rr && rr.width ? (rr.left < W / 2 ? W : rr.left) : W;
   document.querySelectorAll("body *").forEach((el) => {

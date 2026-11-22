@@ -268,3 +268,29 @@ html .ly .pd .pd-t { font-weight: 400; letter-spacing: -.01em; }
 html .ly .pd .pd-main { background: var(--wt-pure); box-shadow: inset 0 0 0 1px var(--wt-rule); border-radius: var(--ly-r-pn); }
 html .ly .pd .pd-th { background: var(--wt-pure); }
 html .ly .opt .opt-ph { background: var(--wt-pure); }
+
+html .ly .wt-log { margin: 10px 0 0; font-size: 12px; letter-spacing: .03em; color: var(--ly-muted); }
+/* a post without a cover: a chapter ring on the family dark, never an empty box */
+html .ly .wt-post-ph.none { background: var(--ly-dark); display: grid; place-items: center; }
+html .ly .wt-dial { position: relative; width: 46%; aspect-ratio: 1; border-radius: 50%;
+  background: repeating-conic-gradient(from -.5deg, var(--ly-dark-muted) 0 1deg, transparent 1deg 6deg);
+  -webkit-mask: radial-gradient(circle, transparent 0 calc(50% - 7px), #000 calc(50% - 7px));
+  mask: radial-gradient(circle, transparent 0 calc(50% - 7px), #000 calc(50% - 7px)); opacity: .75; }
+html .ly .wt-dial i { position: absolute; inset: 0; border-radius: 50%;
+  background: repeating-conic-gradient(from -1deg, var(--ly-dark-ink) 0 2deg, transparent 2deg 30deg);
+  -webkit-mask: radial-gradient(circle, transparent 0 calc(50% - 12px), #000 calc(50% - 12px));
+  mask: radial-gradient(circle, transparent 0 calc(50% - 12px), #000 calc(50% - 12px)); }
+
+/* ── 1.0.1: from the live checks ── */
+/* a focused link keeps its own shape: every link and button sits on the inner corner, so its inset ring does too */
+html .ly :is(a, button, summary):not(.v-btn):not([class*="rounded"]) { border-radius: var(--ly-r-in); }
+html .ly .wt-ticks { border-radius: var(--ly-r-in); }
+/* card names never break inside a word: a narrow card sets them smaller and closer to its edge */
+@container (max-width: 230px) {
+  html .ly .pc-t { font-size: 16px; }
+}
+@container (max-width: 170px) {
+  html .ly .pc-t { font-size: 14px; letter-spacing: -.01em; }
+}
+html .ly .pc .pc-t { overflow-wrap: break-word; word-break: normal; hyphens: manual; }
+@media (max-width: 600px) { html .ly .pc { padding: 14px; } }

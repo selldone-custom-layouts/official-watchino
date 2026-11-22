@@ -118,7 +118,7 @@ export function family(input: string): { light: Family; dark: Family } {
   for (let i = 0; i < 300 && contrast(onAct, lInkBg) < 7; i++) onAct = at((La += 0.002), C0, h);
 
   /* the soft fill and the words on it (the switcher's action colour is tested on these same surfaces) */
-  const pal = paletteFromColor(hex, { lightSurfaces: ["#ffffff", l50, l100], darkSurfaces: [dBg, dBand, dSurf, dPlate] } as any);
+  const pal = paletteFromColor(hex, { lightSurfaces: ["#ffffff", l50, l100, f(0.945, 0.012)], darkSurfaces: [dBg, dBand, dSurf, dPlate] } as any);
   const lSoft = pal.light.soft;
   const dSoft = f(0.3, 0.05);
   const lSoftInk = contrast(pal.light.text, lSoft) >= 4.6 ? pal.light.text : walk(0.42, 0.08, -0.004, (x) => contrast(x, lSoft) >= 4.6);
@@ -164,6 +164,6 @@ export function family(input: string): { light: Family; dark: Family } {
 export function actionPalette(input: string): { light: Record<string, string>; dark: Record<string, string> } {
   const hex = normalizeHex(input) || "#808080";
   const f = family(hex);
-  const pal = paletteFromColor(hex, { lightSurfaces: ["#ffffff", f.light.band, f.light.ph], darkSurfaces: [f.dark.bg, f.dark.band, f.dark.surface, f.dark.plate] } as any);
+  const pal = paletteFromColor(hex, { lightSurfaces: ["#ffffff", f.light.band, f.light.ph, f.light.dial], darkSurfaces: [f.dark.bg, f.dark.band, f.dark.surface, f.dark.plate] } as any);
   return { light: pal.light, dark: pal.dark };
 }

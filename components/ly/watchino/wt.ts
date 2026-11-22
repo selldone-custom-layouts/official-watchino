@@ -88,3 +88,11 @@ export function wtSpecValues(ps: any[], key: string, n = 3): string[] {
 }
 
 export { catTitle };
+
+import { t } from "../../kalio/i18n/kalio-i18n";
+
+/** The ways to pay, in the visitor's language: cash on delivery named from its kind, the others by their brand name. */
+export function wtPayNames(gateways: any[], n = 3): string[] {
+  const out = (gateways || []).map((g: any) => (g?.cod || g?.type === "cod" || /^cod_/i.test(String(g?.code || "")) ? t("wt.hdr.cod", "Cash on delivery") : String(g?.name || "")));
+  return [...new Set(out.filter(Boolean))].slice(0, n);
+}

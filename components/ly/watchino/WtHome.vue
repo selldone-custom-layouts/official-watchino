@@ -165,7 +165,7 @@
         <ul class="wt-posts">
           <li v-for="b in posts" :key="b.id">
             <router-link :to="postRoute(b)" class="wt-post">
-              <span class="wt-post-ph"><img v-if="b.image" :src="postImg(b)" alt="" loading="lazy" /></span>
+              <span :class="['wt-post-ph', { none: !b.image }]"><img v-if="b.image" :src="postImg(b)" alt="" loading="lazy" /><span v-else aria-hidden="true" class="wt-dial"><i></i></span></span>
               <time v-if="b.created_at" :datetime="b.created_at" class="wt-ref">{{ fmtDate(b.created_at) }}</time>
               <b>{{ b.title }}</b>
             </router-link>
@@ -184,7 +184,7 @@ import { journalPage, journalRoute, postRoute } from "../../kalio/pages/kalio-jo
 import { catalogueRoute } from "../../kalio/kalio-catalog";
 import { catTitle, catTo, fmtDate, money, priceView, productImage, productTo } from "../ly";
 import { t } from "../../kalio/i18n/kalio-i18n";
-import { wtCols, wtNewest, wtRegisters, wtSpecRows, wtSpecValues, wtSpotlight } from "./wt";
+import { wtCols, wtNewest, wtPayNames, wtRegisters, wtSpecRows, wtSpecValues, wtSpotlight } from "./wt";
 
 const lang = () => document.documentElement.lang || "en";
 const list = (items) => {
@@ -263,7 +263,7 @@ export default {
         out.push({ k: "c", title: f.courier.title, text: f.courier.distance ? t("wt.as.within", "Within {km} km, {fee}", { km: f.courier.distance, fee }) : fee });
       }
       if (f.shipping) out.push({ k: "s", title: f.shipping.title, text: f.shipping.fee > 0 ? t("wt.as.flat", "{fee} per order", { fee: money(f.shipping.fee) }) : t("wt.as.freeShip", "Free") });
-      const names = [...new Set((f.gateways || []).map((g) => g.name).filter(Boolean))];
+      const names = wtPayNames(f.gateways);
       if (names.length) out.push({ k: "p", title: t("wt.as.pay", "Payment"), text: list(names.slice(0, 3)) });
       const ps = this.products;
       if (ps.length && ps.every((p) => !p.condition || p.condition === "new")) out.push({ k: "n", title: t("wt.as.newT", "New references"), text: t("wt.as.newP", "Every watch is listed as new") });
@@ -279,7 +279,7 @@ export default {
       if (f.shipping) dl.push(f.shipping.title);
       if (f.pickup && f.pickupPoint) dl.push(f.pickup.title);
       if (dl.length) out.push({ k: "d", photo: "travel", title: t("wt.sal.sendT", "Sent to you"), text: list(dl) + "." });
-      const names = [...new Set((f.gateways || []).map((g) => g.name).filter(Boolean))];
+      const names = wtPayNames(f.gateways);
       if (names.length) out.push({ k: "p", photo: "story", title: t("wt.sal.payT", "Paid your way"), text: list(names.slice(0, 3)) + "." });
       return out.length === 3 ? out : out.slice(0, 1).length && out.length === 2 ? out : out;
     },

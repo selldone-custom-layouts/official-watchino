@@ -54,6 +54,7 @@ const ar: Record<string, string> = {
   "wt.sal.sendT": "تُرسل إليك",
   "wt.spot.eb": "الطراز الأثمن",
   "wt.spot.view": "شاهد الطراز",
+  "wt.ls.log": "مقياس لوغاريتمي",
 };
 
 export default ar;

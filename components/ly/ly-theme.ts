@@ -36,7 +36,7 @@ function pal(id: string, name: () => string, light: Record<string, string>, dark
 
 /* The surfaces a Custom colour is made readable on: every family's grounds sit at these lightnesses
    (white, the band L .985, the plate L .966; dark: page .17, band .195, card .225, plate .26). */
-const LIGHT_SURFACES = ["#ffffff", "#fafafa", "#f4f4f4"];
+const LIGHT_SURFACES = ["#ffffff", "#fafafa", "#f4f4f4", "#e8e8e8"]; /* Watchino: + the dial ground (L .945) */
 const DARK_SURFACES = ["#0f0f0f", "#151515", "#1c1c1c", "#242424"];
 
 export const LY_THEME: ThemeSwitcherConfig = {

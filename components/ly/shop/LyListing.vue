@@ -106,8 +106,8 @@
                         <p class="fg-l">{{ t("ly.ls.price", "Price") }}</p>
                         <div :style="{ '--ly-a': pctA + '%', '--ly-b': pctB + '%' }" class="rng">
                           <span class="rng-tr"></span><span class="rng-fill"></span>
-                          <input :aria-label="t('ly.ls.lowest', 'Lowest price')" :max="hi" :min="lo" :value="min" step="1" type="range" @change="update()" @input="onMin($event.target.value)" />
-                          <input :aria-label="t('ly.ls.highest', 'Highest price')" :max="hi" :min="lo" :value="max" step="1" type="range" @change="update()" @input="onMax($event.target.value)" />
+                          <input :aria-label="t('ly.ls.lowest', 'Lowest price')" :aria-valuetext="money(min, true)" max="1000" min="0" :value="posOf(min)" step="1" type="range" @change="update()" @input="onMin(valOf($event.target.value))" />
+                          <input :aria-label="t('ly.ls.highest', 'Highest price')" :aria-valuetext="money(max, true)" max="1000" min="0" :value="posOf(max)" step="1" type="range" @change="update()" @input="onMax(valOf($event.target.value))" />
                         </div>
                         <div class="rng-boxes">
                           <label class="mbox"
@@ -120,6 +120,7 @@
                             ><input :aria-label="t('ly.ls.maxPrice', 'Maximum price')" :max="hi" :min="lo" :value="max" inputmode="numeric" type="number" @change="boxMax($event.target.value)"
                           /></label>
                         </div>
+                        <p v-if="logTrack" class="wt-log">{{ t("wt.ls.log", "Logarithmic scale") }}</p>
                       </div>
                       <div v-if="anyOffer" class="fg fg-sw">
                         <span id="ly-offer-l" class="fg-l">{{ t("ly.ls.onOffer", "On offer") }}</span>
@@ -317,13 +318,16 @@ export default {
     hi() {
       return this.prices.length ? Math.ceil(Math.max(...this.prices)) : 0;
     },
+    /* Watchino: a logarithmic track when the prices span a wide range (the static site's rule: on a linear
+       track most references crowd into its first eighth); the bounds come from the live catalogue. */
+    logTrack() {
+      return this.lo > 0 && this.hi / this.lo >= 4;
+    },
     pctA() {
-      const span = this.hi - this.lo || 1;
-      return ((this.min - this.lo) / span) * 100;
+      return this.posOf(this.min) / 10;
     },
     pctB() {
-      const span = this.hi - this.lo || 1;
-      return ((this.max - this.lo) / span) * 100;
+      return this.posOf(this.max) / 10;
     },
     anyOffer() {
       return this.base.some((p) => this.pv(p).save > 0);
@@ -660,6 +664,22 @@ export default {
     setTab(id) {
       this.tab = id;
       this.update();
+    },
+    /* a price -> the track's position (0..1000), and back */
+    posOf(v) {
+      const lo = this.lo, hi = this.hi;
+      if (hi <= lo) return 0;
+      const x = Math.min(hi, Math.max(lo, Number(v) || lo));
+      const p = this.logTrack ? (Math.log(x) - Math.log(lo)) / (Math.log(hi) - Math.log(lo)) : (x - lo) / (hi - lo);
+      return Math.round(p * 1000);
+    },
+    valOf(pos) {
+      const lo = this.lo, hi = this.hi;
+      const p = Math.min(1, Math.max(0, Number(pos) / 1000));
+      if (p <= 0) return lo;
+      if (p >= 1) return hi;
+      const v = this.logTrack ? Math.exp(Math.log(lo) + p * (Math.log(hi) - Math.log(lo))) : lo + p * (hi - lo);
+      return Math.round(v);
     },
     onMin(v) {
       this.min = Math.min(Number(v), this.max);
