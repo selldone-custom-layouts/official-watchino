@@ -1,0 +1,1590 @@
+/* ▆▆▆▆▆▆▆▆▆▆▆▆▆▆ the Layout — the Layout's own touches ▆▆▆▆▆▆▆▆▆▆▆▆▆▆
+
+   style/ly/*.css are the A "Classic" mockup's stylesheets, generated unchanged
+   (once generated from the mockups; now the base's own source) and scoped to the Layout's markup (.ly). What the
+   storefront needs on top of them lives here: the page ground, the sticky
+   header inside Vuetify's app (the top bar scrolls away), the language &
+   currency pill and its panel and sheet (the region-switcher kit's chips),
+   the bag drawer's receipt and "Often added", the photo slots' designed
+   fallbacks (live cut-outs), the theme-switcher kit's row in the mockup's
+   footer band, and Selldone's own small parts in the legal row. Holds both
+   modes; not rewritten by the dark build step (vite.config.ts). House
+   rules: no underline anywhere, flat buttons, hover = colour only, every
+   ring drawn inside its own box. */
+
+/* ── The page ── */
+/* Vuetify's app clips with overflow: hidden, which stops anything sticking
+   (the header); clip does the same without making a scroll box. */
+.v-application,
+.v-application .v-application__wrap,
+.s--shop {
+  overflow: clip !important;
+}
+html,
+html body,
+.v-application,
+.s--shop {
+  background: var(--ly-bg) !important;
+}
+.v-application,
+.s--shop {
+  color: var(--ly-ink);
+  font-family: var(--ly-sans);
+}
+/* The home meets the footer with no gap (the shop page's bottom padding is
+   for the listing). */
+.nx-shop-page:has(> .ly-home) {
+  padding-bottom: 0 !important;
+}
+/* Words start at the line's start (an inherited centring is a bug: the
+   mockup centres only its section heads, explicitly). */
+.ly {
+  text-align: start;
+}
+/* Focus is shown by the mockup's inset rings only: the shared skin's outer
+   outline (.v-application :focus-visible) would draw outside the box, which
+   a row or card can cut (the owner's ring rule). */
+.ly :focus-visible,
+.ly:focus-visible {
+  outline: none !important;
+}
+/* the Layout's wrappers take the page's type, not a ground of their own where
+   they hold only layers. */
+.ly.ly-layers {
+  position: relative;
+  z-index: 60;
+  background: transparent;
+  height: 0;
+}
+/* Links and buttons inside the Layout keep the mockup's colours against the
+   shared skins (no underline, hover = colour only). */
+.ly a,
+.ly a:hover,
+.ly a:focus,
+.ly button {
+  text-decoration: none !important;
+}
+
+/* ── The header: the top bar scrolls away, the white header sticks ── */
+.ly.ly-hdrwrap {
+  position: sticky;
+  top: calc(-1 * var(--ly-tb-h));
+  z-index: 50;
+  background: var(--ly-hdr-bg);
+}
+.ly-hdrwrap .hdr {
+  position: relative;
+  top: 0;
+}
+.ly-hdrwrap .skip {
+  position: absolute;
+}
+/* One line, always the same height (the sticky offset is this height). */
+.ly .topbar .tb-in {
+  height: var(--ly-tb-h);
+  min-height: 0;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+.ly .topbar .tb-l,
+.ly .topbar .tb-r {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  min-width: 0;
+}
+.ly .topbar .tb-l {
+  overflow: hidden;
+}
+.ly .topbar .tb-r li {
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 1240px) {
+  .ly .topbar .tb-l li:nth-child(3) {
+    display: none;
+  }
+}
+@media (max-width: 1080px) {
+  .ly .topbar .tb-l li:nth-child(2) {
+    display: none;
+  }
+}
+@media (max-width: 979px) {
+  /* Phone and tablet: the counter's hours and the phone (the mockup's rule);
+     the pill moves into the menu. */
+  .ly .topbar .tb-rg,
+  .ly .topbar .tb-mail {
+    display: none !important;
+  }
+  .ly .topbar .tb-tel::before {
+    display: none !important;
+  }
+}
+/* The wordmark: a long shop name steps down and never leaves the bar. */
+.ly .wm {
+  min-width: 0;
+  max-width: 100%;
+}
+.ly .wm-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ly .wm.-long .wm-name {
+  font-size: calc(var(--ly-wm-size, 40px) * 0.9);
+}
+.ly .wm.-xl .wm-name {
+  font-size: calc(var(--ly-wm-size, 40px) * 0.7);
+}
+@media (max-width: 760px) {
+  .ly .wm.-long .wm-name {
+    font-size: calc(var(--ly-wm-size, 40px) * 0.7);
+  }
+  .ly .wm.-xl .wm-name {
+    font-size: calc(var(--ly-wm-size, 40px) * 0.55);
+  }
+}
+/* The wordmark: the shop's title in the skin's display face, its sub line in small tracked capitals (also
+   outside the Layout's own markup, e.g. the sign-in sheet). */
+.ly-wm {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  .wm-name {
+    font-family: var(--ly-wm-font, var(--ly-serif));
+    font-style: var(--ly-wm-style, normal);
+    font-weight: var(--ly-wm-weight, 500);
+    font-size: var(--ly-wm-size, 40px);
+    line-height: 0.9;
+    letter-spacing: var(--ly-wm-track, 0.04em);
+  }
+  .wm-sub {
+    font: 700 9px/1 var(--ly-sans);
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    margin-top: 7px;
+    padding-inline-start: 0.38em;
+    color: var(--ly-muted);
+  }
+}
+@media (max-width: 760px) {
+  .ly-wm .wm-name {
+    font-size: calc(var(--ly-wm-size, 40px) * 0.8);
+  }
+  .ly-wm .wm-sub {
+    font-size: 8px;
+    margin-top: 5px;
+  }
+}
+/* The count on the bag sits on the light accent: cocoa words. */
+.ly .count {
+  background: var(--ly-count-bg);
+  color: var(--ly-count-ink);
+}
+.ly .nav-a[aria-current="page"] {
+  color: var(--ly-hdr-hover);
+}
+/* The search panel: the highlighted suggestion and "See every result". */
+.ly .srch-list a.hl {
+  background: var(--ly-band);
+}
+.ly .srch-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 6px 0;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ly-act-text);
+  .i {
+    width: 16px;
+    height: 16px;
+  }
+}
+.ly .srch-list .ly {
+  white-space: nowrap;
+}
+.ly .srch-hint {
+  min-height: 30px;
+}
+
+/* ── The language & currency pill (top bar), its panel and its sheet ── */
+.ly .rg-pill.rs-pick__btn {
+  --rs-pill-bg: transparent;
+  --rs-pill-bg-hover: transparent;
+  --rs-pill-ink: var(--ly-top-ink);
+  height: 28px;
+  gap: 6px;
+  padding: 0 10px 0 8px;
+  border-radius: var(--ly-r-in) !important;
+  box-shadow: inset 0 0 0 1px var(--ly-dark-line-2);
+  font: 600 10.5px/1 var(--ly-sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  .i {
+    width: 15px;
+    height: 15px;
+  }
+  .chev {
+    width: 13px;
+    height: 13px;
+    stroke-width: 1.8;
+    transition: transform 0.2s;
+  }
+  &[aria-expanded="true"] .chev {
+    transform: rotate(180deg);
+  }
+  &:hover {
+    color: var(--ly-top-hover) !important;
+  }
+  &:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--ly-top-hover) !important;
+  }
+}
+.ly .rgp {
+  position: fixed;
+  z-index: 70;
+  width: 300px;
+  max-width: calc(100vw - 24px);
+  padding: 18px;
+  background: var(--ly-surface);
+  color: var(--ly-ink);
+  border-radius: var(--ly-r-card);
+  box-shadow: inset 0 0 0 1px var(--ly-line);
+  font-family: var(--ly-sans);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.18s, transform 0.18s, visibility 0s 0.18s;
+  &.open {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.18s, transform 0.18s;
+  }
+}
+.ly .rgp-note {
+  margin-top: 12px;
+  color: var(--ly-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.ly .rs-chips {
+  --rs-ink: var(--ly-ink);
+  --rs-muted: var(--ly-muted);
+  --rs-line: var(--ly-line);
+  --rs-surface: var(--ly-surface);
+  --rs-accent: var(--ly-act-text);
+  --rs-accent-soft: var(--ly-act-soft);
+  --rs-on-accent: var(--ly-act-on);
+  --rs-font: var(--ly-sans);
+}
+.ly .rs-chips__t {
+  font: 700 10.5px/1.4 var(--ly-sans);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ly-muted);
+  margin: 0 0 8px;
+}
+.ly .rgp .rs-chips__t:first-child {
+  display: none; /* the panel's own heading says it */
+}
+.ly .rs-chip {
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: var(--ly-r-in);
+  background: var(--ly-band);
+  color: var(--ly-ink);
+  font: 600 14px/1 var(--ly-sans);
+}
+.ly .rs-chip.-on {
+  background: var(--ly-act-soft);
+  box-shadow: inset 0 0 0 2px var(--ly-act-text);
+}
+.ly .rs-chips__note {
+  color: var(--ly-muted);
+  font-size: 12.5px;
+  margin: 10px 0 0;
+}
+/* The sheet (phone): from the bottom, over the scrim. */
+.ly .ly-sheet.rs-sheet {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 95;
+  width: 100%;
+  max-width: 560px;
+  max-height: 86vh;
+  margin: 0 auto;
+  padding: 0 0 env(safe-area-inset-bottom, 0px);
+  overflow: auto;
+  border-radius: var(--ly-r-pn) var(--ly-r-pn) 0 0;
+  background: var(--ly-surface);
+  color: var(--ly-ink);
+  animation: none;
+  visibility: hidden;
+  transform: translateY(100%);
+  transition: transform 0.26s ease, visibility 0s 0.26s;
+  &.open {
+    visibility: visible;
+    transform: none;
+    transition: transform 0.26s ease;
+  }
+  .sh-body {
+    padding: 20px 24px 26px;
+  }
+  .btn.block {
+    margin-top: 18px;
+  }
+}
+
+/* ── The phone menu: "Show N more" and the language row ── */
+.ly .pn-list .pn-more,
+.ly .pn-list .pn-rg {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: var(--ly-r-chip);
+  text-align: start;
+  font-family: var(--ly-serif);
+  font-size: 20px;
+  font-weight: var(--ly-h-weight);
+  color: var(--ly-ink);
+}
+.ly .pn-list .pn-more {
+  color: var(--ly-act-text);
+  font-family: var(--ly-sans);
+  font-size: 15px;
+  font-weight: 600;
+  .th {
+    background: var(--ly-act-soft);
+    color: var(--ly-act-text);
+    border-radius: 50%;
+  }
+  .i {
+    width: 18px;
+    height: 18px;
+  }
+}
+.ly .pn-list .pn-rg > span:first-child {
+  flex: 1;
+}
+.ly .pn-list .pn-more:hover,
+.ly .pn-list .pn-rg:hover {
+  background: var(--ly-band);
+}
+.ly .pn-rg-v {
+  font: 600 12px/1 var(--ly-sans);
+  letter-spacing: 0.1em;
+  color: var(--ly-muted);
+}
+.ly .pn-list .pn-rg .chev {
+  width: 16px;
+  height: 16px;
+  color: var(--ly-muted);
+}
+.ly .pn-info p,
+.ly .pn-info a {
+  align-items: flex-start;
+}
+.ly .pn-info .i {
+  flex: none;
+}
+/* The panels sit above the sticky header and the region panel. */
+.ly .scrim {
+  background: var(--ly-scrim);
+}
+
+/* ── The bag drawer: rows with a line total, the receipt, Often added ── */
+.ly .dw-list li {
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  align-items: start;
+}
+.ly .dw-list .th {
+  grid-row: span 2;
+}
+.ly .dw-tx {
+  min-width: 0;
+}
+.ly .dw-n {
+  display: block;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ly-ink);
+  overflow-wrap: anywhere;
+}
+.ly .dw-n:hover {
+  color: var(--ly-act-text);
+}
+.ly .dw-tx small {
+  display: block;
+  margin-top: 2px;
+  line-height: 1.45;
+}
+.ly .dw-tx small s {
+  color: var(--ly-muted);
+}
+.ly .dw-lt {
+  grid-column: 3;
+  grid-row: 1;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.ly .dw-q {
+  grid-column: 2 / span 2;
+}
+.ly .dw-sum {
+  margin-top: 4px;
+}
+.ly .dw-acts {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+}
+.ly .qlink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 4px;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ly-act-text);
+}
+.ly .qlink:hover {
+  color: var(--ly-ink);
+}
+.ly .dw-often {
+  margin-top: 6px;
+  padding-top: 18px;
+  border-top: 1px solid var(--ly-line);
+}
+.ly .dw-h {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+.ly .minis {
+  display: grid;
+  gap: 10px;
+}
+.ly .mini {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px;
+  border-radius: var(--ly-r);
+  background: var(--ly-band);
+}
+.ly .mini-th {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--ly-r-thumb);
+  background: var(--ly-plate);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  img {
+    width: 84%;
+    height: 84%;
+    object-fit: contain;
+  }
+}
+.ly .mini-tx {
+  min-width: 0;
+}
+.ly .mini-t {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--ly-ink);
+  overflow-wrap: anywhere;
+}
+.ly .mini-t:hover {
+  color: var(--ly-act-text);
+}
+.ly .mini-p {
+  font-size: 13px;
+}
+.ly .mini-a .btn.sm {
+  padding-inline: 16px;
+}
+.ly .mini-a .qb {
+  min-height: 36px;
+}
+.ly .mini-a .qb button {
+  width: 34px;
+  height: 34px;
+}
+.ly .dw-empty .btn {
+  margin-top: 4px;
+}
+
+/* ── The add box ── */
+.ly .btn.add[disabled] {
+  background: var(--ly-band);
+  color: var(--ly-muted);
+  cursor: not-allowed;
+}
+.ly .btn.add.alt:not([disabled]) {
+  background: var(--ly-alt);
+  color: var(--ly-alt-on);
+}
+.ly .btn.add.alt:not([disabled]):hover {
+  background: var(--ly-alt-deep);
+}
+.ly .qb .qn {
+  font-variant-numeric: tabular-nums;
+}
+.ly .money {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ── Photo slots: the designed fallbacks (live cut-outs; never a caption) ── */
+.ly .ly-cuts {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  pointer-events: none;
+}
+.ly .ly-cut {
+  position: absolute;
+  display: block;
+  aspect-ratio: 1;
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+.ly .ly-cuts.-one .c0 {
+  left: 50%;
+  top: 50%;
+  width: min(66%, 420px);
+  transform: translate(-50%, -50%);
+}
+.ly .ly-cuts.-trio .c0 {
+  left: 50%;
+  bottom: 4%;
+  width: min(48%, 340px);
+  transform: translateX(-50%);
+  z-index: 2;
+}
+.ly .ly-cuts.-trio .c1,
+.ly .ly-cuts.-trio .c2 {
+  bottom: 12%;
+  width: min(36%, 260px);
+  z-index: 1;
+}
+.ly .ly-cuts.-trio .c1 {
+  inset-inline-start: 4%;
+}
+.ly .ly-cuts.-trio .c2 {
+  inset-inline-end: 4%;
+}
+.ly .ly-cuts.-spread .ly-cut {
+  width: min(30%, 220px);
+}
+.ly .ly-cuts.-spread .c0 {
+  inset-inline-start: 4%;
+  top: 8%;
+}
+.ly .ly-cuts.-spread .c1 {
+  inset-inline-start: 35%;
+  top: 2%;
+}
+.ly .ly-cuts.-spread .c2 {
+  inset-inline-end: 4%;
+  top: 10%;
+}
+.ly .ly-cuts.-spread .c3 {
+  inset-inline-start: 18%;
+  bottom: 2%;
+}
+.ly .ly-cuts.-spread .c4 {
+  inset-inline-end: 18%;
+  bottom: 0;
+}
+.ly .ly-cuts.-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1%;
+  padding-inline: 5%;
+}
+.ly .ly-cuts.-row .ly-cut {
+  position: relative;
+  flex: 0 1 18%;
+  max-width: 300px;
+}
+@media (max-width: 760px) {
+  .ly .ly-cuts.-row .c4,
+  .ly .ly-cuts.-row .c3 {
+    display: none;
+  }
+  .ly .ly-cuts.-row .ly-cut {
+    flex-basis: 30%;
+  }
+}
+/* A plate under the cut-outs of a collection without its photo. */
+.ly .cc-ph:has(> .ly-cuts),
+.ly .gt:has(> .ly-cuts) {
+  background: radial-gradient(ellipse 70% 42% at 50% 88%, var(--ly-plate), transparent 70%), var(--ly-ph);
+}
+/* The hero's framed photo and the offer card: one piece in the upper middle. */
+.ly .hero-inset .ly-cuts.-one .c0 {
+  width: 76%;
+}
+.ly .offer .ly-cuts.-one .c0 {
+  top: 34%;
+  width: 62%;
+}
+.ly .offer .ly-cut img {
+  filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.35));
+}
+/* On a phone the card is shorter: a smaller piece, higher, clear of the words. */
+@media (max-width: 760px) {
+  .ly .offer .ly-cuts.-one .c0 {
+    top: 25%;
+    width: 42%;
+  }
+}
+/* The words over a deep slot stay above the cut-outs. */
+.ly .ph .hero-words,
+.ly .ph .offer-tx,
+.ly .ph .j-word,
+.ly .ph .pb-down {
+  z-index: 3;
+}
+/* The photo band's row of pieces leaves room for the arrow. */
+.ly .pb-ph .ly-cuts.-row {
+  bottom: 70px;
+}
+@media (max-width: 760px) {
+  .ly .pb-ph .ly-cuts.-row {
+    bottom: 60px;
+  }
+}
+
+/* ── Sections that adapt to the shop's data (every grid row stays full) ── */
+.ly .nums.on-dark.n2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.ly .nums.on-dark.n1 {
+  grid-template-columns: 1fr;
+}
+.ly .ccs.n1 {
+  grid-template-columns: minmax(0, 1fr);
+}
+.ly .focus-in.no-fnums {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+}
+@media (max-width: 760px) {
+  .ly .focus-in.no-fnums {
+    grid-template-columns: 1fr;
+  }
+}
+.ly .cc-t,
+.ly .s-t,
+.ly .p-t,
+.ly .checks a {
+  overflow-wrap: anywhere;
+}
+.ly .post .p-th img[src=""] {
+  display: none;
+}
+
+/* ── The footer: the theme-switcher kit's row in the mockup's band ── */
+.ly .dts-in .ts-row {
+  --ts-swatch-edge: rgba(255, 240, 225, 0.42);
+  --ts-ring: var(--ly-dark-ink); /* the chosen swatch's ring reads on the dark footer */
+  width: 100%;
+  gap: 14px 16px;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+}
+.ly .dts-in .ts-row__label {
+  font: 700 10.5px/1.4 var(--ly-sans);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ly-dark-muted);
+}
+.ly .dts-in .ts-row__palettes {
+  gap: 8px;
+}
+/* The mockup's softer colour wheel for "Custom". */
+.ly .dts-in .ts-swatch.-custom.-rainbow::before {
+  background: conic-gradient(#e0614b, #e8b04a, #8fb35a, #4aa3a0, #4a6fd0, #c4588c, #e0614b);
+}
+.ly .dts-in .ts-row__name {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--ly-dark-muted);
+}
+.ly .dts-in .ts-mode {
+  margin-inline-start: auto;
+  box-shadow: inset 0 0 0 1px var(--ly-dark-line-2);
+}
+.ly .dts-in .ts-mode .ts-mode__btn {
+  height: 36px;
+  font: 600 12px/1 var(--ly-sans);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ly-dark-muted) !important;
+}
+.ly .dts-in .ts-mode .ts-mode__btn:hover {
+  color: var(--ly-dark-ink) !important;
+}
+.ly .dts-in .ts-mode .ts-mode__btn.-on {
+  background: var(--ly-dark-ink) !important;
+  color: var(--ly-dark) !important;
+}
+.ly .dts-in .ts-mode .ts-mode__btn:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--ly-act-dk);
+}
+@media (max-width: 760px) {
+  .ly .dts-in .ts-mode {
+    margin-inline-start: 0;
+  }
+}
+
+/* ── The legal row's Selldone parts, small and quiet ── */
+.ly .fb-in {
+  align-items: center;
+}
+.ly .fb-end {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+.ly .ftr-bot .ly-gdpr,
+.ly .ftr-bot .ly-gdpr .v-btn,
+.ly .ftr-bot .ly-made,
+.ly .ftr-bot .ly-made a,
+.ly .ftr-bot .ly-made .v-btn,
+.ly .ftr-bot .ly-social .v-btn {
+  color: var(--ly-dark-muted) !important;
+  opacity: 1 !important;
+  font: 600 10.5px/1.4 var(--ly-sans) !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+.ly .ftr-bot .ly-gdpr:empty,
+.ly .ftr-bot .ly-social:empty {
+  display: none;
+}
+.ly .ftr-bot .ly-made {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.ly .ftr-bot .ly-made img,
+.ly .ftr-bot .ly-made svg {
+  max-height: 16px;
+  width: auto;
+  filter: brightness(0) invert(0.82); /* Selldone's dark logo, light on the dark footer */
+}
+.ly .ftr-bot nav a:hover,
+.ly .ftr-bot .ly-made a:hover {
+  color: var(--ly-act-dk) !important;
+}
+
+/* The four collections: every card body starts at the same height (the
+   coordinator's review): the photo row never takes the stretched card's
+   spare height. */
+.ly .ccs .cc {
+  align-content: start;
+}
+
+/* ── The listing ── */
+/* The filter panel's wrapper: no box of its own (the panel is the grid's
+   first column from 1200px, a side sheet teleported to <body> below). */
+.ly.ly-fpw {
+  display: contents;
+}
+/* A card without a saving keeps the line's height (the row's buttons stay level). */
+.ly .pc-sv.-none {
+  visibility: hidden;
+}
+/* Skeleton cards while the catalogue arrives (the same shape, a soft shine). */
+.ly .ly-skel .pc-plate {
+  background: linear-gradient(100deg, var(--ly-plate) 30%, var(--ly-band) 50%, var(--ly-plate) 70%) 0 0 / 300% 100%;
+  animation: ly-shine 1.4s ease-in-out infinite;
+}
+.ly .ly-skel .sk-l {
+  display: block;
+  width: 80%;
+  height: 14px;
+  margin: 6px auto;
+  border-radius: var(--ly-r-in);
+  background: var(--ly-band);
+}
+.ly .ly-skel .sk-l.s {
+  width: 50%;
+}
+@keyframes ly-shine {
+  to {
+    background-position: -100% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ly .ly-skel .pc-plate {
+    animation: none;
+  }
+}
+/* A strip with two panels (no courier, or no pickup) keeps its row full. */
+.ly .trio:has(> :nth-child(2):last-child) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.ly .tri.photo:has(> .ly-cuts) {
+  background: radial-gradient(ellipse 70% 42% at 50% 88%, var(--ly-plate), transparent 70%), var(--ly-ph);
+}
+
+/* ── The product page ── */
+/* The product's own article under the lead and the pros, in the text face. */
+.ly .ly-pd-article {
+  max-width: 76ch;
+  margin: 34px auto 0;
+  padding-top: 26px;
+  border-top: 1px solid var(--ly-line);
+  color: var(--ly-muted);
+  font-size: 15px;
+  line-height: 1.75;
+}
+.ly .ly-pd-article p {
+  margin: 0 0 1em;
+}
+.ly .ly-pd-article :is(h2, h3) {
+  font-family: var(--ly-serif);
+  color: var(--ly-ink);
+  margin: 1.2em 0 0.4em;
+}
+/* No pros: the lead takes the whole width; no criteria: the empty card does. */
+.ly .pd-desc.ly-solo,
+.ly .revs.ly-solo {
+  grid-template-columns: minmax(0, 1fr);
+}
+.ly .pd-desc.ly-solo .pd-lead {
+  grid-row: auto;
+  max-width: 60ch;
+  margin-inline: auto;
+  text-align: center;
+}
+/* The deal's own clock (only with a real end date). */
+.ly .ly-pd-deal .i {
+  width: 16px;
+  height: 16px;
+}
+/* The add box when it cannot add (no option chosen, sold out). */
+.ly .btn.add.-off {
+  background: var(--ly-band);
+  color: var(--ly-muted);
+  cursor: not-allowed;
+}
+/* Buy together with two pieces. */
+.ly .bt-l.n2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+/* The page while the product loads: the gallery and the buy column's lines. */
+.ly .ly-pd-skel .pd-main {
+  background: linear-gradient(100deg, var(--ly-plate) 30%, var(--ly-band) 50%, var(--ly-plate) 70%) 0 0 / 300% 100%;
+  animation: ly-shine 1.4s ease-in-out infinite;
+}
+.ly .ly-pd-skel .pd-buy i {
+  display: block;
+  height: 18px;
+  margin-bottom: 16px;
+  border-radius: var(--ly-r-in);
+  background: var(--ly-band);
+}
+.ly .ly-pd-skel .pd-buy .-a { width: 30%; }
+.ly .ly-pd-skel .pd-buy .-b { width: 80%; height: 46px; }
+.ly .ly-pd-skel .pd-buy .-c { width: 40%; }
+.ly .ly-pd-skel .pd-buy .-d { width: 55%; height: 40px; }
+.ly .ly-pd-skel .pd-buy .-e { width: 100%; height: 50px; border-radius: var(--ly-r-in); }
+/* Selldone's option picker and buy section for other kinds of product, in the Layout's dress. */
+.ly .ly-sd-variants,
+.ly .ly-sd-more {
+  width: 100%;
+}
+.ly .ly-sd-buy .v-btn {
+  border-radius: var(--ly-r-in) !important;
+  background: var(--ly-act) !important;
+  color: var(--ly-act-on) !important;
+  box-shadow: none !important;
+}
+
+/* ── The order page (order-b) ── */
+.ly .ly-od-hd {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin-bottom: 14px;
+}
+.ly .ly-od-hd .co-h {
+  margin-bottom: 0;
+}
+.ly .ly-od-tools {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0 14px;
+}
+/* Selldone's share button as a quiet link beside "Invoice". */
+.ly .ly-od-share .v-btn {
+  min-height: 40px !important;
+  height: auto !important;
+  padding: 8px 4px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--ly-muted) !important;
+  font: 500 13px/1.2 var(--ly-sans) !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+.ly .ly-od-share .v-btn:hover {
+  color: var(--ly-ink) !important;
+}
+.ly .ly-od-share .v-btn__overlay,
+.ly .ly-od-share .v-btn__underlay {
+  display: none;
+}
+.ly .ly-od-off .empty {
+  padding: 8px 0;
+}
+.ly .pay-big.ly-off,
+.ly .pay-big.ly-wait,
+.ly .pay-big.ly-busy {
+  background: var(--ly-band);
+  color: var(--ly-ink);
+}
+.ly .ly-od-acts {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 16px;
+}
+.ly .ly-il-acts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 14px;
+  margin-top: 2px;
+}
+.ly .ly-il-acts .qlink {
+  min-height: 34px;
+  padding-block: 4px;
+}
+.ly .ly-od-note {
+  font-style: italic;
+}
+.ly .ly-od-ask {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: var(--ly-r-in);
+  background: var(--ly-act-soft);
+  color: var(--ly-act-text);
+  font-size: 14px;
+}
+.ly .ly-od-ask b {
+  color: var(--ly-ink);
+  font-weight: 600;
+}
+.ly .ly-od-ask .btn {
+  margin-top: 6px;
+}
+.ly .ly-od-done {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border-radius: var(--ly-r-in);
+  background: var(--ly-act-soft);
+  color: var(--ly-act-text);
+  font-size: 14px;
+}
+.ly .ly-od-done .i {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+.ly .ly-od-done b {
+  font-weight: 600;
+}
+.ly .ly-od-bill {
+  display: grid;
+  gap: 12px;
+  width: 100%;
+}
+.ly .ly-od-trip {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ly-line);
+}
+.ly .ly-od-trip ol {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+.ly .ly-od-trip li {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: baseline;
+  font-size: 13.5px;
+}
+.ly .ly-od-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ly-act);
+}
+.ly .ly-od-trip .-wait .ly-od-dot,
+.ly .ly-od-trip .-live .ly-od-dot {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--ly-act);
+}
+.ly .ly-od-trip .-off .ly-od-dot,
+.ly .ly-od-trip .-warn .ly-od-dot {
+  background: var(--ly-err);
+}
+.ly .ly-od-tw {
+  display: grid;
+  min-width: 0;
+}
+.ly .ly-od-tw b {
+  font-weight: 600;
+}
+.ly .ly-od-tw small,
+.ly .ly-od-trip time {
+  color: var(--ly-muted);
+  font-size: 12.5px;
+}
+/* Selldone's own blocks (a bank transfer, the sellers' orders, returns,
+   refunds) on the page's cards. */
+.ly .ly-od-sd:empty {
+  display: none;
+}
+.ly .ly-od-sd table {
+  width: 100%;
+}
+.ly .ly-od-sd .v-btn {
+  border-radius: var(--ly-r-in) !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
+.ly .ly-od-sd .v-btn.bg-primary,
+.ly .ly-od-sd .v-btn.text-primary {
+  background: var(--ly-act) !important;
+  color: var(--ly-act-on) !important;
+}
+.ly .ly-od-load {
+  display: grid;
+  gap: 20px;
+}
+.ly .ly-od-sk {
+  display: block;
+  height: 150px;
+  border-radius: var(--ly-r-card);
+  background: linear-gradient(100deg, var(--ly-surface) 30%, var(--ly-band) 50%, var(--ly-surface) 70%) 0 0 / 300% 100%;
+  animation: ly-shine 1.4s ease-in-out infinite;
+}
+.ly .ly-od-sk + .ly-od-sk + .ly-od-sk {
+  height: 300px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ly .ly-od-sk {
+    animation: none;
+  }
+}
+/* The messages: the time under each, the shopper's "Delete", the starters. */
+.ly .chat .ly-msg-t {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  opacity: 0.7;
+}
+.ly .msg.me {
+  align-items: center;
+}
+.ly .msg.me .ly-msg-x {
+  order: -1;
+  display: inline-grid;
+  place-items: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 6px;
+  border-radius: var(--ly-r-in);
+  color: var(--ly-muted);
+  font-size: 12px;
+  opacity: 0;
+}
+.ly .msg.me:hover .ly-msg-x,
+.ly .msg.me .ly-msg-x:focus-visible,
+.ly .msg.me .ly-msg-x.-ask {
+  opacity: 1;
+}
+.ly .msg.me .ly-msg-x.-ask {
+  color: var(--ly-err);
+}
+.ly .msg.me .ly-msg-x .i {
+  width: 16px;
+  height: 16px;
+}
+@media (hover: none) {
+  .ly .msg.me .ly-msg-x {
+    opacity: 1;
+  }
+}
+.ly .msg.ly-busy {
+  opacity: 0.5;
+}
+.ly .ly-chat-st {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 18px 14px;
+  background: var(--ly-bg);
+}
+.ly .ly-od-share .v-btn__prepend,
+.ly .ly-od-share .v-btn .v-icon {
+  margin-inline-end: 8px !important;
+}
+.ly .ly-od-share .v-btn .v-icon {
+  font-size: 16px !important;
+}
+
+/* ── The account (account-b, addresses-b) ── */
+.ly .ly-acc-more {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--ly-line);
+}
+.ly .ly-acc-more .an {
+  padding-block: 7px;
+  font-size: 14px;
+  color: var(--ly-muted);
+}
+.ly .ly-acc-more .an.on,
+.ly .ly-acc-more .an:hover {
+  color: var(--ly-act-text);
+}
+.ly .acc-nav button.an {
+  width: 100%;
+  text-align: start;
+}
+.ly .ly-or-hd {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+}
+.ly .ly-or-hd .co-p {
+  margin-top: 4px;
+}
+.ly .ly-chip-n {
+  margin-inline-start: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  opacity: 0.75;
+}
+.ly .ol {
+  display: grid;
+  gap: 12px;
+}
+.ly .ol-tx b {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 0;
+}
+.ly .tagx.-off {
+  background: var(--ly-band);
+  color: var(--ly-muted);
+}
+.ly .tagx.-pay {
+  background: var(--ly-err-soft);
+  color: var(--ly-err);
+}
+.ly .ly-ol-chat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ly .ly-ol-chat .i {
+  width: 15px;
+  height: 15px;
+}
+.ly .ol-a .chev {
+  color: var(--ly-muted);
+}
+[dir="rtl"] .ly .ol-a .chev,
+.ly[dir="rtl"] .ol-a .chev {
+  transform: scaleX(-1);
+}
+.ly .ly-or-more {
+  display: flex;
+  justify-content: center;
+}
+.ly .ly-od-sk.-row {
+  height: 84px;
+}
+.ly .ly-od-sk.-row + .ly-od-sk.-row + .ly-od-sk.-row {
+  height: 84px;
+}
+.ly .oc .ly-od-acts {
+  margin-top: 0;
+}
+.ly .ly-oc-more small {
+  color: var(--ly-muted);
+  font-size: 13px;
+}
+.ly .ly-oc-off {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding-top: 14px;
+  border-top: 1px solid var(--ly-line);
+  color: var(--ly-muted);
+  font-size: 14px;
+}
+.ly .ly-oc-off .i {
+  width: 18px;
+  height: 18px;
+}
+.ly .ly-prof-more .ils {
+  width: 100%;
+}
+.ly .qlink.ly-danger,
+.ly .qlink.ly-danger:hover {
+  color: var(--ly-err);
+}
+.ly .ly-ab-ask {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ly-err);
+}
+/* The sign-in sheet: the legal line, and "Signed in". */
+.ly .ly-lg-legal {
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--ly-muted);
+}
+.ly .ly-lg-legal a {
+  color: var(--ly-ink);
+  font-weight: 600;
+}
+.ly .ly-lg-legal a:hover {
+  color: var(--ly-act-text);
+}
+.ly .ly-lg-done {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+}
+.ly .inp.code {
+  letter-spacing: 0.4em;
+  font-size: 20px;
+  text-align: center;
+}
+.ly .ly-lg-sms {
+  width: 100%;
+}
+
+/* ── The reading pages ── */
+/* Kalio's frame for About, Terms, Privacy and Contact adds its own padding;
+   a page of the Layout starts with its title band right under the header. */
+.k-official:has(> .ly) {
+  padding: 0 !important;
+}
+/* Contact: the counter on a real map (LyMap) inside the mockup's map box. */
+.ly .ct-mbox .ly-map {
+  position: absolute;
+  inset: 0;
+}
+.ly .ly-map {
+  background: var(--ly-map-water);
+  overflow: hidden;
+}
+.ly .ly-map__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+html.ly-dark .ly .ly-map__img {
+  filter: brightness(0.9);
+}
+.ly .ly-map.-none {
+  background:
+    radial-gradient(circle at 50% 46%, var(--ly-map-land) 0 30%, transparent 31%),
+    var(--ly-map-water);
+}
+.ly .ly-map__pin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 60px;
+  height: 64px;
+  transform: translate(-50%, -88%);
+  overflow: visible;
+}
+.ly .ly-map__halo {
+  fill: var(--ly-map-pin);
+  opacity: 0.18;
+}
+.ly .ly-map__body {
+  fill: var(--ly-map-pin);
+  stroke: var(--ly-surface);
+  stroke-width: 2;
+}
+.ly .ly-map__b {
+  fill: var(--ly-surface);
+  font: 500 17px/1 var(--ly-serif);
+  text-anchor: middle;
+}
+/* The article's comments: Selldone's list in the reading column, without
+   its own "Write first comment…" line under the sign-in card. */
+.ly .ly-comments > .mx-auto {
+  padding-inline: 0 !important;
+}
+.ly .ly-comments .mb-16 {
+  margin-bottom: 0 !important;
+}
+.ly .ly-comments > .mx-auto > .text-subtitle-2 {
+  display: none;
+}
+.ly .cmts .ap-t {
+  margin-bottom: 16px;
+}
+/* The 404's six pastries: three to a row until there is room for six (at
+   1024px six cards left a long name no room). */
+@media (min-width: 761px) and (max-width: 1279px) {
+  .ly .nf-try .grid.six {
+    --ly-cols: 3;
+  }
+}
+/* Words in a circle keep to about 80% of it so a long amount takes two
+   lines and fit-in-circle shrinks it inside (any currency, any language). */
+.ly .pc-off > span,
+.ly .dt-sv > * {
+  max-width: 80%;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+/* A tick box draws no words, but its value ("on") takes the box's ink:
+   the ink of a word on the box's own ground. */
+.ly .cbx {
+  color: var(--ly-ink);
+}
+.ly .cbx:checked {
+  color: var(--ly-act-on);
+}
+/* Selldone's tax and free-shipping line under the price, in the Layout's ink. */
+.ly .s--product-section-tax {
+  padding-inline: 0 !important;
+  color: var(--ly-muted);
+  font-size: 13px;
+}
+.ly .s--product-section-tax .-shipping-box {
+  margin-inline: 0 8px !important;
+  color: var(--ly-act-text) !important;
+  font-weight: 600;
+}
+.ly .s--product-section-tax .-shipping-box .v-icon {
+  color: inherit !important;
+}
+
+/* ── Checkout: Selldone's discount code and coupons in the Layout's dress ── */
+.ly .ly-code {
+  margin-top: 12px;
+}
+.ly .ly-code .discount-code-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ly .ly-code .discount-code-row > .v-btn:not(.v-btn--icon) {
+  height: auto !important;
+  min-height: 40px;
+  padding: 8px 4px !important;
+  background: transparent !important;
+  color: var(--ly-act-text) !important;
+  box-shadow: none !important;
+  font: 500 13px/1.2 var(--ly-sans) !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+.ly .ly-code .discount-code-row > .v-btn:not(.v-btn--icon):hover {
+  color: var(--ly-ink) !important;
+}
+.ly .ly-code .discount-code-row > .v-btn .v-icon {
+  font-size: 15px !important;
+  margin-inline: 0 8px !important;
+}
+.ly .ly-code .discount-code-row > .v-btn--icon {
+  background: var(--ly-act) !important;
+  color: var(--ly-act-on) !important;
+}
+.ly .ly-code .discount-code-row > .v-btn--icon.v-btn--variant-text {
+  background: transparent !important;
+  color: var(--ly-ink) !important;
+}
+.ly .ly-code .v-field {
+  border-radius: var(--ly-r-in) !important;
+  background: var(--ly-field) !important;
+  color: var(--ly-ink) !important;
+}
+.ly .ly-code .v-field__outline {
+  --v-field-border-opacity: 1;
+  color: var(--ly-field-line) !important;
+}
+.ly .ly-code .v-btn__overlay,
+.ly .ly-code .v-btn__underlay,
+.ly .ly-offers .v-btn__overlay,
+.ly .ly-offers .v-btn__underlay {
+  display: none;
+}
+/* The coupons (only when the shopper has some): a card like the checkout's. */
+.ly .ly-offers.s--storefront-coupons {
+  margin-top: 16px;
+  padding: 20px 24px !important;
+  background: var(--ly-surface);
+  border-radius: var(--ly-r-card);
+}
+.ly .ly-offers > p > .v-btn {
+  height: auto !important;
+  min-height: 36px;
+  padding: 6px 4px !important;
+  background: transparent !important;
+  color: var(--ly-act-text) !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  font: 500 13px/1.2 var(--ly-sans) !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+.ly .ly-offers .s--coupon-card {
+  border: 1.5px dashed var(--ly-line) !important;
+  border-radius: var(--ly-r-in);
+  padding: 12px;
+  background: var(--ly-bg);
+  color: var(--ly-ink);
+}
+.ly .ly-offers .s--coupon-card.selected {
+  background: var(--ly-act-soft) !important;
+  color: var(--ly-ink);
+  border: 0 !important;
+  box-shadow: inset 0 0 0 2px var(--ly-act-text);
+}
+.ly .ly-offers .s--coupon-card.selected small {
+  color: var(--ly-muted) !important;
+}
+.ly .ly-offers .coupon-slide > .v-btn {
+  border-radius: var(--ly-r-in) !important;
+  background: var(--ly-bg) !important;
+  color: var(--ly-ink) !important;
+  box-shadow: inset 0 0 0 1.5px var(--ly-line) !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font: 600 14px/1.2 var(--ly-sans) !important;
+}
+/* The checkout's columns never grow past the page: Selldone's coupon row
+   (fixed-width cards) and checkout form ask for more than a phone has. */
+.ly .co > *,
+.ly .cart > *,
+.ly .co-main > *,
+.ly .co-sum > * {
+  min-width: 0;
+  max-width: 100%;
+}
+.ly .co-main .v-container {
+  max-width: 100% !important;
+  padding-inline: 0 !important;
+}
+.ly .ly-offers .coupon-title img {
+  display: none;
+}
+
+/* Selldone's pickup chip under the product's price: a the Layout chip (the soft
+   accent, a pill) instead of Selldone's black label. Its hover card is
+   dressed in ly-sd.scss. */
+.ly .s--product-section-tax .-pickup-box.v-chip {
+  height: auto !important;
+  min-height: 24px;
+  padding: 3px 10px !important;
+  border-radius: var(--ly-r-in) !important;
+  background: var(--ly-act-soft) !important;
+  color: var(--ly-act-text) !important;
+  font: 600 12px/1.2 var(--ly-sans) !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+.ly .s--product-section-tax .-pickup-box .v-chip__underlay,
+.ly .s--product-section-tax .-pickup-box .v-chip__overlay {
+  display: none;
+}
+.ly .s--product-section-tax .-pickup-box .v-icon {
+  color: inherit !important;
+  font-size: 14px !important;
+}
+/* Selldone's cookie-settings icon in the legal row (its blue-and-gold EU
+   stars) drawn in the footer's own light ink, like Selldone's mark beside it. */
+.ly .ftr-bot .ly-gdpr .v-img {
+  filter: brightness(0) invert(0.82);
+}
+
+/* ── the Layout A: the product page's bands reach the window edges (the tint title band, the tabs band) ── */
+.ly.ly-pdp {
+  padding-inline: 0 !important;
+  /* the Kalio base caps .s--product at 1440px; the product page's bands run the window like every page,
+     its content stays in the wrap */
+  max-width: none !important;
+}
+/* The stock dot and the compare row's dot sit in the line (Selldone's pods.scss makes a .dot absolute). */
+.ly .pd-stock .dot,
+.ly .cmp-row .dot {
+  position: static !important;
+  flex: none;
+}
+/* The theme row's Light / Dark switch on the shape scale (the kit draws pills). */
+.ly .dts-in .ts-mode,
+.ly .dts-in .ts-mode .ts-mode__btn {
+  border-radius: var(--ly-r-in) !important;
+}
+
+/* A slot's photo lies behind everything drawn in its slot or over it (the offer card's words, the footer's
+   scrim and columns): the slot is its own layer and the photo the bottom of it, above the slot's ground.
+   The page looks the same; the words are on the photo on purpose, measured by the contrast audit. */
+.ly .ph.has-photo {
+  isolation: isolate;
+}
+.ly .ph.has-photo > .ph-img {
+  z-index: -1;
+}

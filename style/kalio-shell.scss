@@ -1,0 +1,2315 @@
+/* ▆▆▆▆▆▆▆▆▆▆▆▆▆▆ Kalio — the shell ▆▆▆▆▆▆▆▆▆▆▆▆▆▆
+
+   The header (bar, aisle strip, Aisles menu), the basket and phone-menu
+   drawers, the footer, and the catalogue's filter panel and toolbar. */
+
+$k-header-bar: 72px;
+$k-header-strip: 46px;
+
+/* ▆▆▆▆▆▆▆▆ Header ▆▆▆▆▆▆▆▆ */
+
+.k-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--k-paper);
+  box-shadow: 0 1px 0 var(--k-line);
+  font-family: var(--k-body);
+  text-align: start;
+
+  &__bar {
+    border-bottom: 1px solid var(--k-line);
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: $k-header-bar;
+  }
+
+  &__brand {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 5px;
+    flex: 0 0 auto;
+    font-family: var(--k-display);
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: lowercase;
+    color: var(--k-green-t) !important;
+    text-decoration: none;
+
+    i {
+      width: 11px;
+      height: 11px;
+      margin-top: 1px;
+      border-radius: 11px 0 11px 0;
+      background: var(--k-leaf);
+    }
+  }
+
+  &__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    color: var(--k-ink);
+    background: transparent;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--k-wash);
+    }
+
+    /* The phone's account, beside the basket. */
+    &.-me {
+      overflow: hidden;
+      color: var(--k-ink) !important;
+
+      img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 0 0 1px var(--k-line);
+      }
+    }
+  }
+
+  &__aisles {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 auto;
+    height: 44px;
+    padding: 0 12px 0 14px;
+    border-radius: var(--k-pill);
+    background: var(--k-green-soft);
+    color: var(--k-green-t);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 140ms ease;
+
+    &:hover {
+      background: #dbe9f8;
+    }
+  }
+
+  &__search {
+    flex: 1 1 auto;
+    max-width: 620px;
+    min-width: 0;
+    margin-inline: auto;
+
+    .s--storefront-search-box {
+      margin: 0 !important;
+    }
+
+    .v-field {
+      min-height: 46px;
+      border-radius: var(--k-pill) !important;
+      background: var(--k-wash) !important;
+      font-size: 15px;
+    }
+
+    .v-field__input {
+      min-height: 46px !important;
+      padding-block: 0 !important;
+      padding-inline-start: 20px !important;
+    }
+
+    .v-field__outline {
+      color: var(--k-line) !important;
+      --v-field-border-opacity: 1;
+    }
+
+    .v-field--focused .v-field__outline {
+      color: var(--k-green-t) !important;
+    }
+
+    &.-below {
+      padding-bottom: 12px;
+      max-width: none;
+    }
+  }
+
+  &__search-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: 46px;
+    padding: 0 18px;
+    border: 1px solid var(--k-line);
+    border-radius: var(--k-pill);
+    background: var(--k-wash);
+    color: var(--k-muted);
+    font-size: 15px;
+    text-align: start;
+    cursor: text;
+
+    .v-icon {
+      color: var(--k-green-t);
+    }
+  }
+
+  &__acts {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex: 0 0 auto;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 44px;
+    padding: 0 12px;
+    border-radius: var(--k-pill);
+    background: transparent;
+    color: var(--k-ink) !important;
+    font-size: 14.5px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 140ms ease;
+
+    &:hover {
+      background: var(--k-wash);
+    }
+
+    &.-signin {
+      margin-inline-start: 4px;
+      border: 1px solid var(--k-line);
+    }
+  }
+
+  &__lang {
+    margin-inline-end: 4px;
+  }
+
+  &__basket {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 46px;
+    margin-inline-start: 8px;
+    padding: 0 18px 0 16px;
+    border-radius: var(--k-pill);
+    background: var(--k-green);
+    /* !important: Selldone's base reset [type=button] { color: inherit } has
+       the same weight and loads after this sheet. */
+    color: var(--bk-on-brand) !important;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 140ms ease;
+
+    &:hover {
+      background: var(--k-green-deep);
+    }
+
+    em {
+      display: grid;
+      place-items: center;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 6px;
+      border-radius: var(--k-pill);
+      background: var(--k-card);
+      color: var(--k-green-t);
+      font-style: normal;
+      font-size: 12.5px;
+      font-weight: 700;
+    }
+  }
+
+  /* The signed-in account menu (Selldone's), as a quiet pill. */
+  .v-btn--variant-outlined {
+    height: 44px !important;
+    margin: 0 0 0 4px !important;
+    border-color: var(--k-line) !important;
+    color: var(--k-ink) !important;
+  }
+
+  @media (max-width: 960px) {
+    &__row {
+      gap: 8px;
+      height: 62px;
+    }
+
+    &__brand {
+      font-size: 27px;
+      margin-inline-end: auto;
+    }
+
+    &__basket {
+      height: 44px;
+      padding: 0 14px;
+    }
+  }
+}
+
+/* The aisle strip under the bar: deals first, then every aisle. */
+.k-strip {
+  background: var(--k-paper);
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: $k-header-strip;
+    overflow-x: auto;
+    mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent);
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 auto;
+    height: 100%;
+    padding: 0 12px;
+    color: var(--k-ink-2) !important;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    text-decoration: none;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset-inline: 12px;
+      bottom: 0;
+      height: 3px;
+      border-radius: 3px 3px 0 0;
+      background: var(--k-green);
+      transform: scaleX(0);
+      transition: transform 160ms ease;
+    }
+
+    &:hover,
+    &.-on {
+      color: var(--k-green-t) !important;
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+
+    &.-on {
+      font-weight: 600;
+    }
+
+    &.-deals {
+      color: var(--k-coral-t) !important;
+      font-weight: 600;
+
+      &::after {
+        background: var(--k-coral);
+      }
+    }
+  }
+}
+
+/* In a right-to-left language the strip is cut on the other side. */
+.v-locale--is-rtl .k-strip__row {
+  mask-image: linear-gradient(to left, #000 calc(100% - 48px), transparent);
+}
+
+/* The row inside its frame: the frame holds the width and the arrows, the
+   row scrolls; the fade shows only on a side with more to see. */
+.k-strip__frame {
+  position: relative;
+
+  > .k-strip__row {
+    mask-image: none;
+  }
+
+  &.-more > .k-strip__row {
+    mask-image: linear-gradient(to right, #000 calc(100% - 72px), transparent);
+  }
+
+  &.-back > .k-strip__row {
+    mask-image: linear-gradient(to left, #000 calc(100% - 72px), transparent);
+  }
+
+  &.-more.-back > .k-strip__row {
+    mask-image: linear-gradient(to right, transparent, #000 72px, #000 calc(100% - 72px), transparent);
+  }
+}
+
+.k-strip__nudge {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--k-line);
+  border-radius: 50%;
+  background: var(--k-card);
+  box-shadow: var(--k-shadow);
+  transform: translateY(-50%);
+
+  &.-on {
+    inset-inline-end: calc(var(--k-gutter) - 4px);
+  }
+
+  &.-back {
+    inset-inline-start: calc(var(--k-gutter) - 4px);
+  }
+
+  .v-icon {
+    color: var(--k-ink) !important;
+  }
+
+  &:hover {
+    border-color: var(--k-green-t);
+  }
+}
+
+/* The Aisles menu. */
+.k-mega {
+  width: min(760px, 92vw);
+  padding: 20px 22px 16px;
+  border: 1px solid var(--k-line);
+  border-radius: var(--k-radius-lg);
+  background: var(--k-card);
+  box-shadow: 0 24px 50px -24px rgba(20, 20, 20, 0.35);
+  font-family: var(--k-body);
+  text-align: start;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--k-radius-sm);
+    color: var(--k-ink) !important;
+    font-size: 14.5px;
+    font-weight: 500;
+    text-decoration: none;
+
+    &:hover {
+      background: var(--k-wash);
+      color: var(--k-green-t) !important;
+    }
+  }
+
+  &__ring {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--k-tint);
+    overflow: hidden;
+
+    img {
+      width: 86%;
+      height: 86%;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+  }
+
+  &__foot {
+    display: flex;
+    gap: 18px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--k-line);
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Drawers (basket, phone menu) ▆▆▆▆▆▆▆▆ */
+
+.k-drawer {
+  background: var(--k-paper) !important;
+  font-family: var(--k-body);
+  text-align: start;
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px 14px 20px;
+    border-bottom: 1px solid var(--k-line);
+  }
+
+  &__title {
+    margin: 0;
+    font-family: var(--k-display);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--k-ink);
+  }
+
+  &__body {
+    padding: 8px 6px;
+  }
+
+  /* The empty basket: a mark, a line, the way back to the shelves. */
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 44px 24px 28px;
+    text-align: center;
+  }
+
+  &__empty-mark {
+    display: grid;
+    place-items: center;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: var(--k-green-soft);
+    color: var(--k-green-t);
+  }
+
+  &__empty-title {
+    margin: 18px 0 6px;
+    font-family: var(--k-display);
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--k-ink);
+  }
+
+  &__empty-text {
+    max-width: 300px;
+    margin: 0 0 22px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--k-muted);
+  }
+
+  &__empty-ctas {
+    display: grid;
+    gap: 10px;
+    width: min(100%, 320px);
+  }
+
+  &__empty-label {
+    margin: 34px 0 12px;
+  }
+
+  &__empty-aisles {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  &__account {
+    display: grid;
+    gap: 2px;
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--k-line);
+
+    .k-btn {
+      width: 100%;
+    }
+  }
+
+  &__label {
+    margin: 18px 20px 6px;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 6px 20px;
+    color: var(--k-ink) !important;
+    font-size: 15.5px;
+    font-weight: 500;
+    text-decoration: none;
+
+    &:hover {
+      background: var(--k-wash);
+    }
+
+    .v-icon {
+      color: var(--k-green-t);
+    }
+
+    &.-deals {
+      color: var(--k-coral-t) !important;
+      font-weight: 600;
+
+      .v-icon {
+        color: var(--k-coral-t);
+      }
+    }
+  }
+
+  &__ring {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--k-tint);
+    overflow: hidden;
+
+    img {
+      width: 84%;
+      height: 84%;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+  }
+
+  &__pickers {
+    display: grid;
+    gap: 10px;
+    padding: 18px 20px 28px;
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Basket drawer (KalioBasketDrawer, design C) ▆▆▆▆▆▆▆▆ */
+
+.k-drawer.-basket {
+  .k-drawer__head {
+    padding: 18px 14px 12px 24px;
+    border-bottom: 0;
+  }
+
+  .k-drawer__title {
+    font-size: 26px;
+    letter-spacing: -0.02em;
+
+    small {
+      margin-inline-start: 8px;
+      font-family: var(--k-body);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0;
+      color: var(--k-muted);
+    }
+  }
+}
+
+.k-bdrawer {
+  padding: 0 24px 28px;
+  color: var(--k-ink);
+
+  &__group + &__group {
+    margin-top: 22px;
+  }
+
+  /* The receipt: subtotal, savings and the way to pay, before the rows. */
+  &__receipt {
+    margin: 2px 0 6px;
+    padding: 18px 18px 16px;
+    border-radius: 22px;
+    background: var(--k-well);
+  }
+
+  &__sum {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  &__total {
+    margin: 0;
+    font-family: var(--k-display);
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1;
+
+    small {
+      display: block;
+      margin-bottom: 8px;
+      font-family: var(--k-body);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      line-height: 1.3;
+      text-transform: uppercase;
+      color: var(--k-muted);
+    }
+
+    .u--price {
+      transition: opacity 0.2s;
+
+      .small {
+        font-size: inherit;
+      }
+    }
+  }
+
+  &__receipt.-settling &__total .u--price {
+    opacity: 0.5;
+  }
+
+  &__save {
+    flex: none;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    padding: 6px 11px;
+    border-radius: var(--k-pill);
+    background: var(--k-coral-soft);
+    color: var(--k-coral-t);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+
+    .u--price .small {
+      font-size: inherit;
+    }
+  }
+
+  &__go {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 56px;
+    margin-top: 14px;
+    border-radius: var(--k-pill);
+    background: var(--k-green-deep);
+    color: var(--bk-on-brand) !important;
+    font-size: 16.5px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.15s;
+
+    &:hover {
+      background: var(--k-green);
+    }
+
+    .v-icon {
+      color: var(--bk-on-brand);
+    }
+  }
+
+  /* Rows: compact, a dashed rule between them like a till slip. */
+  &__rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--k-line);
+  }
+
+  &__pic {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--k-well);
+
+    img {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+  }
+
+  &__name {
+    min-width: 0;
+    color: var(--k-ink) !important;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.3;
+    text-decoration: none;
+
+    span,
+    small {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    small {
+      font-size: 12.5px;
+      color: var(--k-muted);
+    }
+
+    &:hover span {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+  }
+
+  &__qty {
+    display: inline-grid;
+    grid-template-columns: 28px 22px 28px;
+    align-items: center;
+    height: 30px;
+    border: 1px solid var(--k-line);
+    border-radius: var(--k-pill);
+    background: var(--k-card);
+    text-align: center;
+
+    button {
+      display: grid;
+      place-items: center;
+      height: 28px;
+      border-radius: var(--k-pill);
+      color: var(--k-green-deep-t) !important;
+
+      &:hover:not(:disabled) {
+        background: var(--k-wash);
+      }
+
+      &:disabled {
+        opacity: 0.35;
+      }
+    }
+
+    output {
+      font-size: 13px;
+      font-weight: 700;
+      transition: opacity 0.2s;
+    }
+
+    &.-busy output {
+      opacity: 0.6;
+    }
+  }
+
+  &__price {
+    min-width: 54px;
+    text-align: end;
+    font-size: 14.5px;
+    font-weight: 700;
+  }
+}
+
+.k-bdrawer__often {
+  margin-top: 20px;
+}
+
+@media (max-width: 599px) {
+  .k-drawer.-basket .k-drawer__head {
+    padding: 14px 8px 10px 16px;
+  }
+
+  .k-bdrawer {
+    padding: 0 16px 24px;
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Footer ▆▆▆▆▆▆▆▆ */
+
+.k-footer {
+  margin-top: 0;
+  font-family: var(--k-body);
+  text-align: start;
+
+  /* The band before the footer: the shop in three counts and the way back
+     to the aisles, on the stone ground. */
+  &__band {
+    padding: 44px 0;
+    border-top: 1px solid var(--k-line-soft);
+    background: var(--k-well);
+  }
+
+  &__band-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.6fr) auto;
+    align-items: center;
+    gap: 24px 48px;
+  }
+
+  &__band-copy .k-eyebrow {
+    margin: 0 0 6px;
+  }
+
+  &__band-title {
+    margin: 0;
+    max-width: 380px;
+    font-family: var(--k-display);
+    font-size: clamp(28px, 2.8vw, 36px);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--k-ink);
+  }
+
+  &__facts {
+    display: flex;
+    gap: 16px 40px;
+    margin: 0;
+
+    > div {
+      min-width: 0;
+      padding-inline-start: 18px;
+      border-inline-start: 1px solid var(--k-line-strong);
+    }
+
+    dt {
+      font-family: var(--k-display);
+      font-size: 36px;
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--k-green-deep-t);
+      font-variant-numeric: lining-nums;
+    }
+
+    dd {
+      margin: 6px 0 0;
+      font-size: 14px;
+      line-height: 1.35;
+      color: var(--k-muted);
+    }
+  }
+
+  @media (max-width: 1100px) {
+    &__band-row {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    &__facts {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+  }
+
+  @media (max-width: 600px) {
+    &__band {
+      padding: 32px 0;
+    }
+
+    &__band-row {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    &__facts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-row: auto;
+      gap: 12px;
+
+      > div {
+        padding-inline-start: 12px;
+      }
+
+      dt {
+        font-size: 28px;
+      }
+
+      dd {
+        font-size: 13px;
+      }
+    }
+
+    .k-btn {
+      justify-self: start;
+    }
+  }
+
+  &__main {
+    padding: 56px 0 26px;
+    background: var(--k-green-deep);
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) repeat(4, minmax(0, 1fr));
+    gap: 32px;
+  }
+
+  &__mark {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 5px;
+    font-family: var(--k-display);
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: lowercase;
+    color: #fffaf0 !important;
+    text-decoration: none;
+
+    i {
+      width: 12px;
+      height: 12px;
+      margin-top: 1px;
+      border-radius: 12px 0 12px 0;
+      background: #ffd91a;
+    }
+  }
+
+  &__lede {
+    max-width: 290px;
+    margin: 14px 0 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  &__social {
+    margin-top: 16px;
+
+    .v-btn {
+      color: #fff !important;
+    }
+  }
+
+  &__pickers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+    max-width: 260px;
+    --v-theme-on-surface: 255, 255, 255;
+
+    .v-field__outline {
+      color: rgba(255, 255, 255, 0.3) !important;
+    }
+  }
+
+  &__head {
+    margin: 4px 0 14px;
+    font-family: var(--k-body) !important;
+    letter-spacing: 0.12em !important;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #c2dcf5;
+  }
+
+  &__col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+
+    a,
+    .k-footer__textbtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 0;
+      background: none;
+      color: rgba(255, 255, 255, 0.84) !important;
+      font-size: 15px;
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover {
+        color: #fff !important;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+    }
+
+    .-more {
+      color: #c2dcf5 !important;
+      font-weight: 600;
+    }
+  }
+
+  &__seller img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #fff;
+  }
+
+  &__base {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 24px;
+    margin-top: 44px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    font-size: 13.5px;
+    color: rgba(255, 255, 255, 0.6);
+
+    a {
+      color: rgba(255, 255, 255, 0.72) !important;
+      text-decoration: none;
+
+      &:hover {
+        color: #fff !important;
+      }
+    }
+
+    /* Selldone's cookie-settings and powered-by buttons, in the footer's
+       light-on-green. */
+    .v-btn {
+      color: rgba(255, 255, 255, 0.72) !important;
+      text-transform: none !important;
+      letter-spacing: 0 !important;
+      font-size: 13.5px !important;
+    }
+
+    .s--footer-svg .fil1 {
+      fill: rgba(255, 255, 255, 0.72) !important;
+    }
+  }
+
+  &__base-links {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 18px;
+  }
+
+  @media (max-width: 1000px) {
+    &__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    &__brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 760px) {
+    &__band {
+      padding: 30px 0;
+    }
+
+    &__band-aisle {
+      width: 54px;
+      height: 54px;
+    }
+
+    &__main {
+      padding-bottom: calc(24px + env(safe-area-inset-bottom));
+    }
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Catalogue toolbar ▆▆▆▆▆▆▆▆
+
+   View mode, sort and the filter button as one row of quiet pills. */
+
+.s--storefront-products-listing {
+  .s--sort-view {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0 !important;
+    overflow: visible !important;
+
+    > .v-spacer,
+    > div[style*="min-width: 100px"] {
+      display: none;
+    }
+
+    > div:has(> .v-btn-group) {
+      flex: 0 1 auto;
+      min-width: 0;
+    }
+
+    .v-btn {
+      font-family: var(--k-body) !important;
+      text-transform: none !important;
+      letter-spacing: 0 !important;
+      box-shadow: none !important;
+    }
+
+    /* View mode ("All", "Normal"): icon and word side by side. */
+    .v-btn--stacked {
+      flex: none;
+      height: 40px !important;
+      min-width: 0 !important;
+      padding: 0 14px !important;
+      border: 1px solid var(--k-line) !important;
+      border-radius: var(--k-pill) !important;
+      color: var(--k-ink-2) !important;
+      background: var(--k-card) !important;
+
+      .v-btn__content {
+        flex-direction: row !important;
+        gap: 6px;
+      }
+
+      .v-icon {
+        margin: 0 !important;
+        font-size: 18px !important;
+      }
+
+      .small {
+        font-size: 14px !important;
+        font-weight: 600;
+      }
+
+      &.v-btn--active {
+        border-color: var(--k-green-t) !important;
+        background: var(--k-green-soft) !important;
+        color: var(--k-green-t) !important;
+      }
+    }
+
+    /* One row: the sort pills scroll sideways before the row would wrap. */
+    .v-btn-group {
+      flex: 0 1 auto;
+      min-width: 0 !important;
+      max-width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+      height: 40px !important;
+      padding: 3px !important;
+      border: 0 !important;
+      border-radius: var(--k-pill) !important;
+      background: var(--k-wash) !important;
+
+      .v-btn {
+        flex: none;
+        height: 34px !important;
+        padding: 0 12px !important;
+        border-radius: var(--k-pill) !important;
+        background: transparent !important;
+        color: var(--k-ink-2) !important;
+        font-weight: 600 !important;
+        font-size: 14px !important;
+      }
+
+      .v-btn--active,
+      .v-btn.bg-primary {
+        background: var(--k-green-deep) !important;
+        color: var(--bk-on-brand) !important;
+      }
+    }
+
+    /* Filter: a pill at the end of the row, not a bordered block. */
+    .v-btn.border-start {
+      flex: none;
+      position: static !important;
+      margin-inline-start: auto !important;
+      height: 40px !important;
+      padding: 0 16px !important;
+      border: 1px solid var(--k-line) !important;
+      border-radius: var(--k-pill) !important;
+      background: var(--k-card) !important;
+      color: var(--k-ink) !important;
+      font-weight: 600 !important;
+    }
+
+    /* The sort menu that stands in for the sort pills below 900px. */
+    .show-on-small-900 {
+      height: 40px !important;
+      padding: 0 12px !important;
+      border-radius: var(--k-pill) !important;
+      color: var(--k-ink) !important;
+      font-weight: 600 !important;
+    }
+  }
+
+  /* A phone has 320px for the row, and "All", the view mode, the sort menu
+     and Filter needed 400: Filter was pushed off the screen. "All" and the
+     view mode keep their icons and give up their words (still read aloud),
+     and the sort menu shrinks before Filter does. */
+  @media (max-width: 599px) {
+    .s--sort-view {
+      gap: 6px;
+
+      .v-btn--stacked {
+        width: 40px;
+        padding: 0 !important;
+
+        .small {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+        }
+      }
+
+      > .v-btn.show-on-small-900,
+      > div > .v-btn.show-on-small-900 {
+        flex: 0 1 auto;
+        min-width: 0 !important;
+
+        .v-btn__content {
+          min-width: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
+      .v-btn.border-start {
+        padding: 0 14px !important;
+      }
+    }
+  }
+}
+
+/* Design A's toolbar: Filter on the start side; on the end side the sort
+   as one menu ("Newest ▾") instead of a row of six pills (which also ran
+   under Filter beside the open panel), then availability and the view mode
+   as two icon buttons, their words still read aloud. */
+.s--storefront-products-listing .s--sort-view {
+  > div:has(> .v-btn-group),
+  .hide-on-small-900 {
+    display: none !important;
+  }
+
+  .v-btn.border-start {
+    order: 0;
+    margin-inline-start: 0 !important;
+  }
+
+  > .v-btn.show-on-small-900,
+  > div > .v-btn.show-on-small-900,
+  .show-on-small-900 {
+    display: inline-flex !important;
+    order: 2;
+    margin-inline-start: auto !important;
+    height: 40px !important;
+    padding: 0 16px !important;
+    border: 1px solid var(--k-line) !important;
+    border-radius: var(--k-pill) !important;
+    background: var(--k-card) !important;
+    color: var(--k-ink) !important;
+    font-weight: 600 !important;
+  }
+
+  .v-btn--stacked {
+    order: 3;
+    width: 40px;
+    padding: 0 !important;
+
+    /* The glyph is drawn from its box's corner: an 18px glyph in Vuetify's
+       24px box sat 6px off the circle's centre. Box and glyph match. */
+    .v-icon {
+      width: 20px !important;
+      height: 20px !important;
+      font-size: 20px !important;
+      margin: 0 !important;
+    }
+
+    .small {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+    }
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Filter panel ▆▆▆▆▆▆▆▆
+
+   Selldone draws the panel in its dark theme as a full-height drawer pinned
+   to the window's edge. Kalio's is design A's quiet sidebar inside the
+   catalogue column, as tall as its filters: no ground of its own, groups
+   divided by hairlines under small-caps headings, "only originals" and
+   "only discounted" as checkboxes, an ink price range, and brands and sizes
+   as pills that fill ink when chosen. Vuetify's dark-theme variables are
+   re-pointed to light ones, so every nested control reads ink on white. On
+   a phone it is a white sheet over the page. */
+
+$k-filter-w: 244px;
+$k-filter-gap: 36px;
+
+.s--storefront-products-filter-menu,
+.s--storefront-products-listing .v-navigation-drawer {
+  --v-theme-surface: 255, 255, 255;
+  --v-theme-on-surface: 16, 35, 27;
+  --v-theme-background: 255, 255, 255;
+  --v-theme-on-background: 16, 35, 27;
+  --v-border-color: 232, 228, 218;
+
+  background: var(--k-paper) !important;
+  color: var(--k-ink) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-family: var(--k-body);
+  text-align: start;
+
+  .v-navigation-drawer__content {
+    padding: 0;
+    scrollbar-width: thin;
+  }
+
+  .v-navigation-drawer__content > div,
+  .text-start {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Selldone separates groups with its own rules; Kalio's are hairlines on
+     the groups themselves. */
+  .v-divider,
+  .-divider {
+    display: none !important;
+  }
+
+  /* ── The panel's own head: "Filters" and its close button. The aisle's
+     name and picture are already in the shelf head above. ── */
+  .text-start > .v-list-item:first-child {
+    min-height: 0 !important;
+    padding: 4px 0 10px !important;
+    border-bottom: 1px solid var(--k-line-soft);
+    background: transparent !important;
+
+    .v-list-item__overlay,
+    .v-list-item__prepend,
+    .v-list-item-title,
+    .v-list-item-subtitle {
+      display: none !important;
+    }
+
+    .v-list-item__content::before {
+      content: "Filters";
+      display: block;
+      font-family: var(--k-body);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--k-ink);
+    }
+
+    .v-btn {
+      width: 32px !important;
+      height: 32px !important;
+      border-radius: 50% !important;
+      background: transparent !important;
+      color: var(--k-muted) !important;
+      opacity: 1 !important;
+
+      .v-icon {
+        font-size: 20px !important;
+      }
+    }
+  }
+
+  /* ── Category tree (the catalogue and seller pages list aisles here) ── */
+  .v-treeview {
+    padding: 8px 0 !important;
+    border-radius: 0;
+    border-bottom: 1px solid var(--k-line-soft);
+    background: transparent !important;
+
+    .v-list-item {
+      min-height: 36px !important;
+      padding: 2px 6px !important;
+      border-radius: 10px !important;
+
+      .v-list-item__overlay {
+        display: none;
+      }
+
+      &:hover {
+        background: var(--k-wash) !important;
+      }
+    }
+
+    .v-list-item-title,
+    .v-list-item-title > div {
+      font-family: var(--k-body) !important;
+      font-size: 14.5px !important;
+      font-weight: 500 !important;
+      color: var(--k-ink) !important;
+    }
+
+    /* Aisles under "Home": a small step in, not Vuetify's two. */
+    .v-list-group .v-list-group__items .v-list-item {
+      padding-inline-start: 18px !important;
+
+      .v-list-item__prepend {
+        display: none;
+      }
+    }
+
+    .font-weight-bold {
+      font-weight: 700 !important;
+      color: var(--k-ink) !important;
+    }
+
+    .v-avatar {
+      width: 28px !important;
+      height: 28px !important;
+      background: var(--k-wash) !important;
+    }
+  }
+
+  /* ── Only originals / only discounted: a checkbox row ── */
+  .s--smart-toggle {
+    > div {
+      padding: 7px 0 !important;
+      border-radius: 0 !important;
+      background: transparent;
+    }
+
+    &:first-of-type > div {
+      padding-top: 14px !important;
+    }
+
+    .mnh {
+      min-height: 0 !important;
+    }
+
+    b {
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--k-ink-2);
+    }
+
+    .mnh > .v-icon {
+      display: none !important;
+    }
+
+    /* Selldone's radio dot becomes a checkbox at the start of the row. */
+    .mnh > .flex-grow-0 {
+      order: -1;
+      min-width: 0 !important;
+      min-height: 0 !important;
+      margin: 0 10px 0 0 !important;
+
+      > div {
+        width: 18px;
+        height: 18px;
+        padding: 0 !important;
+        border-radius: 5px;
+        border: 1.5px solid #c9c4b8;
+        background: #fff !important;
+        transition: background-color 140ms ease, border-color 140ms ease;
+      }
+    }
+
+    &:hover .mnh > .flex-grow-0 > div {
+      border-color: var(--k-ink-2);
+    }
+
+    .s--smart-toggle__indicator {
+      display: none !important;
+    }
+
+    &.s--smart-toggle--checked .mnh > .flex-grow-0 > div {
+      border-color: var(--k-ink);
+      background: var(--k-ink) !important;
+      box-shadow: inset 0 0 0 3px #fff;
+    }
+  }
+
+  /* ── Groups: price range, brands, sizes, specs ── */
+  div:has(> .s-filter-header) {
+    padding: 8px 0 16px;
+    border-top: 1px solid var(--k-line-soft);
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .s-filter-header {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 8px 0 2px !important;
+    font-family: var(--k-body) !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--k-muted) !important;
+
+    /* Selldone's decorative icon before the title; the reset button stays. */
+    > .v-icon {
+      display: none;
+    }
+
+    span {
+      margin: 0 !important;
+    }
+
+    .v-btn {
+      width: 28px !important;
+      height: 28px !important;
+      margin-inline-start: auto;
+      color: var(--k-muted) !important;
+    }
+  }
+
+  /* Price range. */
+  /* The handles reach 10px past each end of the track, and the panel clips
+     what crosses its edge: the track keeps clear of it. */
+  .v-slider {
+    margin: 12px 14px 0 !important;
+  }
+
+  .v-slider-track__background {
+    background: var(--k-line-strong) !important;
+    opacity: 1 !important;
+  }
+
+  .v-slider-track__fill {
+    background: var(--k-ink) !important;
+  }
+
+  .v-slider-thumb {
+    color: var(--k-ink) !important;
+  }
+
+  .v-slider-thumb__surface {
+    background: #fff !important;
+    border: 2px solid var(--k-ink);
+    box-shadow: 0 4px 10px -4px rgba(20, 20, 20, 0.45) !important;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  .v-slider-thumb__label {
+    background: var(--k-green-deep) !important;
+    color: var(--bk-on-brand) !important;
+    font-size: 12px;
+
+    &::before {
+      color: var(--k-green-deep-t) !important;
+    }
+  }
+
+  .v-row:has(> .v-col > .u--price) {
+    position: relative;
+    margin: 10px 0 0 !important;
+    gap: 22px;
+    flex-wrap: nowrap;
+
+    > .v-col {
+      flex: 1 1 0 !important;
+      max-width: none !important;
+      padding: 0 !important;
+    }
+
+    /* "from — to" */
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 10px;
+      height: 2px;
+      margin-left: -5px;
+      border-radius: 1px;
+      background: var(--k-line-strong);
+    }
+
+    .u--price {
+      display: block;
+      padding: 8px 10px;
+      border: 1px solid var(--k-line);
+      border-radius: 12px;
+      background: var(--k-paper);
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+      color: var(--k-ink);
+    }
+  }
+
+  /* Brands, sizes and other option filters: pills. */
+  .v-chip-group {
+    padding: 2px 0 0 !important;
+  }
+
+  .v-chip {
+    height: 34px !important;
+    margin: 0 6px 8px 0 !important;
+    padding: 0 14px !important;
+    border: 1px solid var(--k-line) !important;
+    border-radius: var(--k-pill) !important;
+    background: var(--k-paper) !important;
+    color: var(--k-ink) !important;
+    font-size: 13.5px !important;
+    font-weight: 500;
+
+    .v-chip__underlay,
+    .v-chip__overlay {
+      display: none;
+    }
+
+    &:hover {
+      border-color: var(--k-ink-2) !important;
+    }
+  }
+
+  .v-chip--selected {
+    border-color: var(--k-ink) !important;
+    background: var(--k-ink) !important;
+    color: #fff !important;
+
+    .v-chip__filter {
+      color: #fff !important;
+    }
+  }
+}
+
+/* Desktop: the panel sits in the catalogue column, beside the grid, and is
+   only as tall as its filters. */
+@media (min-width: 960px) {
+  .s--storefront-products-listing {
+    position: relative;
+
+    .s--storefront-products-filter-menu {
+      top: 6px !important;
+      bottom: auto !important;
+      left: 24px !important;
+      width: $k-filter-w !important;
+      margin: 0 !important;
+      height: auto !important;
+      max-height: none !important;
+      transition-property: transform, opacity, visibility !important;
+
+      /* A closed drawer slides only part-way left; out of the column it would
+         still show in the page margin. */
+      &:not(.v-navigation-drawer--active) {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .text-start > div[style*="min-height"] {
+        display: none;
+      }
+    }
+
+    .v-container.products-container.container-expanded-side-menu {
+      padding-left: $k-filter-w + $k-filter-gap !important;
+    }
+
+    .add-marginal-side-menu-open {
+      margin-left: $k-filter-w + $k-filter-gap !important;
+    }
+
+    &.rtl {
+      .s--storefront-products-filter-menu {
+        left: auto !important;
+        right: 24px !important;
+      }
+
+      .v-container.products-container.container-expanded-side-menu {
+        padding-left: 4px !important;
+        padding-right: $k-filter-w + $k-filter-gap !important;
+      }
+
+      .add-marginal-side-menu-open {
+        margin-left: 0 !important;
+        margin-right: $k-filter-w + $k-filter-gap !important;
+      }
+    }
+  }
+}
+
+/* Phone and tablet: a sheet over the page, whatever the scroll. */
+@media (max-width: 959.98px) {
+  .s--storefront-products-listing {
+    .s--storefront-products-filter-menu {
+      position: fixed !important;
+      top: 0 !important;
+      margin: 0 !important;
+      height: 100% !important;
+      max-width: 88vw;
+      border-radius: 0 28px 28px 0 !important;
+      z-index: 2400 !important;
+
+      &:not(.v-navigation-drawer--active) {
+        visibility: hidden;
+      }
+    }
+
+    .v-navigation-drawer__scrim {
+      position: fixed !important;
+      z-index: 2399 !important;
+      background: rgba(14, 30, 23, 0.45) !important;
+      opacity: 1 !important;
+    }
+
+    /* The sheet covers the header and the bottom bar; its content keeps a
+       margin from the sheet's edges (the panel's own rule, three classes
+       deep, sets none on desktop). */
+    .s--storefront-products-filter-menu .v-navigation-drawer__content {
+      padding: 18px 20px 24px;
+    }
+
+    /* Sixteen aisles pushed price and brand to the bottom of the sheet; the
+       aisle list scrolls in its own box of about six rows instead. */
+    .v-treeview {
+      max-height: 264px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+    }
+
+    /* The listing does not slide aside under the sheet. */
+    .add-marginal-side-menu-open,
+    .products-container.container-expanded-side-menu {
+      transform: none !important;
+    }
+  }
+}
+
+/* The page card (z-index 0) would keep the sheet under the sticky header;
+   it steps aside while the sheet is open. */
+@media (max-width: 959.98px) {
+  .s--shop-card:has(.s--storefront-products-filter-menu.v-navigation-drawer--active) {
+    z-index: auto !important;
+  }
+
+}
+
+/* ▆▆▆▆▆▆▆▆ Sign in ▆▆▆▆▆▆▆▆
+
+   KalioSignIn: the shop's wordmark on deep green beside the ways in. The
+   ways in are Selldone's SShopLogin, re-dressed: its greeting and the shop's
+   round icon give way to Kalio's heading, and its four buttons in four
+   colours become one stack of white pills, each with its own mark. On a
+   phone the card rises from the bottom and the green half is a header. */
+
+.k-signin-overlay > .v-overlay__scrim {
+  background: #1a1a1a;
+  opacity: 0.58;
+}
+
+.k-signin {
+  border-radius: 30px !important;
+  overflow: hidden;
+  box-shadow: 0 40px 90px -30px rgba(8, 26, 18, 0.55) !important;
+}
+
+.k-signin__card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  min-height: 540px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  background: var(--k-card);
+  font-family: var(--k-body);
+  text-align: start;
+  color: var(--k-ink);
+}
+
+.k-signin__brand {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 36px 34px;
+  color: #fff;
+  background:
+    radial-gradient(360px 260px at 0% 110%, rgba(59, 170, 92, 0.32), transparent 70%),
+    radial-gradient(300px 220px at 110% -10%, rgba(255, 255, 255, 0.08), transparent 70%),
+    var(--k-green-deep-t);
+}
+
+.k-signin__mark {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 5px;
+  margin: 0;
+  font-family: var(--k-display);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  color: #fffaf0;
+
+  i {
+    width: 11px;
+    height: 11px;
+    margin-top: 1px;
+    border-radius: 11px 0 11px 0;
+    background: #ffd91a;
+  }
+}
+
+.k-signin__pitch {
+  margin: 34px 0 24px;
+  font-family: var(--k-display);
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.k-signin__perks {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    line-height: 1.35;
+    color: rgba(255, 255, 255, 0.84);
+  }
+
+  .v-icon {
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #cfe4ff;
+  }
+}
+
+/* A few aisles, overlapping, as a sign of what is on the shelves. */
+.k-signin__rings {
+  display: flex;
+  margin-top: auto;
+  padding-top: 30px;
+
+  span {
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 3px solid var(--k-green-deep-t);
+    background: var(--k-tint, #fff);
+    overflow: hidden;
+
+    & + span {
+      margin-inline-start: -14px;
+    }
+  }
+
+  img {
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+}
+
+.k-signin__main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 52px 34px;
+}
+
+.k-signin__close {
+  position: absolute;
+  top: 16px;
+  inset-inline-end: 16px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  color: var(--k-ink) !important;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 140ms ease;
+
+  &:hover {
+    background: var(--k-wash);
+  }
+}
+
+.k-signin__title {
+  margin: 10px 0 8px;
+  font-family: var(--k-display);
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--k-ink);
+}
+
+.k-signin__lede {
+  margin: 0 0 26px;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--k-muted);
+}
+
+/* ―― SShopLogin, inside ―― */
+.k-signin__methods.v-card {
+  background: transparent !important;
+  color: inherit !important;
+  overflow: visible;
+
+  /* Its breadcrumb ("Login › Mobile") only shows past the first step. */
+  > .v-card-title {
+    padding: 0 0 8px !important;
+    margin: 0 !important;
+
+    .v-btn {
+      color: var(--k-green-t) !important;
+      text-transform: none !important;
+      letter-spacing: 0 !important;
+    }
+  }
+
+  .log-form {
+    display: block !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* The shop's round icon, "Hi," and "Please login": the heading above
+     says it. */
+  .-msg {
+    display: none !important;
+  }
+
+  .max-width-field {
+    max-width: none !important;
+  }
+
+  .s--button-flex.v-btn {
+    position: relative;
+    height: 54px !important;
+    margin: 0 0 10px !important;
+    padding: 0 56px !important;
+    border: 1px solid var(--k-line-strong) !important;
+    border-radius: var(--k-pill) !important;
+    background: var(--k-card) !important;
+    color: var(--k-ink) !important;
+    box-shadow: none !important;
+    font-family: var(--k-body) !important;
+    font-size: 15.5px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    transition: border-color 140ms ease, background-color 140ms ease;
+
+    &:hover {
+      border-color: var(--k-green-t) !important;
+      background: #fbfaf5 !important;
+    }
+
+    .v-btn__overlay {
+      display: none;
+    }
+
+    .v-btn__content {
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* Each method's mark, at the start of its pill. */
+    .v-btn__prepend {
+      position: absolute;
+      inset-inline-start: 16px;
+      margin: 0 !important;
+
+      .v-avatar {
+        width: 28px !important;
+        height: 28px !important;
+        margin: 0 !important;
+        background: transparent !important;
+      }
+
+      img {
+        width: 24px;
+        height: 24px;
+        padding: 0 !important;
+        object-fit: contain;
+      }
+
+      .v-icon {
+        color: var(--k-green-t) !important;
+      }
+    }
+
+    small {
+      color: var(--k-muted);
+      font-weight: 500;
+    }
+  }
+
+  /* The other steps (phone, code, account picker), in Kalio's colours. */
+  .widget-buttons .v-btn {
+    border-radius: var(--k-pill) !important;
+    background: var(--k-green-deep) !important;
+    color: var(--bk-on-brand) !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+  }
+}
+
+.k-signin__legal {
+  margin: 14px 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--k-muted);
+
+  a {
+    color: var(--k-green-t) !important;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+}
+
+.k-signin__busy {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(13, 34, 25, 0.35);
+  backdrop-filter: blur(4px);
+}
+
+@media (max-width: 759px) {
+  .k-signin__card {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .k-signin__brand {
+    padding: 24px 22px 22px;
+  }
+
+  .k-signin__mark {
+    font-size: 26px;
+  }
+
+  .k-signin__pitch {
+    margin: 12px 0 0;
+    font-size: 22px;
+  }
+
+  .k-signin__perks,
+  .k-signin__rings {
+    display: none;
+  }
+
+  /* The close button sits on the green header. */
+  .k-signin__main {
+    position: static;
+    padding: 24px 20px calc(18px + env(safe-area-inset-bottom));
+  }
+
+  .k-signin__close {
+    top: 14px;
+    color: #fff !important; /* Selldone's [type=button] reset loads after */
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+  }
+
+  .k-signin__title {
+    font-size: 26px;
+  }
+
+  .k-signin__lede {
+    margin-bottom: 18px;
+  }
+}
+
+/* A phone: the card rises from the bottom edge. */
+@media (max-width: 599px) {
+  .k-signin-overlay.v-overlay {
+    align-items: flex-end;
+  }
+
+  .k-signin-overlay > .v-overlay__content.k-signin {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    max-height: 94vh !important;
+    border-radius: 28px 28px 0 0 !important;
+  }
+
+  .k-signin__card {
+    max-height: 94vh;
+  }
+}
+
+/* Selldone's email step (ShopEmailLogin) opens a sheet of its own over the
+   sign-in card: Kalio's type, a rounded field and a deep green pill. It is
+   found by its body text, the one thing that sheet always has. */
+.v-bottom-sheet > .v-overlay__content.rounded-t-xl:has(.typo-body) {
+  border-radius: 28px 28px 0 0 !important;
+  overflow: hidden;
+
+  > .v-card {
+    padding: 24px 26px 18px;
+    background: var(--k-card) !important;
+    color: var(--k-ink) !important;
+    font-family: var(--k-body);
+  }
+
+  .v-card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 0 8px !important;
+    font-family: var(--k-display);
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+
+    .v-icon {
+      color: var(--k-green-t);
+    }
+  }
+
+  .v-card-text {
+    padding: 0 !important;
+  }
+
+  .typo-body {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--k-muted);
+  }
+
+  .v-field {
+    border-radius: 16px !important;
+    font-size: 17px;
+  }
+
+  .v-field__outline {
+    color: var(--k-line-strong) !important;
+  }
+
+  .v-field--focused .v-field__outline {
+    color: var(--k-green-t) !important;
+  }
+
+  .text-h4 {
+    font-family: var(--k-body) !important;
+    font-size: 22px !important;
+    font-weight: 600 !important;
+    color: var(--k-ink);
+  }
+
+  .v-card-actions {
+    padding: 10px 0 0 !important;
+  }
+
+  .widget-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    width: 100%;
+
+    .v-btn {
+      height: 52px !important;
+      border-radius: var(--k-pill) !important;
+      box-shadow: none !important;
+      font-family: var(--k-body) !important;
+      font-size: 15.5px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0 !important;
+      text-transform: none !important;
+    }
+
+    .v-btn--variant-elevated {
+      padding: 0 28px !important;
+      background: var(--k-green-deep) !important;
+      color: var(--bk-on-brand) !important;
+    }
+
+    .v-btn--variant-text {
+      color: var(--k-ink-2) !important;
+    }
+
+    .v-btn.disabled {
+      opacity: 0.45;
+    }
+  }
+}
+
+/* The "newer version" notice (SPwaVersionCheck, 5 November 2026): a
+   deep-green card with a white Refresh pill. */
+.v-snackbar__wrapper.k-update,
+.k-update.v-snackbar__wrapper {
+  min-width: 0 !important;
+  max-width: min(520px, calc(100vw - 24px)) !important;
+  border-radius: var(--k-radius) !important;
+  background: var(--k-green-deep) !important;
+  box-shadow: 0 18px 40px -18px rgba(20, 20, 20, 0.6) !important;
+  color: var(--bk-on-brand) !important;
+  font-family: var(--k-body);
+
+  .v-snackbar__content {
+    padding: 14px 6px 14px 18px !important;
+    font-size: 15px;
+  }
+
+  .k-update__words {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    .v-icon {
+      color: #d6e9ff !important;
+    }
+  }
+
+  .k-update__go {
+    height: 40px !important;
+    margin-inline-end: 6px;
+    padding: 0 18px !important;
+    border-radius: var(--k-pill) !important;
+    background: var(--k-card) !important;
+    color: var(--k-green-deep-t) !important;
+    font-weight: 700;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+  }
+}
+
+@media (max-width: 960px) {
+  .v-snackbar:has(.k-update) {
+    padding-bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+  }
+}

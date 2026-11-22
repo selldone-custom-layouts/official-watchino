@@ -1,0 +1,28 @@
+{
+  "name": "Watchino Fine Watches",
+  "shop": "Watchino",
+  "kind": "Watches · single shop",
+  "summary": "Fine watches drawn like a dial: a chapter-ring index rail as scroll progress, minute-marker dividers, a photo hero, a hairline grid of collection cut-outs, price registers, a graphite spotlight, a filter column with a logarithmic price track and a sticky product page.",
+  "live": "https://watchino.myselldone.com",
+  "cover": "docs/screenshots/cover.jpg",
+  "screenshots": [
+    "docs/screenshots/desktop-home.jpg",
+    "docs/screenshots/desktop-category.jpg",
+    "docs/screenshots/desktop-product.jpg",
+    "docs/screenshots/desktop-cart.jpg",
+    "docs/screenshots/phone-home.jpg",
+    "docs/screenshots/phone-category.jpg",
+    "docs/screenshots/phone-product.jpg",
+    "docs/screenshots/phone-cart.jpg"
+  ],
+  "tags": [
+    "watches",
+    "luxury",
+    "single-vendor",
+    "light",
+    "rtl"
+  ],
+  "package": "watchino-fine-watches",
+  "base": "selldone/storefront",
+  "status": "draft"
+}

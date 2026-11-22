@@ -1,0 +1,28 @@
+*.env
+/dist
+node_modules
+/.idea
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+/Backend/bootstrap/cache/
+/dist.zip
+/modules/
+
+# Dev screenshots stay on disk (large PNGs; regenerate with scripts/dev-shots.cjs)
+/docs/dev-shots/
+
+# The generated dev config and the checks' inputs are part of the repo (scripts/skin-apply.mjs writes them)
+!.env
+!checks/checks.env

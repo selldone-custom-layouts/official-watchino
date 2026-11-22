@@ -1,0 +1,78 @@
+/* ▆▆▆▆▆▆▆▆▆▆▆▆▆▆ the Layout — the theme tokens ▆▆▆▆▆▆▆▆▆▆▆▆▆▆
+
+   Type, shape and the first paint's colours. Every name is the A "Classic" mockup's own
+   (design/src/look.css and src/tokens.js) with a --ly- prefix.
+
+   ONE SHAPE LANGUAGE: circle 50% · panel 8px · inner 4px (no pills, no scallops). Square only where
+   a box runs to the window edge.
+
+   ONE COLOUR FAMILY: every colour comes from the chosen palette's hue, plus white and the family's
+   near-black. The values below are the Tan (brand) family, light in :root and dark in html.ly-dark,
+   written by the same maths as components/ly/ly-family.ts, so the first paint is right.
+   After the app starts, ly-family.ts rewrites them inline on <html> for the palette and mode the
+   visitor (or the merchant, ly-theme.settings.ts) picked; the theme switcher writes the action
+   colour itself (--ly-act, -deep, -on, -text) and Vuetify's primary.
+
+   The generated stylesheets (style/ly/*.css, the mockup CSS tool of the first Layout) read only these names.
+   The dark build step (postcss-dark-tokens, vite.config.ts) skips this file. */
+
+:root {
+  /* ── Type ── */
+  --ly-eb-weight: 700;
+  --ly-eb-size: 10.5px;
+  --ly-eb-track: 0.24em;
+  --ly-btn-weight: 700;
+  --ly-btn-size: 11.5px;
+  --ly-btn-track: 0.16em;
+
+  /* ── Shape and rhythm ── */
+  /* one page frame: bleeding photos end at its edge (1920 px, centred); the wrap grows a little on big screens,
+     measured on the band or frame it sits in (cqw; with no container around it, the window's width) */
+  --ly-frame-max: 1920px;
+  --ly-frame-w: min(100cqw, var(--ly-frame-max));
+  --ly-wrap: clamp(1320px, calc(1320px + (var(--ly-frame-w) - 1440px) * 0.35), 1600px);
+  --ly-gut: max(clamp(16px, 4vw, 40px), env(safe-area-inset-left));
+  --ly-hdr-h: 104px;
+  --ly-tb-h: 44px; /* the top bar, which scrolls away above the sticky header */
+  --ly-frame: 10px;
+  --ly-g-gap: 22px;
+  /* 100cqw: the band's own width (the hero, how, journal and title bands are size containers), never the window's */
+  --ly-hero-pad: max(var(--ly-gut), calc((var(--ly-frame-w) - var(--ly-wrap)) / 2 + var(--ly-gut)));
+  --ly-r: var(--ly-r-pn);
+  --ly-r-card: var(--ly-r-pn);
+  --ly-r-band: var(--ly-r-pn);
+  --ly-r-btn: var(--ly-r-in);
+  --ly-r-chip: var(--ly-r-in);
+  --ly-r-thumb: var(--ly-r-in);
+  --ly-r-plate: var(--ly-r-in);
+  --ly-r-cb: var(--ly-r-in);
+  --ly-r-seg: var(--ly-r-in);
+  --ly-r-ibtn: 50%;
+
+  /* ── Tan (brand), light ── */
+  /* names the Layout's own touches use for the same colours */
+  --ly-cocoa: var(--ly-dark);
+  --ly-cocoa-ink: var(--ly-dark-ink);
+  --ly-on-cocoa-dk: var(--ly-dark);
+  --ly-dark-line-2: rgba(255, 255, 255, 0.3);
+  --ly-pt-muted: var(--ly-muted);
+  --ly-pt-link: var(--ly-act-text);
+  --ly-tex: none;
+  color-scheme: light;
+}
+
+html.ly-dark {
+  --ly-dark-line-2: rgba(255, 255, 255, 0.26);
+  color-scheme: dark;
+}
+
+@media (max-width: 979px) {
+  :root {
+    --ly-hdr-h: 72px;
+  }
+}
+@media (max-width: 760px) {
+  :root {
+    --ly-tb-h: 38px;
+  }
+}

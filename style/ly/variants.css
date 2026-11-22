@@ -1,0 +1,74 @@
+/* The home's section variants beyond the first Layout's set (components/ly/home/sections.json). Hand-written, in the
+   base's tokens only (one colour family, the skin's radius scale), scoped to the Layout's markup like the rest of
+   style/ly/. Loaded last, so a variant wins over the base look. No viewport maths for anything that bleeds or aligns
+   (the page frame and cqw do that); no decorative edges (one shape language).
+
+   Ported from Domino 1.0.2 (domino-layout/style/domino/b.css, its B "Cocoa & Pistachio" set): the mirrored hero, the
+   counters on the family-dark band (without Domino's scallops), the collections as a 2 x 2 grid of cards, About
+   without the numbers. */
+
+/* ───────── hero "mirror": the photo bleeds to the left edge, the words sit on the right ─────────
+   The split hero is written in logical directions (it mirrors for Arabic), so the mirror is the same boxes laid out
+   right to left: the hero's frame runs right to left, so every inset and radius flips (the photo to the left edge,
+   the framed inset across the seam, the collection words on the photo's left corner), and only the words inside
+   are set left to right again. Chrome resolves inset-inline-* against the box's own direction, so the positioned
+   boxes (the inset, the words) keep the frame's direction and only their text is turned back. The photo is flipped
+   too, so the calm dark corner a split hero's photo has at its lower right is again under the words. */
+.hero.v-mirror:is(.ly,.ly *) .hero-in { direction: rtl; }
+.hero.v-mirror:is(.ly,.ly *) :is(.hero-h, .hero-sub, .hi-cap) { direction: ltr; }
+.hero.v-mirror:is(.ly,.ly *) .hero-back .ph-img { transform: scaleX(-1); }
+.hero.v-mirror:is(.ly,.ly *) .hero-back::after { background: linear-gradient(160deg, transparent 52%, rgba(12, 8, 5, .34) 100%); }
+@media (max-width: 979px) {
+  /* on a phone the words are a row under the photo, in the flow: left to right again */
+  .hero.v-mirror:is(.ly,.ly *) .hero-words { direction: ltr; }
+}
+/* in a right-to-left language the mirror is the split hero's left-to-right layout, its words right to left */
+[dir="rtl"] .hero.v-mirror:is(.ly,.ly *) .hero-in { direction: ltr; }
+[dir="rtl"] .hero.v-mirror:is(.ly,.ly *) :is(.hero-h, .hero-sub, .hi-cap) { direction: rtl; }
+@media (max-width: 979px) {
+  [dir="rtl"] .hero.v-mirror:is(.ly,.ly *) .hero-words { direction: rtl; }
+}
+
+/* ───────── counters "band": the shop in numbers on the family-dark band ───────── */
+.nums-band:is(.ly,.ly *) { position: relative; background: var(--ly-dark); color: var(--ly-dark-ink); padding-block: clamp(56px, 6vw, 84px); overflow-x: clip; }
+.nums.on-dark:is(.ly,.ly *) { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; }
+.nums.on-dark.n3:is(.ly,.ly *) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.nums.on-dark.n2:is(.ly,.ly *) { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 760px; margin-inline: auto; }
+.nums.on-dark.n1:is(.ly,.ly *) { grid-template-columns: minmax(0, 1fr); max-width: 420px; margin-inline: auto; }
+.on-dark:is(.ly,.ly *) .num { display: flex; flex-direction: column-reverse; align-items: center; text-align: center; padding: 6px 16px; }
+.on-dark:is(.ly,.ly *) .num + .num { border-inline-start: 1px solid var(--ly-dark-line); }
+.on-dark:is(.ly,.ly *) dt { color: var(--ly-act-dk); font: 600 12px/1.45 var(--ly-sans); letter-spacing: .18em; text-transform: uppercase; margin-top: 10px; max-width: 24ch; }
+.on-dark:is(.ly,.ly *) dd { color: var(--ly-dark-ink); font-style: italic; }
+@media (max-width: 979px) {
+  .nums.on-dark:is(.ly,.ly *), .nums.on-dark.n3:is(.ly,.ly *) { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 26px; }
+  .on-dark:is(.ly,.ly *) .num:nth-child(3) { border-inline-start: 0; }
+}
+@media (max-width: 420px) {
+  .on-dark:is(.ly,.ly *) .num { padding-inline: 8px; }
+  .on-dark:is(.ly,.ly *) dt { letter-spacing: .12em; }
+}
+
+/* ───────── about "story": the story, the photo and the links, centred, no numbers ───────── */
+.about.v-story:is(.ly,.ly *) .about-in { grid-template-columns: minmax(0, 1fr); }
+.about.v-story:is(.ly,.ly *) .about-main { display: grid; grid-template-columns: minmax(0, 1fr); }
+.about.v-story:is(.ly,.ly *) .about-main > .eyebrow, .about.v-story:is(.ly,.ly *) .about-main > .h2 { text-align: center; }
+.about.v-story:is(.ly,.ly *) .about-row { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 72px); align-items: center; }
+.about.v-story:is(.ly,.ly *) .about-copy p { font-size: 16px; }
+.about.v-story:is(.ly,.ly *) .about-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.about.v-story:is(.ly,.ly *) .about-links a { border: 1px solid var(--ly-line-2); border-radius: var(--ly-r-in); padding: 10px 16px 10px 22px; background: var(--ly-paper); }
+.about.v-story:is(.ly,.ly *) .about-links a:hover { color: var(--ly-act-text); }
+@media (max-width: 979px) {
+  .about.v-story:is(.ly,.ly *) .about-row { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ───────── collections "cards": a 2 x 2 grid of cards, the photo on top inside the card ───────── */
+.cols.v-cards:is(.ly,.ly *) .ccs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.cols.v-cards:is(.ly,.ly *) .ccs.n1 { grid-template-columns: minmax(0, 1fr); max-width: 720px; margin-inline: auto; }
+.cols.v-cards:is(.ly,.ly *) .cc { grid-template-columns: minmax(0, 1fr); border-radius: var(--ly-r-pn); }
+.cols.v-cards:is(.ly,.ly *) .cc-ph, .cols.v-cards:is(.ly,.ly *) .cc.flip .cc-ph { order: -1; min-height: 0; aspect-ratio: 16 / 10; margin: 12px 12px 0; border-radius: var(--ly-r-in); }
+.cols.v-cards:is(.ly,.ly *) .cc-txt { padding: 26px 34px 36px; justify-content: flex-start; }
+.cols.v-cards:is(.ly,.ly *) .numeral { width: 84px; height: 54px; margin-bottom: 4px; }
+@media (max-width: 760px) {
+  .cols.v-cards:is(.ly,.ly *) .ccs { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .cols.v-cards:is(.ly,.ly *) .cc-txt { padding: 22px 20px 28px; }
+}

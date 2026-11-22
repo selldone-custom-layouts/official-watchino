@@ -1,0 +1,221 @@
+{
+  "$schema": "../../skin.schema.json",
+  "name": "watchino",
+  "package": "watchino-fine-watches",
+  "title": "Watchino Fine Watches",
+  "description": "A Layout for a fine-watch shop drawn like a watch dial: graphite ink on cool dial white with heat-blued steel. Its signature is a fixed chapter-ring index rail down the left edge that doubles as scroll progress, with section dividers made of minute markers. A dark announcement bar over a centred Bodoni Moda wordmark, with Collections (a mega menu of the collections' cut-outs), the top collection, Journal and Client care. The home: a photo hero with the words on its dark side, a service strip read from the shop's own delivery and payment settings, the collections as a hairline grid of cut-outs, three price registers, a spotlight on the most precious reference on graphite, new arrivals in a hairline rail, how a watch reaches you beside the shop's photos, client care and the journal. A collection page with a filter column (collection, brand, a logarithmic price track and the watches' real specification) and a hairline grid; a product page with a thumbnail column, a sticky details column, finish swatches and the specification table; compare, the bag drawer and the whole checkout. A gallery, not a funnel: no badges, no timers, a reduced price shown as a muted struck-through figure. One colour family from the chosen palette (Blued steel by default; Racing green, Burgundy, Bronze or any colour), light by default with a dark mode; Bodoni Moda over Archivo with Azeret Mono figures; hairline rules and 4 px corners. English, German, Spanish, French and Arabic.",
+  "summary": "Fine watches drawn like a dial: a chapter-ring index rail as scroll progress, minute-marker dividers, a photo hero, a hairline grid of collection cut-outs, price registers, a graphite spotlight, a filter column with a logarithmic price track and a sticky product page.",
+  "tagline": "Fine watches, nothing hidden.",
+  "kind": "Watches · single shop",
+  "tags": [
+    "watches",
+    "luxury",
+    "single-vendor",
+    "light",
+    "rtl"
+  ],
+  "shop": {
+    "name": "Watchino",
+    "id": 8460,
+    "xapi": "watchino",
+    "domain": "watchino.myselldone.com",
+    "currency": "USD",
+    "country": "US",
+    "language": "en"
+  },
+  "github": {
+    "org": "selldone-custom-layouts",
+    "repo": "official-watchino",
+    "topics": [
+      "selldone",
+      "selldone-layout",
+      "storefront",
+      "vue",
+      "watches",
+      "luxury"
+    ]
+  },
+  "dev": {
+    "port": 9175
+  },
+  "checks": {
+    "product": "709386",
+    "product2": "325648",
+    "category": "/womens-collection-category",
+    "search": "automatic",
+    "article": "/blog/how-to-choose-a-luxury-watch-that-truly-fits-you-743551",
+    "compare": "p709386_p325697_p325698",
+    "i18nIgnore": ""
+  },
+  "palettes": {
+    "brand": "blued-steel",
+    "mode": "light",
+    "list": [
+      {
+        "id": "blued-steel",
+        "name": "Blued steel",
+        "seed": "#2F4E8F"
+      },
+      {
+        "id": "racing-green",
+        "name": "Racing green",
+        "seed": "#1F5C46"
+      },
+      {
+        "id": "burgundy",
+        "name": "Burgundy",
+        "seed": "#7A2436"
+      },
+      {
+        "id": "bronze",
+        "name": "Bronze",
+        "seed": "#7A5A1E"
+      }
+    ],
+    "showcaseShops": [
+      {
+        "id": 15740,
+        "name": "bakio"
+      },
+      {
+        "id": 15549,
+        "name": "digini-hzgablru"
+      },
+      {
+        "id": 15645,
+        "name": "molino"
+      },
+      {
+        "id": 8460,
+        "name": "watchino"
+      }
+    ]
+  },
+  "fonts": {
+    "display": {
+      "family": "Bodoni Moda",
+      "google": "Bodoni+Moda:opsz,wght@6..96,400;6..96,500",
+      "stack": "\"Bodoni Moda\", \"Noto Naskh Arabic\", Didot, \"Times New Roman\", serif"
+    },
+    "text": {
+      "family": "Archivo",
+      "google": "Archivo:wght@400;500;600;700",
+      "stack": "\"Archivo\", \"Noto Sans Arabic\", \"Segoe UI\", system-ui, sans-serif"
+    },
+    "headingWeight": 400
+  },
+  "shape": {
+    "panel": 4,
+    "inner": 2
+  },
+  "wordmark": {
+    "case": "upper",
+    "italic": false,
+    "dot": false,
+    "sub": "none",
+    "weight": 400,
+    "tracking": ".14em",
+    "size": 23
+  },
+  "basket": {
+    "one": "bag",
+    "many": "bags"
+  },
+  "home": [
+    {
+      "section": "hero",
+      "variant": "split"
+    },
+    {
+      "section": "about",
+      "variant": "numbers",
+      "band": true
+    },
+    {
+      "section": "collections",
+      "variant": "rows"
+    },
+    {
+      "section": "journal",
+      "variant": "photo",
+      "band": true
+    }
+  ],
+  "photos": {
+    "hero": {
+      "size": [
+        1672,
+        941
+      ],
+      "art": "none",
+      "note": "the shop's own photo: two people in evening dress on black; the left 40% dark and empty for the white words"
+    },
+    "hero-phone": {
+      "size": [
+        900,
+        900
+      ],
+      "art": "none",
+      "note": "square crop of the same photo; the words go under it on a phone"
+    },
+    "story": {
+      "size": [
+        1600,
+        900
+      ],
+      "art": "none",
+      "note": "a watchmaker's bench"
+    },
+    "boutique": {
+      "size": [
+        1600,
+        900
+      ],
+      "art": "none",
+      "note": "a boutique counter with a customer"
+    },
+    "travel": {
+      "size": [
+        1600,
+        900
+      ],
+      "art": "none",
+      "note": "a traveller wearing a watch"
+    },
+    "gift": {
+      "size": [
+        1600,
+        900
+      ],
+      "art": "none",
+      "note": "a watch given as a gift"
+    },
+    "empty": {
+      "size": [
+        1200,
+        900
+      ],
+      "art": "none",
+      "note": "an empty open watch box; 404 and empty states"
+    },
+    "collections": {
+      "size": [
+        900,
+        1200
+      ],
+      "pattern": "col-<slug of the collection title>"
+    }
+  },
+  "loading": {
+    "art": "none",
+    "sub": "none"
+  },
+  "splash": {
+    "art": "none"
+  },
+  "photoCredit": "hero.webp is the shop's own photo; the other photos were generated with Magnific (Freepik) for Watchino under the owner's plan.",
+  "words": {
+    "en": {},
+    "ar": {}
+  }
+}

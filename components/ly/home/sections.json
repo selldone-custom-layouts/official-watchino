@@ -1,0 +1,94 @@
+{
+  "$comment": "The home's section library. skins/<name>/skin.json lists sections in order, each { section, variant, band? }. 'band' is the default tint (white or the family tint band); 'tone' says whether a skin may flip it. scripts/skin-apply.mjs validates a skin against this file; components/ly/home/LyHome.vue maps each id and variant to its component.",
+  "hero": {
+    "tone": false,
+    "band": false,
+    "photos": ["hero-back", "hero-inset"],
+    "variants": {
+      "split": "The shop's name and line on the left; the counter photo bleeding to the right edge of the frame, a framed inset across the seam with the best seller, the three most-ordered collections set large on the photo's dark corner (from Pralino).",
+      "mirror": "The same parts mirrored: the photo bleeds to the left edge, the words sit on the right, the collections on the photo's left corner (Domino's hero)."
+    }
+  },
+  "about": {
+    "tone": true,
+    "band": true,
+    "photos": ["about"],
+    "variants": {
+      "numbers": "The shop in numbers (collections, the saving, days and hours, ways to receive an order) beside its story, photo and Delivery / Pickup / Payment links (from Pralino).",
+      "story": "The story, the photo and the links, centred, without the numbers (pair it with counters; Domino's About)."
+    }
+  },
+  "counters": {
+    "tone": false,
+    "band": false,
+    "photos": [],
+    "variants": {
+      "band": "The shop in numbers on the family-dark band, four to a row with thin dividers, the numbers set large in the display face (Domino's cocoa counters, without scallops: one shape language)."
+    }
+  },
+  "collections": {
+    "tone": true,
+    "band": false,
+    "photos": ["col-*"],
+    "variants": {
+      "rows": "The four collections people order most as alternating photo rows: an outlined numeral, the description, three best sellers with prices, 'Shop <collection>' (from Pralino).",
+      "cards": "The same four as a 2 × 2 grid of cards, the photo on top inside the card (Domino)."
+    }
+  },
+  "how": {
+    "tone": true,
+    "band": true,
+    "photos": ["how"],
+    "variants": {
+      "photo": "How ordering works over a photo bleeding to the frame's edge: four features from the shop's own facts and the courier's card (from Pralino)."
+    }
+  },
+  "offer": {
+    "tone": true,
+    "band": false,
+    "photos": ["offer"],
+    "variants": {
+      "ways": "The courier's numbers, the tall offer card on its photo and every way to receive an order (from Pralino)."
+    }
+  },
+  "gallery": {
+    "tone": true,
+    "band": false,
+    "photos": ["col-*"],
+    "variants": {
+      "mosaic": "A gallery of the collections around the most-ordered one, product plates where a collection is missing (from Pralino)."
+    }
+  },
+  "selection": {
+    "tone": true,
+    "band": true,
+    "photos": [],
+    "variants": {
+      "rows": "Today's selection: six best sellers mixed across collections as numbered rows with one Add button style (from Pralino)."
+    }
+  },
+  "photoband": {
+    "tone": false,
+    "band": false,
+    "photos": ["parallax"],
+    "variants": {
+      "full": "A full-width photo band with a scroll-down button (from Pralino)."
+    }
+  },
+  "marquee": {
+    "tone": false,
+    "band": false,
+    "photos": [],
+    "variants": {
+      "names": "A slow marquee of the collections' names (from Pralino)."
+    }
+  },
+  "journal": {
+    "tone": true,
+    "band": true,
+    "photos": ["journal"],
+    "variants": {
+      "photo": "The four newest posts beside a tall photo with the big word 'Journal' (from Pralino; best last)."
+    }
+  }
+}

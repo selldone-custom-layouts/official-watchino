@@ -1,0 +1,16 @@
+{
+ "name": "Watchino",
+ "sub": "none",
+ "art": "none",
+ "bg": "#ffffff",
+ "ink": "#1d222b",
+ "muted": "#585e69",
+ "accent": "#2f4e8f",
+ "line": "#d7e0f1",
+ "serif": "Bodoni+Moda:wght@400",
+ "sans": "Archivo:wght@700",
+ "serifCss": "\"Bodoni Moda\",Georgia,serif",
+ "sansCss": "\"Archivo\",system-ui,sans-serif",
+ "nameWeight": 400,
+ "nameTracking": ".14em"
+}

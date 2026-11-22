@@ -1,0 +1,335 @@
+/* ▆▆▆▆▆▆▆▆▆▆▆▆▆▆ The parts the Layout borrows, in its dress ▆▆▆▆▆▆▆▆▆▆▆▆▆▆
+
+   Kalio's address sheet (KalioAddressSheet: the checkout's, the order's
+   "Change address" and the address book's; the mockup's map-b sheet) and
+   Selldone's payment window (payment-b) keep their own markup and logic;
+   these rules give them the Layout's surface, type, fields and buttons, with
+   the map on or off. Plus the page itself inside Vuetify's app. Not
+   rewritten by the dark build step (vite.config.ts): the tokens carry both
+   modes. */
+
+/* ── The page ── */
+/* Vuetify's app clips with overflow: hidden, which stops anything sticking
+   (the header, the buy column, the compare heads); clip does the same
+   without making a scroll box. */
+.v-application,
+.v-application .v-application__wrap,
+.s--shop {
+  overflow: clip !important;
+}
+.v-application,
+.s--shop {
+  background: var(--ly-bg) !important;
+  color: var(--ly-ink);
+  font-family: var(--ly-sans);
+}
+
+/* ── The scrim under the sheets: the Layout's, no blur ── */
+.v-overlay.v-dialog:has(.k-addr),
+.v-overlay.v-dialog:has(.s--storefront-master-payment-dialog) {
+  backdrop-filter: none !important;
+}
+.v-overlay.v-dialog:has(.k-addr) > .v-overlay__scrim,
+.v-overlay.v-dialog:has(.s--storefront-master-payment-dialog) > .v-overlay__scrim {
+  background: var(--ly-scrim) !important;
+  opacity: 1 !important;
+}
+
+/* ── The address sheet (map-b) ── */
+.k-sheet.k-addr {
+  --bk-blue: var(--ly-map-pin);
+  background: var(--ly-surface) !important;
+  color: var(--ly-ink);
+  font-family: var(--ly-sans);
+  border-radius: var(--ly-r-pn);
+  box-shadow: 0 40px 80px -30px rgba(15, 12, 10, 0.55);
+  .k-sheet__head {
+    border-bottom: 1px solid var(--ly-line);
+  }
+  .k-sheet__head h2 {
+    font: var(--ly-h-weight) 26px/1.2 var(--ly-serif) !important;
+    letter-spacing: 0 !important;
+    color: var(--ly-ink);
+  }
+  .k-addr__eyebrow {
+    margin: 0;
+    font: 500 11px/1.4 var(--ly-sans) !important;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ly-act-text) !important;
+  }
+  .k-sheet__x {
+    background: transparent !important;
+    color: var(--ly-ink) !important;
+    border-radius: var(--ly-r-in);
+  }
+  .k-sheet__x:hover {
+    color: var(--ly-act-text) !important;
+  }
+  .k-addr__field > span,
+  .k-addr__label {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ly-ink);
+  }
+  .k-addr__field input,
+  .k-addr__field select,
+  .k-addr__field textarea,
+  .k-addr__search {
+    border-radius: var(--ly-r-in) !important;
+    background: var(--ly-field) !important;
+    color: var(--ly-ink) !important;
+    box-shadow: inset 0 0 0 1.5px var(--ly-field-line) !important;
+    border: 0 !important;
+  }
+  .k-addr__search {
+    border-radius: var(--ly-r-in) !important;
+  }
+  .k-addr__field input:focus,
+  .k-addr__field select:focus,
+  .k-addr__field textarea:focus,
+  .k-addr__search:focus-within {
+    outline: none !important;
+    box-shadow: inset 0 0 0 2px var(--ly-act-text) !important;
+  }
+  .k-addr__field.-error input {
+    box-shadow: inset 0 0 0 2px var(--ly-err) !important;
+  }
+  .k-sheet__foot {
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid var(--ly-line);
+    background: var(--ly-surface);
+  }
+  .k-sheet__go {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-height: 50px;
+    padding: 0 28px !important;
+    border-radius: var(--ly-r-in) !important;
+    background: var(--ly-act) !important;
+    color: var(--ly-act-on) !important;
+    font: 600 13px/1 var(--ly-sans) !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase;
+    box-shadow: none !important;
+  }
+  .k-sheet__go:hover {
+    background: var(--ly-act-deep) !important;
+  }
+  .k-sheet__ghost {
+    border-radius: var(--ly-r-in) !important;
+    padding: 0 20px !important;
+    min-height: 46px;
+    color: var(--ly-ink) !important;
+    box-shadow: inset 0 0 0 1.5px var(--ly-line) !important;
+    background: transparent !important;
+  }
+  .k-sheet__ghost:hover {
+    color: var(--ly-act-text) !important;
+  }
+  .k-addr__locate {
+    border-radius: var(--ly-r-in) !important;
+    background: var(--ly-surface) !important;
+    color: var(--ly-ink) !important;
+    box-shadow: inset 0 0 0 1px var(--ly-line) !important;
+  }
+  .k-addr__found {
+    border-radius: var(--ly-r-in);
+    background: var(--ly-act-soft);
+    color: var(--ly-ink);
+  }
+  .k-addr__found-ico {
+    color: var(--ly-act-text);
+  }
+}
+/* On a phone the address sheet fills the window; without a map its fields
+   take all the room between the head and the foot. */
+.v-dialog--fullscreen .k-addr__grid.-nomap {
+  flex: 1 1 auto;
+  max-height: none;
+  min-height: 0;
+}
+
+/* ── Selldone's payment window (payment-b): the sheet on the Layout's surface,
+   the total on the soft band, each way to pay as the mockup's card (an
+   icon tile, its kind and name; the ring on hover). Its logic and words
+   stay Selldone's (gateways, gift cards, wallet, Stripe…). ── */
+$ly-ico-cash: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='6.5' width='18' height='11' rx='2'/%3E%3Ccircle cx='12' cy='12' r='2.6'/%3E%3Cpath d='M6.5 9.5v5M17.5 9.5v5'/%3E%3C/svg%3E";
+$ly-ico-card: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5.5' width='18' height='13' rx='2.5'/%3E%3Cpath d='M3 10h18M7 15h4'/%3E%3C/svg%3E";
+$ly-ico-gift: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='9' width='16' height='11' rx='2'/%3E%3Cpath d='M3 9h18M12 9v11M12 9S10.5 4 8 4.8 9.5 9 12 9zM12 9s1.5-5 4-4.2S14.5 9 12 9z'/%3E%3C/svg%3E";
+
+html.ly-dark .s--storefront-master-payment-dialog,
+.s--storefront-master-payment-dialog {
+  font-family: var(--ly-sans);
+  border-radius: var(--ly-r-pn) var(--ly-r-pn) 0 0 !important;
+
+  > .v-card {
+    border-radius: var(--ly-r-pn) var(--ly-r-pn) 0 0 !important;
+    background: var(--ly-surface) !important;
+    color: var(--ly-ink) !important;
+    box-shadow: 0 -30px 80px -40px rgba(15, 12, 10, 0.6) !important;
+  }
+  .v-toolbar {
+    background: transparent !important;
+    color: var(--ly-ink) !important;
+    border-bottom: 1px solid var(--ly-line);
+  }
+  .body-title {
+    font: var(--ly-h-weight) 26px/1.2 var(--ly-serif) !important;
+    letter-spacing: 0 !important;
+    color: var(--ly-ink) !important;
+  }
+  .circle-button-selldone .v-btn {
+    background: transparent !important;
+    color: var(--ly-ink) !important;
+    box-shadow: none !important;
+  }
+  .circle-button-selldone .v-btn:hover {
+    color: var(--ly-act-text) !important;
+  }
+  .v-card-text {
+    color: var(--ly-muted) !important;
+  }
+  /* The total */
+  .v-card-text > div > .text-start:first-child {
+    background: var(--ly-act-soft) !important;
+    color: var(--ly-act-text) !important;
+    box-shadow: none;
+    border-radius: var(--ly-r-in) !important;
+    > small {
+      font: 500 11px/1.4 var(--ly-sans) !important;
+      letter-spacing: 0.18em !important;
+      text-transform: uppercase;
+      color: var(--ly-act-text) !important;
+    }
+    > .v-icon {
+      display: none;
+    }
+    .u--price {
+      font: 600 34px/1.05 var(--ly-serif) !important;
+      letter-spacing: 0 !important;
+      color: var(--ly-ink) !important;
+    }
+    .v-btn {
+      color: var(--ly-muted) !important;
+    }
+  }
+  .pb-12 > p.small {
+    color: var(--ly-ink) !important;
+    font-weight: 600;
+  }
+  /* Each way to pay */
+  .container-btn.container-btn {
+    border: 0 !important;
+    border-radius: var(--ly-r-pn) !important;
+    background: var(--ly-bg) !important;
+    box-shadow: inset 0 0 0 1px var(--ly-line) !important;
+    color: var(--ly-ink) !important;
+    &:hover,
+    &:focus-visible {
+      border: 0 !important;
+      background: var(--ly-act-soft) !important;
+      box-shadow: inset 0 0 0 2px var(--ly-act-text) !important;
+    }
+    .left-side {
+      position: relative;
+      display: grid !important;
+      place-items: center;
+      &::before {
+        content: "";
+        position: absolute;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--ly-surface);
+        box-shadow: inset 0 0 0 1px var(--ly-line);
+      }
+      &::after {
+        position: relative;
+        width: 22px !important;
+        height: 22px !important;
+        border-radius: 0 !important;
+        background: var(--ly-icon-line) !important;
+        -webkit-mask: url($ly-ico-card) center / 22px no-repeat;
+        mask: url($ly-ico-card) center / 22px no-repeat;
+      }
+    }
+    &.-blue .left-side::after {
+      -webkit-mask-image: url($ly-ico-cash);
+      mask-image: url($ly-ico-cash);
+    }
+    &.-purple .left-side::after {
+      -webkit-mask-image: url($ly-ico-gift);
+      mask-image: url($ly-ico-gift);
+    }
+    .-right-side-container {
+      color: var(--ly-muted) !important;
+      p {
+        color: var(--ly-ink) !important;
+      }
+    }
+    .arrow {
+      color: var(--ly-act-text) !important;
+    }
+  }
+  /* "No gateway for this currency": Selldone's own words, in a calm card */
+  .pb-12 > div:not(.v-row) {
+    background: var(--ly-bg) !important;
+    box-shadow: inset 0 0 0 1px var(--ly-line);
+    color: var(--ly-muted) !important;
+  }
+  .v-expansion-panel {
+    background: var(--ly-bg) !important;
+    color: var(--ly-ink) !important;
+  }
+  .v-field {
+    border-radius: var(--ly-r-in) !important;
+    background: var(--ly-field) !important;
+    color: var(--ly-ink) !important;
+  }
+  .v-field__outline {
+    --v-field-border-opacity: 1;
+    color: var(--ly-field-line) !important;
+  }
+}
+.s--storefront-master-payment-dialog .container-btn .-right-side-container img {
+  display: none !important;
+}
+/* The payment window on a wide screen: a dialog in the middle of the page,
+   as in the mockup (payment-b); on a phone, Selldone's bottom sheet. */
+@media (min-width: 761px) {
+  .v-bottom-sheet > .v-overlay__content.s--storefront-master-payment-dialog {
+    align-self: center !important;
+    margin-block: auto !important;
+    max-height: calc(100dvh - 64px) !important;
+    border-radius: var(--ly-r-pn) !important;
+  }
+  html.ly-dark .s--storefront-master-payment-dialog > .v-card,
+  .s--storefront-master-payment-dialog > .v-card {
+    border-radius: var(--ly-r-pn) !important;
+    box-shadow: 0 40px 80px -30px rgba(15, 12, 10, 0.6) !important;
+  }
+}
+
+/* The pickup chip's hover card (Selldone's black sheet with the counter's
+   map and address) on the Layout's surface. */
+.v-overlay__content > .v-sheet:has(.v-avatar.hover-scale-small) {
+  background: var(--ly-surface) !important;
+  color: var(--ly-ink) !important;
+  border-radius: var(--ly-r-pn) !important;
+  box-shadow: 0 18px 40px -18px rgba(15, 12, 10, 0.45), inset 0 0 0 1px var(--ly-line) !important;
+  .v-list,
+  .v-list-item,
+  .text-subtitle-2 {
+    color: var(--ly-ink) !important;
+    font-family: var(--ly-sans);
+  }
+  .v-list-item-subtitle {
+    color: var(--ly-muted) !important;
+    opacity: 1 !important;
+  }
+  .v-avatar {
+    border-radius: var(--ly-r-in) !important;
+  }
+}

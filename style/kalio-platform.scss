@@ -1,0 +1,2170 @@
+/* ▆▆▆▆▆▆▆▆▆▆▆▆▆▆ Kalio — the platform skin ▆▆▆▆▆▆▆▆▆▆▆▆▆▆
+
+   kalio-tokens.scss holds Kalio's tokens; kalio-sections.scss the sections
+   Kalio owns outright. This file re-skins Selldone's own storefront
+   components: the header and search, the category menu, the product card,
+   the listing and its filter column, the product page and quick-buy sheet,
+   the basket and checkout and the footer.
+
+   Two rules hold throughout:
+
+   1. Only presentation changes. Every component keeps its markup, events and
+      data; nothing here hides a control that does something.
+   2. Selectors stay on the components' own s--* hooks and Vuetify's public
+      class names, never on generated ones, so a module update that keeps its
+      public classes keeps this skin. Where a component paints a Vuetify
+      utility inline (bg-white, rounded-xl), it is re-stated under the
+      component's hook rather than globally.
+*/
+
+/* ▆▆▆▆▆▆▆▆ Page card ▆▆▆▆▆▆▆▆
+
+   Selldone floats each page on a big rounded white card with a heavy shadow.
+   Kalio's page is one continuous white floor, so the card dissolves. */
+
+.s--shop-card {
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  min-height: 0;
+}
+
+.v-application .s--shadow-no-padding {
+  box-shadow: none !important;
+}
+
+/* Selldone paints each route's floor from route metadata through an inline
+   --background (#f0f0f0 on the product page). Kalio has one floor. */
+.v-application.s--shop {
+  --background: var(--k-paper) !important;
+  background-color: var(--k-paper) !important;
+}
+
+/* The buy button reads --theme-btn-color, which the storefront writes inline
+   from the shop theme. An !important declaration outranks the inline one, so
+   the shop's dashboard colour never reaches a Kalio page. */
+.v-application {
+  --theme-btn-color: var(--k-green) !important;
+}
+
+/* Breadcrumbs everywhere: Selldone colours the icon and link text with the
+   shop theme's accent (amber on Kalio's dashboard); here they are links in
+   Kalio green, the current page in ink. */
+.v-breadcrumbs {
+  .v-breadcrumbs-item a,
+  .link-dash,
+  .v-icon {
+    color: var(--k-green-t) !important;
+  }
+
+  .v-breadcrumbs-item--disabled,
+  .v-breadcrumbs-item--disabled * {
+    color: var(--k-ink) !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Prices print the cents in a much smaller size; on a grocery price the
+   cents matter, so they are only slightly reduced. */
+.v-application .u--price .small {
+  font-size: 0.74em !important;
+}
+
+/* ▆▆▆▆▆▆▆▆ Header ▆▆▆▆▆▆▆▆
+
+   One quiet white row: the shop's name as a wordmark, the search in the
+   middle, the shopper's controls as pills on the right. The basket is the
+   one solid green pill. No second dark bar, no coloured logo tile. */
+
+.s--storefront-primary-header {
+  background: var(--k-paper) !important;
+  color: var(--k-ink) !important;
+  border-bottom: 1px solid var(--k-line) !important;
+  box-shadow: none !important;
+
+  .v-toolbar__content {
+    height: 76px !important;
+    max-width: var(--k-maxw);
+    margin: 0 auto;
+    padding-inline: var(--k-gutter) !important;
+  }
+
+  /* The wordmark. Where the header prints the shop's name, the name is the
+     logo and the round logo tile beside it is retired — the name links to
+     the same home page. On a phone Selldone prints the tile alone, so there
+     the tile stays. A merchant who set a sized logo image gets their image
+     (that is a router-link, not this). */
+  .v-toolbar__content > .d-inline-flex:has(> a:not(.v-btn)) > .v-btn--icon {
+    display: none !important;
+  }
+
+  .v-toolbar__content > .d-inline-flex > a:not(.v-btn) {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 5px;
+    margin-inline-start: 0 !important;
+    font-family: var(--k-display) !important;
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    letter-spacing: -0.02em;
+    text-transform: lowercase;
+    color: var(--k-green-t) !important;
+    text-decoration: none;
+
+    &::after {
+      content: "";
+      width: 11px;
+      height: 11px;
+      margin-top: 1px;
+      border-radius: 11px 0 11px 0;
+      background: var(--k-leaf);
+    }
+  }
+
+  .v-btn {
+    color: var(--k-ink) !important;
+  }
+
+  /* Orders, basket and sign-in: Selldone's circle buttons, each with its
+     label beside it rather than under it, framed as a pill. */
+  .circle-button-selldone {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 2px;
+    height: 44px;
+    margin-inline-end: 10px !important;
+    padding-inline: 2px 16px;
+    border: 1px solid var(--k-line);
+    border-radius: var(--k-pill);
+    background: var(--k-card);
+    transition: border-color 140ms ease;
+
+    &:hover {
+      border-color: var(--k-green-t);
+    }
+
+    > .v-btn {
+      width: 38px !important;
+      height: 38px !important;
+      margin: 0 !important;
+    }
+
+    .mini-name {
+      position: static !important;
+      display: inline !important;
+      margin: 0 !important;
+      font-family: var(--k-body) !important;
+      font-size: 15px !important;
+      font-weight: 600 !important;
+      line-height: 1 !important;
+      color: var(--k-ink) !important;
+      text-transform: capitalize;
+      white-space: nowrap;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .v-badge__badge {
+      background: var(--k-coral) !important;
+      color: #fff !important;
+      font-family: var(--k-body);
+      font-weight: 700;
+    }
+  }
+
+  /* The basket: its badge is the teal one, which is how it is told apart. */
+  .circle-button-selldone:has(.v-badge__badge.bg-teal) {
+    background: var(--k-green);
+    border-color: var(--k-green-t);
+
+    &:hover {
+      background: var(--k-green-deep);
+    }
+
+    .mini-name {
+      color: var(--bk-on-brand) !important;
+    }
+
+    img {
+      filter: brightness(0) invert(1);
+    }
+
+    .v-badge__badge {
+      background: var(--k-card) !important;
+      color: var(--k-green-t) !important;
+    }
+  }
+
+  /* A signed-in shopper's menu button. */
+  .v-btn--variant-outlined {
+    border-color: var(--k-line) !important;
+    height: 44px !important;
+    margin-top: 0 !important;
+  }
+}
+
+/* The basket drawer the header's basket opens. */
+.s--storefront-primary-header-basket-navigation {
+  font-family: var(--k-body);
+  border-radius: var(--k-radius-lg) 0 0 var(--k-radius-lg);
+
+  .v-btn {
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+  }
+}
+
+/* The layout's own search box, set into the header row as a wide pill. Below
+   1280px the layout drops it under the header; there it is the same pill
+   across the page column. */
+.s--storefront-layout-search-style {
+  top: 14px !important;
+  max-width: 560px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  .s--storefront-search-box {
+    margin-top: 0 !important;
+  }
+
+  .v-field {
+    min-height: 48px;
+    background: var(--k-wash) !important;
+    border-radius: var(--k-pill) !important;
+    font-family: var(--k-body);
+    font-size: 15px;
+    color: var(--k-ink) !important;
+  }
+
+  .v-field__input {
+    min-height: 48px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-inline-start: 20px !important;
+  }
+
+  .v-field__outline {
+    color: var(--k-line) !important;
+    --v-field-border-opacity: 1;
+  }
+
+  .v-field--focused .v-field__outline {
+    color: var(--k-green-t) !important;
+  }
+
+  @media only screen and (max-width: 1280px) {
+    top: 0 !important;
+    max-width: var(--k-maxw) !important;
+    margin-inline: auto;
+    padding: 12px var(--k-gutter) 0 !important;
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Category menu ▆▆▆▆▆▆▆▆
+
+   The merchant's own menu, when they set one: a quiet row of words on
+   white, the current one underlined in green. */
+
+.s--storefront-top-menu {
+  background: var(--k-paper) !important;
+  border-bottom: 1px solid var(--k-line);
+  box-shadow: none !important;
+
+  .v-tab,
+  .v-btn {
+    font-family: var(--k-body) !important;
+    font-size: 14.5px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    color: var(--k-ink) !important;
+    min-height: var(--k-tap);
+  }
+
+  .v-tab--selected,
+  .v-btn--active {
+    color: var(--k-green-t) !important;
+  }
+
+  .v-tab__slider {
+    background: var(--k-green) !important;
+    height: 3px !important;
+  }
+}
+
+.s--storefront-top-menu-submenu,
+.s--top-menu-categories {
+  background: var(--k-card) !important;
+  border: 1px solid var(--k-line);
+  border-radius: var(--k-radius) !important;
+  box-shadow: var(--k-shadow) !important;
+  font-family: var(--k-body);
+
+  a,
+  .v-list-item-title {
+    color: var(--k-ink) !important;
+    font-weight: 500;
+  }
+
+  a:hover,
+  .v-list-item:hover .v-list-item-title {
+    color: var(--k-green-t) !important;
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Product card ▆▆▆▆▆▆▆▆
+
+   Selldone's card is an image-led tile with the title and price floating
+   over a white scrim and Quick Buy sliding in on hover. Kalio's is a grocery
+   card: the packshot on its aisle's tint, the saving as a coral badge in the
+   corner, a round "+" on the picture that is always there (a hover-only add
+   does not exist on a phone), and the price, then the name, on the white
+   below. No frame around the whole card: the tint is the card.
+
+   The markup is untouched: the same nodes are re-flowed into one column.
+   .card__img is the original aspect sizer and .card__img--hover the real
+   image; the sizer is retired and the image given its own square. The
+   quick-buy row is laid over that square, so it needs the card's width:
+   the card is a size container and the row is placed in its units. */
+
+.s--product-card {
+  display: block;
+  height: 100%;
+  text-decoration: none;
+
+  /* Selldone fixes .card--1 at 360px and lets the scrim overlap the photo;
+     here the card grows to fit its own content. */
+  .card {
+    height: 100% !important;
+    min-height: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-align: start !important;
+    overflow: visible !important;
+  }
+
+  .card-wrap {
+    height: 100% !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column;
+    background: transparent !important;
+    container-type: inline-size;
+  }
+
+  .card__img {
+    display: none !important;
+  }
+
+  .card__img--hover {
+    order: 0;
+    position: relative !important;
+    inset: auto !important;
+    flex: 0 0 auto;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--k-radius);
+    background: var(--k-tint);
+    overflow: hidden;
+    transition: filter 160ms ease;
+
+    .v-responsive__sizer {
+      display: none;
+    }
+
+    /* Packshots are cut-outs on white; multiply drops the white box into
+       the tint instead of printing a white square on it. Every product
+       photo frames its pack at 70%, centred (all 160 measured, 7 November
+       2026), so the photo is drawn at 120% of the square and cropped by it:
+       the pack fills about 84%, as on the big grocers' cards (with an 11%
+       padding it filled 55%). Sized, not scaled, so reduced motion keeps it. */
+    .v-img__img {
+      top: -10% !important;
+      left: -10% !important;
+      width: 120% !important;
+      height: 120% !important;
+      max-width: none !important;
+      mix-blend-mode: multiply;
+      object-fit: contain !important;
+      padding: 0;
+      transition: transform 220ms ease;
+    }
+  }
+
+  /* Selldone lifts the hovered card (scale 1.1) and shrinks its text
+     panel. In a rail the lift is cut off by the track's edge, and the
+     transformed panel becomes the badge's anchor, dropping the badge onto
+     the price. The card stays put; only the packshot moves. */
+  .card:hover,
+  .card:hover .card__info {
+    transform: none !important;
+  }
+
+  &:hover .card__img--hover .v-img__img {
+    transform: scale(1.04);
+  }
+
+  &:hover .card__img--hover {
+    filter: brightness(0.98);
+  }
+
+  .card__info-hover {
+    display: none !important; /* the countdown overlay fights the badge corner */
+  }
+
+  .card__info {
+    order: 1;
+    position: static !important;
+    inset: auto !important;
+    flex: 1 1 auto;
+    display: flex !important;
+    flex-direction: column;
+    background: transparent !important;
+    padding: 12px 2px 0 !important;
+    text-align: start !important;
+    backdrop-filter: none !important;
+  }
+
+  /* Price first, then the name. Selldone positions this row; it is made
+     static so the discount badge below anchors to the card, not to it. */
+  .toggle-hidden-on-hover {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    flex: 1 1 auto;
+    align-content: flex-start;
+  }
+
+  .toggle-visible-on-hover {
+    display: none !important;
+  }
+
+  .card__info .sec--price {
+    order: -1;
+  }
+
+  .card__info .v-col-12 .font-weight-bold,
+  .card__info .single-line.font-weight-bold {
+    font-family: var(--k-body) !important;
+    font-size: 14.5px !important;
+    font-weight: 500 !important;
+    line-height: 1.35 !important;
+    color: var(--k-ink) !important;
+    white-space: normal !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.7em;
+  }
+
+  .card__info .v-col-12 {
+    margin: 2px 0 0 !important;
+    padding-top: 0 !important;
+  }
+
+  /* Rating and colour swatches sit in a 5/7 split with the price; with
+     neither present the split only pushed the price to the right edge. */
+  .card__info .v-col-5:empty {
+    display: none;
+  }
+
+  /* The rating line (design A of the reviews options, 7 November 2026):
+     KalioCardRating, "★★★★☆ 4.2 (19)", takes the column's whole width.
+     Selldone's own stars (the bare div) and "4.2 ● 19 reviews" (cut to
+     "19 rev…" in 5/12 of a card) are hidden; colour swatches (.p-1) stay. */
+  .card__info .sec--rate-variants {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    container-type: inline-size;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+    padding: 0 !important;
+
+    > div:not([class]),
+    > .single-line:not(.p-1) {
+      display: none !important;
+    }
+  }
+
+  .card__info .sec--rate-variants:not(:has(.k-card-rate, .p-1)) {
+    display: none !important;
+  }
+
+  .card__info .v-col-7,
+  .card__info .sec--price {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* The live price, then the struck one beside it. */
+  .main-price-label {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 2px 8px;
+    text-align: start !important;
+
+    p {
+      margin: 0 !important;
+      justify-content: flex-start !important;
+    }
+
+    > p:not(.dis-val) {
+      font-family: var(--k-body) !important;
+      font-variant-numeric: tabular-nums;
+      font-size: 19px !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.01em;
+      color: var(--k-ink) !important;
+    }
+
+    .v-spacer {
+      display: none;
+    }
+
+    /* Without a saving the struck-price line is empty, and as a flex item
+       it dropped the price 5px below its neighbours'. */
+    > .dis-val:not(:has(.discount-percent)) {
+      display: none !important;
+    }
+  }
+
+  /* On a discounted product the live price is the sale price, in coral. */
+  .main-price-label:has(.discount-percent) > p:not(.dis-val),
+  .main-price-label:has(.discount-percent) > p:not(.dis-val) * {
+    color: var(--k-coral-t) !important;
+  }
+
+  .dis-val {
+    font-family: var(--k-body) !important;
+    font-size: 13.5px !important;
+    color: var(--k-muted) !important;
+
+    /* Selldone sets the struck price at 0.7em (9px); readable here. */
+    .u--price {
+      font-size: 13.5px !important;
+
+      .small {
+        font-size: 0.85em !important;
+      }
+    }
+  }
+
+  del,
+  s,
+  .line-through,
+  .text-decoration-line-through {
+    color: var(--k-muted) !important;
+    font-weight: 400 !important;
+  }
+
+  /* The saving, moved onto the picture's corner as a coral badge. Its
+     nearest positioned ancestor is .card-wrap, whose top-left is the
+     picture's. */
+  .discount-percent {
+    position: absolute;
+    top: 10px;
+    inset-inline-start: 10px;
+    z-index: 2;
+    padding: 5px 9px !important;
+    border-radius: var(--k-pill) !important;
+    background: var(--k-coral) !important;
+    color: #fff !important;
+    font-family: var(--k-body) !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.2;
+    white-space: nowrap;
+    word-spacing: -0.3em; /* Selldone writes "20 %" */
+
+    &::before {
+      content: "−";
+    }
+  }
+
+  /* Add and compare, laid over the picture: "+" in the bottom corner,
+     compare small in the top one. The row covers the picture's square
+     (100cqw of the card) and lets clicks through to the card elsewhere. */
+  .quick-buy {
+    position: absolute !important;
+    inset: 0 0 auto 0 !important;
+    width: auto !important;
+    height: 100cqw !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+    border: 0 !important; /* Selldone's 1px #ddd drew a ring round the picture */
+    background: transparent !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    pointer-events: none;
+    z-index: 2;
+
+    .v-btn {
+      position: absolute !important;
+      pointer-events: auto;
+      margin: 0 !important;
+      padding: 0 !important;
+      min-width: 0 !important;
+      border-radius: 50% !important;
+      background: var(--k-card) !important;
+      color: var(--k-green-t) !important;
+      box-shadow: 0 6px 16px -6px rgba(20, 20, 20, 0.38) !important;
+      text-transform: none !important;
+      letter-spacing: 0 !important;
+      transition: background-color 140ms ease, color 140ms ease, transform 140ms ease;
+    }
+
+    /* Primary: add. The basket glyph and its words give way to a drawn
+       plus; the words stay for screen readers. 28px drawn (the owner found
+       44px too big, 6 November 2026), still a 44px target for a finger:
+       the ::before ring is invisible and catches the tap. */
+    .v-btn:first-child {
+      inset-inline-end: 10px;
+      bottom: 10px;
+      width: 28px !important;
+      height: 28px !important;
+      overflow: visible !important;
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: -8px;
+        border-radius: 50%;
+      }
+
+      .v-icon {
+        display: none;
+      }
+
+      .v-btn__content > span {
+        position: absolute !important;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+      }
+
+      .v-btn__content::before,
+      .v-btn__content::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 12px;
+        height: 2px;
+        border-radius: 2px;
+        background: currentColor;
+        transform: translate(-50%, -50%);
+      }
+
+      .v-btn__content::after {
+        transform: translate(-50%, -50%) rotate(90deg);
+      }
+
+      &:hover {
+        background: var(--k-green) !important;
+        color: var(--bk-on-brand) !important;
+        transform: scale(1.06);
+      }
+    }
+
+    /* Secondary: compare. Drawn at the foot of the card: see "Compare
+       under the card" at the end of this file. */
+  }
+
+  &:hover .quick-buy .v-btn + .v-btn,
+  .quick-buy .v-btn + .v-btn:focus-visible {
+    opacity: 1;
+  }
+
+  /* Compare is for a mouse: on a touch screen it showed on every card as a
+     second round "+"-like mark beside the real one (the owner, 6 November
+     2026). The aisles already hid it; now every rail does too. */
+  @media (hover: none) {
+    .quick-buy .v-btn + .v-btn {
+      display: none !important;
+    }
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ A card's foot: Add to basket ▆▆▆▆▆▆▆▆
+
+   After Amazon's grocery cards, which the owner pointed to (6 November
+   2026): "Add to basket" across the foot of every card, and once tapped
+   the same place reads "− 1 in basket +"; a product with sizes says "See
+   options". It replaces the round "+" on the packshot, which on a phone
+   was small to hit and, for a sized product, opened a sheet without saying
+   why. KalioCardStep (card) draws it: at the foot of Selldone's card
+   through kalio-card-basket.ts, or under a rail's unit and sellers. */
+.s--product-card .k-card-step-host {
+  position: relative;
+  order: 2;
+  margin-top: 10px;
+}
+
+.s--product-card .quick-buy .v-btn:first-child {
+  display: none !important;
+}
+
+/* A rail's cell: the card, its unit and sellers, then the foot, level
+   across the rail. */
+.k-rail__cell {
+  display: flex;
+  flex-direction: column;
+
+  > :nth-last-child(2) {
+    margin-bottom: 10px;
+  }
+}
+
+.k-rail__foot {
+  align-self: stretch;
+  margin-top: auto;
+}
+
+/* The foot is its own size container: the words follow the pill's width
+   (a deals-board card insets it, a dense grid narrows it). */
+.k-card-foot {
+  container-type: inline-size;
+}
+
+.k-card-add,
+.k-card-step.-card {
+  width: 100%;
+  height: 38px;
+  border-radius: var(--k-pill);
+  font-family: var(--k-body);
+}
+
+.k-card-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 12px;
+  border: 1.5px solid var(--k-green-t);
+  background: var(--k-green);
+  /* !important: Selldone's base reset [type=button] { color: inherit }
+     loads after this sheet. */
+  color: var(--bk-on-brand) !important;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 140ms ease, border-color 140ms ease;
+
+  .v-icon {
+    margin-inline-start: -4px;
+  }
+
+  .-short {
+    display: none;
+  }
+
+  &:hover {
+    border-color: var(--k-green-deep-t);
+    background: var(--k-green-deep);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--k-green-deep-t);
+    outline-offset: 2px;
+  }
+
+  /* A product with sizes: the sheet to pick one. */
+  &.-options {
+    border-color: var(--k-line);
+    background: var(--k-card);
+    color: var(--k-green-deep-t) !important;
+
+    &:hover {
+      border-color: var(--k-green-t);
+      background: var(--k-green-soft);
+    }
+  }
+
+  &.-none {
+    border-color: var(--k-well);
+    background: var(--k-well);
+    color: var(--k-muted) !important;
+    font-weight: 600;
+    cursor: default;
+  }
+}
+
+/* In the basket: the same pill, outlined, with the count between − and +. */
+.k-card-step.-card {
+  grid-template-columns: 32px minmax(0, 1fr) 32px;
+  border: 1.5px solid var(--k-green-t);
+  background: var(--k-green-soft);
+  color: var(--k-green-deep-t);
+  box-shadow: none;
+
+  button {
+    width: 32px;
+    height: 35px;
+    color: var(--k-green-deep-t) !important;
+
+    &:hover:not(:disabled) {
+      background: rgba(59, 170, 92, 0.16);
+    }
+  }
+
+  .k-card-step__count {
+    overflow: hidden;
+    font-size: 14px;
+    white-space: nowrap;
+
+    small {
+      display: inline;
+      font-size: 13px;
+      font-weight: 600;
+      opacity: 0.85;
+    }
+  }
+}
+
+/* Narrow feet (a phone's rails are about 150px, a deals-board card's
+   120px): the words shorten before they would crowd the pill. */
+@container (max-width: 149.98px) {
+  .k-card-add {
+    padding: 0 8px;
+    font-size: 13.5px;
+
+    .v-icon {
+      display: none;
+    }
+  }
+}
+
+@container (max-width: 139.98px) {
+  .k-card-step.-card .k-card-step__count small {
+    display: none;
+  }
+}
+
+@container (max-width: 99.98px) {
+  .k-card-add {
+    .-long {
+      display: none;
+    }
+
+    .-short {
+      display: inline;
+    }
+  }
+}
+
+.k-card-step {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 36px;
+  align-items: center;
+  height: 36px;
+  border-radius: var(--k-pill);
+  background: var(--k-green-deep);
+  color: var(--bk-on-brand);
+  box-shadow: 0 8px 18px -8px rgba(0, 79, 154, 0.6);
+  font-family: var(--k-body);
+  text-align: center;
+  cursor: default;
+
+  button {
+    display: grid;
+    place-items: center;
+    height: 36px;
+    border-radius: var(--k-pill);
+    color: var(--bk-on-brand) !important; /* Selldone's [type=button] reset loads after */
+    cursor: pointer;
+    transition: background-color 140ms ease;
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: default;
+    }
+  }
+
+  &__count {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.05;
+    font-variant-numeric: tabular-nums;
+
+    small {
+      display: block;
+      font-size: 10px;
+      font-weight: 500;
+      opacity: 0.75;
+    }
+  }
+
+  &.-busy &__count {
+    opacity: 0.6;
+  }
+
+  /* In a shelf label: compact, beside the price. */
+  &.-inline {
+    grid-template-columns: 34px 28px 34px;
+    height: 36px;
+    box-shadow: none;
+
+    button {
+      height: 36px;
+    }
+
+    .k-card-step__count {
+      font-size: 15px;
+    }
+  }
+
+  /* The foot of a home-shelf label (KalioShelf): the strip "+ Add" was,
+     with "n in basket" between round buttons. A phone's label is 132px, so
+     there it keeps the number alone. */
+  &.-strip {
+    grid-template-columns: 32px minmax(0, 1fr) 32px;
+    height: 40px;
+    padding: 0 4px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: none;
+
+    button {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+
+      &:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.24);
+      }
+    }
+
+    .k-card-step__count {
+      white-space: nowrap;
+
+      small {
+        display: inline;
+        margin-inline-start: 4px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .k-card-step__count small {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .s--product-card .card__img--hover .v-img__img,
+  .s--product-card .quick-buy .v-btn {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Listing ▆▆▆▆▆▆▆▆
+
+   The catalogue: Selldone's sub-category cards, the sort/view toolbar, the
+   product grid, the load-more control and the side drawer. It shares the
+   page column with Kalio's sections above it. */
+
+.s--storefront-products-listing {
+  max-width: var(--k-maxw);
+  margin: 0 auto;
+  padding-inline: var(--k-gutter);
+  font-family: var(--k-body);
+  text-align: start;
+
+  .v-breadcrumbs {
+    padding-inline: 0 !important;
+    font-size: 13.5px;
+
+    .v-breadcrumbs-item {
+      color: var(--k-muted) !important;
+    }
+
+    .v-breadcrumbs-item--disabled {
+      color: var(--k-ink) !important;
+      opacity: 1 !important;
+      font-weight: 600;
+    }
+  }
+
+  /* "N More.." — the load-more control, as an outlined pill. */
+  .v-btn.text-blue {
+    display: flex;
+    margin: 28px auto 0;
+    min-height: 52px !important;
+    padding: 0 32px !important;
+    border-radius: var(--k-pill) !important;
+    border: 1px solid var(--k-line-strong) !important;
+    background: var(--k-card) !important;
+    color: var(--k-ink) !important;
+    font-family: var(--k-body) !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+
+    &:hover {
+      border-color: var(--k-green-t) !important;
+      color: var(--k-green-t) !important;
+    }
+  }
+}
+
+/* In a single sliding row (a seller's aisles) each card keeps a card's
+   width: on a phone one was 534 px wide in a 335 px row, cut at the edge
+   with the arrow over its words (5 November 2026). A touch screen slides
+   the row by hand, so the arrows go there. */
+.s-fade-scroll .s--products-listing-row > .s--category-card {
+  flex: 0 0 auto !important;
+  width: min(300px, 78vw) !important;
+  min-width: 0 !important; // Selldone sets "max-content" inline
+  max-width: min(300px, 78vw) !important;
+
+  .details > :not(.-title) {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+}
+
+@media (hover: none) {
+  .s-fade-scroll > .-arrows {
+    display: none !important;
+  }
+}
+
+/* Sub-aisle cards: a compact tile like the aisle chips, not Selldone's tall
+   shadowed card. */
+.s--category-card {
+  text-decoration: none;
+
+  .folder-card {
+    height: auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    align-items: center;
+    gap: 14px;
+    padding: 10px !important;
+    background: var(--k-card) !important;
+    border: 1px solid var(--k-line) !important;
+    border-radius: var(--k-radius) !important;
+    box-shadow: none !important;
+    transition: border-color 140ms ease;
+  }
+
+  &:hover .folder-card {
+    border-color: var(--k-green-t) !important;
+  }
+
+  .-image-box {
+    position: relative !important;
+    flex: 0 0 72px;
+    width: 72px !important;
+    height: 72px !important;
+    border-radius: 50%;
+    background: var(--k-wash);
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+
+    img {
+      position: static !important;
+      width: 58px !important;
+      height: 58px !important;
+      object-fit: contain !important;
+      mix-blend-mode: multiply;
+      transform: none !important;
+    }
+
+    .category-title {
+      display: none; /* duplicated by .details -title beside it */
+    }
+  }
+
+  .details {
+    position: static !important;
+    background: transparent !important;
+    padding: 0 !important;
+    text-align: start !important;
+    min-width: 0;
+
+    .-title {
+      display: block;
+      text-transform: none !important;
+      letter-spacing: -0.01em !important;
+      font-family: var(--k-display) !important;
+      font-size: 19px !important;
+      font-weight: 600 !important;
+      color: var(--k-ink) !important;
+      line-height: 1.15;
+    }
+
+    .-description {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-top: 2px;
+      font-size: 13px !important;
+      color: var(--k-muted) !important;
+    }
+  }
+}
+
+/* The grid: two cards across on a phone, three on a tablet, four on a
+   landscape tablet, five on a laptop, six on a wide screen — a grocery shelf
+   shows more at once than a fashion grid. */
+.s--products-listing-row {
+  row-gap: 22px;
+
+  /* Every card in a row as tall as the tallest, so the "Add to basket"
+     feet line up (a two-line name or a struck price made one 2px taller). */
+  &:has(> .s--product-card) {
+    align-items: stretch !important;
+  }
+
+  > .s--product-card {
+    height: auto !important; /* a set height (100%) is not stretched */
+    padding: 8px !important;
+  }
+
+  @media (min-width: 600px) and (max-width: 899px) {
+    > .s--product-card {
+      flex: 0 0 33.3333% !important;
+      max-width: 33.3333% !important;
+    }
+  }
+
+  @media (min-width: 900px) and (max-width: 1099px) {
+    > .s--product-card {
+      flex: 0 0 25% !important;
+      max-width: 25% !important;
+    }
+  }
+
+  @media (min-width: 1100px) {
+    > .s--product-card {
+      flex: 0 0 20% !important;
+      max-width: 20% !important;
+    }
+  }
+
+  @media (min-width: 1600px) {
+    > .s--product-card {
+      flex: 0 0 16.6667% !important;
+      max-width: 16.6667% !important;
+    }
+  }
+
+  @media (max-width: 599px) {
+    > .s--product-card {
+      flex: 0 0 50% !important;
+      max-width: 50% !important;
+      padding: 6px !important;
+    }
+  }
+
+  /* Insta. Selldone's photo wall pins every card to a square and shows the
+     name only on hover, so a grocery card's name and price fell under the
+     next row. Here it is the same card on a denser shelf: one column more
+     at every width, smaller type, the name and price always shown. */
+  &.insta-row {
+    justify-content: flex-start !important;
+    margin: 0 !important;
+    row-gap: 16px;
+  }
+
+  &.insta-row > .s--product-card.-insta-mode {
+    height: auto !important;
+    min-width: 0 !important;
+    flex: 0 0 33.3333% !important;
+    max-width: 33.3333% !important;
+    padding: 5px !important;
+
+    @media (min-width: 600px) {
+      flex-basis: 25% !important;
+      max-width: 25% !important;
+    }
+
+    @media (min-width: 900px) {
+      flex-basis: 20% !important;
+      max-width: 20% !important;
+    }
+
+    @media (min-width: 1100px) {
+      flex-basis: 16.6667% !important;
+      max-width: 16.6667% !important;
+    }
+
+    @media (min-width: 1600px) {
+      flex-basis: 14.2857% !important;
+      max-width: 14.2857% !important;
+    }
+
+    .card--1 {
+      height: 100% !important;
+      border: 0 !important;
+    }
+
+    .card--1 .card__img--hover {
+      height: auto !important;
+    }
+
+    .card__info {
+      padding-top: 8px !important;
+    }
+
+    .card__info .v-col-12 .font-weight-bold,
+    .card__info .single-line.font-weight-bold {
+      font-size: 12.5px !important;
+    }
+
+    .main-price-label > p:not(.dis-val) {
+      font-size: 15.5px !important;
+    }
+
+    .discount-percent {
+      top: 6px;
+      inset-inline-start: 6px;
+      padding: 3px 7px !important;
+      font-size: 11px !important;
+    }
+
+    .quick-buy .v-btn:first-child {
+      inset-inline-end: 6px;
+      bottom: 6px;
+      width: 24px !important;
+      height: 24px !important;
+    }
+  }
+}
+
+/* Design A on the shop pages (aisles, the catalogue, a seller's rows):
+   every packshot on the same stone well, and the saving as coral type on a
+   white tab instead of a coral badge, so nothing but the products is
+   coloured. The home page keeps its aisle tints. */
+.s--storefront-products-listing .s--product-card,
+.k-seller-shelf .s--product-card {
+  .card__img--hover {
+    background: var(--k-well);
+  }
+
+  .discount-percent {
+    padding: 3px 8px !important;
+    border-radius: 7px !important;
+    background: var(--k-card) !important;
+    color: var(--k-coral-t) !important;
+    font-size: 12px !important;
+  }
+
+  /* Compare shows on hover only; a touch screen has no hover, and on every
+     card it was one more mark competing with the packshot. */
+  @media (hover: none) {
+    .quick-buy .v-btn + .v-btn {
+      display: none !important;
+    }
+  }
+}
+
+/* The listing's filter panel and toolbar: kalio-shell.scss. */
+
+/* ▆▆▆▆▆▆▆▆ Product page and product overview ▆▆▆▆▆▆▆▆
+
+   SProductOverview is the product page's main block and also the body of the
+   Quick Buy sheet, so this one skin serves both. Selldone's version: a blue
+   "Add To Cart" bar, a blue bold price, a magenta discount chip and black
+   variant tiles. Kalio's: the packshot on a pale tile, the price large with
+   the sale in coral, variants as pills that fill green when chosen, and one
+   deep green pill to add. */
+
+.s--product {
+  max-width: var(--k-maxw);
+  margin: 0 auto;
+  padding-inline: var(--k-gutter);
+  text-align: start;
+}
+
+.s--product-section-info {
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  > .v-toolbar {
+    background: transparent !important;
+  }
+}
+
+.s--product-info {
+  font-family: var(--k-body);
+  text-align: start;
+
+  h1 {
+    font-family: var(--k-display) !important;
+    font-size: clamp(30px, 3.2vw, 44px) !important;
+    font-weight: 600 !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.02em !important;
+    color: var(--k-ink) !important;
+    text-align: start !important;
+  }
+
+  /* Gallery: packshots on a pale tile. */
+  .v-img {
+    border-radius: var(--k-radius) !important;
+    background: var(--k-wash);
+  }
+
+  .v-img__img {
+    mix-blend-mode: multiply;
+  }
+
+  .v-breadcrumbs-item,
+  a {
+    color: var(--k-green-t);
+  }
+
+  /* Compare, wishlist and share: quiet outlined pills. */
+  .v-chip,
+  .v-btn--variant-outlined {
+    border-radius: var(--k-pill) !important;
+    font-family: var(--k-body);
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+  }
+
+  .v-btn--variant-elevated {
+    min-height: 56px !important;
+    border-radius: var(--k-pill) !important;
+    box-shadow: none !important;
+    font-family: var(--k-body) !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+  }
+}
+
+/* SProductOverview passes the theme colour to its buy button as a Vuetify
+   color prop, which lands as an inline background-color the variable above
+   cannot reach, so the button itself is re-stated. */
+.s--shop-buy-button {
+  background-color: var(--k-green-deep) !important;
+  color: var(--bk-on-brand) !important;
+  border-radius: var(--k-pill) !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-weight: 600 !important;
+
+  &:hover {
+    background-color: var(--k-green) !important;
+  }
+}
+
+/* Price: large and plain; on sale the figure turns coral and the old price
+   sits struck beside it. */
+.s-product-section-price {
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0 !important;
+  margin: 10px 0 6px !important;
+  background: transparent;
+
+  .price,
+  .u--price {
+    font-family: var(--k-body) !important;
+    font-variant-numeric: tabular-nums;
+    color: var(--k-ink) !important;
+  }
+
+  .price-value {
+    font-size: 30px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.015em;
+  }
+
+  &:has(.discount-percent) .price-value {
+    color: var(--k-coral-t) !important;
+  }
+
+  del,
+  s,
+  .line-through,
+  .text-decoration-line-through {
+    color: var(--k-muted) !important;
+  }
+}
+
+.discount-percent {
+  background: var(--k-coral-soft) !important;
+  color: var(--k-coral-t) !important;
+  font-family: var(--k-body) !important;
+  font-weight: 700 !important;
+  border-radius: var(--k-pill) !important;
+}
+
+/* Variants: outlined pills; the chosen one fills soft green. */
+.s-product-variants__options {
+  gap: 8px;
+
+  /* Selldone sizes each option as a 70px square tile; a word like
+     "Half gallon" needs a pill that grows with its label instead. */
+  .var-sel {
+    width: auto !important;
+    height: var(--k-tap) !important;
+    min-width: 64px;
+    padding: 0 18px !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--k-tap);
+    border-radius: var(--k-pill) !important;
+    border: 1px solid var(--k-line-strong) !important;
+    background: var(--k-card) !important;
+    color: var(--k-ink) !important;
+    box-shadow: none !important;
+    font-family: var(--k-body);
+    font-weight: 600;
+    transition: border-color 140ms ease, background-color 140ms ease;
+
+    &:hover {
+      border-color: var(--k-green-t) !important;
+    }
+  }
+
+  .var-sel.selected,
+  .var-sel.-selected,
+  .var-sel.active,
+  .var-sel[class*="selected"] {
+    border-color: var(--k-green-t) !important;
+    background: var(--k-green-soft) !important;
+    color: var(--k-green-t) !important;
+  }
+}
+
+.s--product-variants {
+  .v-chip--selected,
+  .v-btn--active {
+    border-color: var(--k-green-t) !important;
+    background: var(--k-green-soft) !important;
+    color: var(--k-green-t) !important;
+  }
+}
+
+.s--shop-product-section-box-badges .v-chip {
+  background: var(--k-green-soft) !important;
+  color: var(--k-green-t) !important;
+}
+
+/* Sections under the overview: hairline-ruled bands on white, headings in
+   the display face, cards with a hairline instead of a shadow. */
+.s--product-section {
+  border-top: 1px solid var(--k-line);
+  padding-top: 32px;
+  text-align: start;
+
+  h2,
+  h3,
+  .v-card-title {
+    font-family: var(--k-display) !important;
+    font-weight: 600 !important;
+    color: var(--k-ink) !important;
+  }
+
+  .v-card {
+    background: var(--k-card) !important;
+    border: 1px solid var(--k-line) !important;
+    border-radius: var(--k-radius) !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Product article header ("Introducing …") and every Vuetify display heading.
+   Vuetify's .text-h* classes carry their own !important font-family, so the
+   display face has to be stated with !important to take over — and one class
+   deeper than Selldone's own ".v-application .text-h3 { font-family:
+   var(--font) !important }", which comes later in the cascade. */
+.v-application.s--shop {
+  .text-h1,
+  .text-h2,
+  .text-h3,
+  .text-h4 {
+    font-family: var(--k-display) !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.015em !important;
+  }
+}
+
+.s--product-section-header {
+  text-align: start;
+
+  h2 {
+    color: var(--k-ink) !important;
+    line-height: 1.05 !important;
+  }
+}
+
+/* Pros and cons, spec tables: Selldone fills them flat grey (#e5e5e5); here
+   they are a card with hairline rows and the label column in ink. */
+.s--product .v-table,
+.k-quickbuy .v-table {
+  background: var(--k-card) !important;
+  border: 1px solid var(--k-line);
+  border-radius: var(--k-radius) !important;
+  overflow: hidden;
+  font-family: var(--k-body);
+
+  th {
+    background: var(--k-wash) !important;
+    font-family: var(--k-display) !important;
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    color: var(--k-ink) !important;
+  }
+
+  td {
+    border-bottom: 1px solid var(--k-line) !important;
+    color: var(--k-muted);
+  }
+
+  td:first-child {
+    color: var(--k-ink);
+    font-weight: 600;
+  }
+}
+
+/* Compare and wishlist: one outlined pill, words in sentence case. */
+.btn-fav {
+  border-color: var(--k-line) !important;
+  border-radius: var(--k-pill) !important;
+  overflow: hidden;
+
+  .v-btn {
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font-family: var(--k-body) !important;
+    font-weight: 600 !important;
+  }
+}
+
+/* Pros and cons: Selldone's scoped style fills the table grey. */
+.s--product-pros-cons .v-table.-table {
+  background: var(--k-card) !important;
+}
+
+/* "You might also enjoy": the same pale tile and plain type as Kalio's
+   cards, packshots contained rather than cropped. */
+.s--shop-related-products {
+  .-product-card {
+    font-family: var(--k-body);
+    text-align: start;
+  }
+
+  .-img-banner {
+    border-radius: var(--k-radius) !important;
+    background: var(--k-tint) !important;
+    overflow: hidden;
+
+    .v-img__img {
+      object-fit: contain !important;
+      mix-blend-mode: multiply;
+      padding: 10%;
+    }
+  }
+
+  .-card-title {
+    font-family: var(--k-body) !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    color: var(--k-ink) !important;
+    text-align: start !important;
+  }
+
+  .-card-content .u--price {
+    font-weight: 700 !important;
+    color: var(--k-ink) !important;
+  }
+}
+
+/* "Discover in collections": Selldone's dark photo tiles with white titles
+   become pale aisle tiles with the title in ink across the bottom. */
+.s--shop-related-categories {
+  .-category-card {
+    border-radius: var(--k-radius) !important;
+    overflow: hidden;
+  }
+
+  .-card-img {
+    border-radius: var(--k-radius) !important;
+    background-color: var(--k-wash) !important;
+
+    .v-img__img {
+      object-fit: contain !important;
+      mix-blend-mode: multiply;
+      padding: 8% 12% 28%;
+    }
+  }
+
+  .-card-content {
+    position: absolute !important;
+    inset: auto 0 0 0 !important;
+    padding: 14px 16px !important;
+    background: linear-gradient(transparent, rgba(246, 244, 238, 0.95) 38%) !important;
+    text-align: start !important;
+  }
+
+  .-card-title {
+    font-family: var(--k-display) !important;
+    font-size: 22px !important;
+    font-weight: 600 !important;
+    color: var(--k-ink) !important;
+    text-shadow: none !important;
+  }
+
+  .-card-desc {
+    margin-top: 2px;
+    font-family: var(--k-body) !important;
+    font-size: 13px !important;
+    color: var(--k-muted) !important;
+    text-shadow: none !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* The Quick Buy sheet: white, with Kalio's large radius. */
+.k-quickbuy,
+.v-bottom-sheet > .v-bottom-sheet__content {
+  > .v-card {
+    background: var(--k-paper) !important;
+    border-radius: var(--k-radius-lg) var(--k-radius-lg) 0 0 !important;
+  }
+}
+
+/* Kalio's sheet (KalioQuickBuy): the product page's overview inside, under
+   a bar with "Full details" and the close button. */
+.k-quickbuy {
+  &__bar {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 12px;
+    padding: 14px 18px 10px 28px;
+    background: var(--k-paper);
+  }
+
+  /* A round grey button, as on every Kalio sheet: a bare X on white was
+     easy to miss on a phone (6 November 2026). */
+  &__close {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--k-wash);
+    color: var(--k-ink) !important; /* Selldone's [type=button] reset loads after */
+    cursor: pointer;
+    transition: background-color 140ms ease;
+
+    &:hover {
+      background: var(--k-line);
+    }
+  }
+
+  &__body.v-card-text {
+    padding: 0 28px 32px !important;
+  }
+
+  /* On the product page the packshot stays in view under the header; in
+     the sheet there is no header to clear. */
+  .k-pdp__media {
+    position: static;
+  }
+
+  .k-pdp__title {
+    font-size: clamp(26px, 2.6vw, 36px) !important;
+  }
+
+  @media (max-width: 760px) {
+    &__bar {
+      padding: 10px 10px 6px 18px;
+    }
+
+    &__body.v-card-text {
+      padding: 0 16px 24px !important;
+    }
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Basket and checkout ▆▆▆▆▆▆▆▆
+
+   Selldone's basket is a stack of white cards with large rounded corners
+   and a dark bill. Kalio's line items are hairline cards with the packshot
+   on a pale tile, and the bill is deep green. */
+
+.s--shop-basket-items,
+.s--shop-basket-items-list {
+  font-family: var(--k-body);
+}
+
+.s--shop-basket-item {
+  background: var(--k-card) !important;
+  border: 1px solid var(--k-line) !important;
+  border-radius: var(--k-radius) !important;
+  box-shadow: none !important;
+  margin-bottom: 10px !important;
+
+  .v-img {
+    background: var(--k-wash);
+    border-radius: var(--k-radius-sm) !important;
+  }
+
+  .v-img__img {
+    mix-blend-mode: multiply;
+  }
+}
+
+.s--shop-basket-item-count-select .v-btn {
+  min-width: var(--k-tap) !important;
+  min-height: var(--k-tap) !important;
+  border-radius: 50% !important;
+}
+
+.s--shop-billing-address-form,
+.s--shop-buyer-receiver-info-widget,
+.s--shop-customer-delivery-info-widget {
+  background: var(--k-card) !important;
+  border: 1px solid var(--k-line) !important;
+  border-radius: var(--k-radius) !important;
+  box-shadow: none !important;
+  font-family: var(--k-body);
+}
+
+/* The bill. The basket page paints it from the shop theme's deep-dark colour
+   (--color-bg-1/2, written inline on the page root); in production that is
+   the merchant's purple. Re-pointing the two variables on the receipt keeps
+   Selldone's receipt — shipping, tax, coupons, the checkout button — and
+   gives it Kalio's deep green, with the checkout button in white. */
+.receipt-container {
+  --color-bg-1: var(--k-green-deep) !important;
+  --color-bg-2: #00264d !important;
+  border-radius: var(--k-radius-lg) !important;
+  box-shadow: 0 22px 44px -20px rgba(0, 79, 154, 0.55) !important;
+  font-family: var(--k-body);
+
+  .data-row,
+  .u--price,
+  [class*="price"] {
+    font-family: var(--k-body) !important;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .v-btn--variant-elevated,
+  .v-btn--variant-flat {
+    border-radius: var(--k-pill) !important;
+    min-height: 52px !important;
+    background-color: var(--k-card) !important;
+    color: var(--k-green-deep-t) !important;
+    box-shadow: none !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font-weight: 700 !important;
+  }
+}
+
+/* The page title in the basket toolbar ("Shopping Cart"). */
+.s--shop-card > .v-toolbar .v-toolbar-title {
+  /* The display face has deep descenders; the toolbar clipped them. */
+  line-height: 1.3 !important;
+  overflow: visible !important;
+  font-family: var(--k-display) !important;
+  font-size: clamp(26px, 2.6vw, 34px) !important;
+  font-weight: 600 !important;
+  color: var(--k-ink) !important;
+}
+
+/* ▆▆▆▆▆▆▆▆ Sign-in ▆▆▆▆▆▆▆▆
+
+   The shop's sign-in form (the need-login dialog, and anywhere Selldone
+   embeds it), in Kalio's type with pill buttons. The sign-in methods it
+   offers are the shop's login settings; nothing here hides one. */
+.log-form {
+  font-family: var(--k-body);
+
+  h1,
+  h2,
+  h3,
+  .text-h1,
+  .text-h2,
+  .text-h3,
+  .text-h4 {
+    font-family: var(--k-display) !important;
+    color: var(--k-ink) !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  .v-btn {
+    border-radius: var(--k-pill) !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font-family: var(--k-body) !important;
+    font-weight: 600 !important;
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Footer ▆▆▆▆▆▆▆▆
+
+   Light and short: the warm wash under a hairline, ink text, green on
+   hover. Selldone's powered-by mark keeps its own dark drawing, which reads
+   on this ground. */
+
+.s--storefront-primary-footer {
+  margin-top: 64px;
+  padding: 44px var(--k-gutter) 30px !important;
+  background: var(--k-wash) !important;
+  color: var(--k-ink-2) !important;
+  border-top: 1px solid var(--k-line) !important;
+  font-family: var(--k-body);
+
+  > .v-container {
+    max-width: var(--k-maxw) !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .v-card-title {
+    font-family: var(--k-display) !important;
+    color: var(--k-ink) !important;
+    font-weight: 600 !important;
+  }
+
+  a,
+  .v-btn {
+    color: var(--k-ink-2) !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+  }
+
+  a:hover,
+  .v-btn:hover {
+    color: var(--k-green-t) !important;
+  }
+
+  .v-divider {
+    border-color: var(--k-line) !important;
+    opacity: 1;
+  }
+
+  .s--footer-section-copyright {
+    color: var(--k-muted) !important;
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Compare (SComparisonButton) ▆▆▆▆▆▆▆▆
+
+   The round "Compare" badge at the window's foot, once a product is in the
+   compare list. Selldone painted it in the theme's deep purple with a pink
+   ring; here it is the shop's deep green with a leaf-green ring (the owner,
+   6 November 2026). It no longer shows on the basket and checkout
+   (StorefrontApp.vue). The phone's bottom bar is gone, so it sits at the
+   foot; on a product page it stands above the floating buy bar. Selldone
+   draws an 84px circle at 0.7 scale: `bottom` is set for the drawn one. */
+/* Since 7 November 2026 a pill, "⇄ Compare 2", not a ring: the ring filled
+   up like a loading spinner and was easy to miss (a tester's feedback). It
+   bumps once when a product joins the list (SComparisonButton). */
+.k-compare-fab.s--storefront-products-comparison-circle-progress {
+  bottom: calc(14px + env(safe-area-inset-bottom)) !important;
+  left: 14px !important;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 8px 0 16px;
+  border: 0;
+  border-radius: 999px !important;
+  background-color: var(--k-green-deep) !important;
+  color: var(--bk-on-brand) !important;
+  box-shadow: 0 14px 28px -12px rgba(14, 63, 46, 0.7);
+  font-family: var(--k-body);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none !important;
+  /* Hover changes the colour only: no underline under the word and the
+     icon, and not Selldone's widget-hover lift with its 50px shadow
+     easing in over 0.65s (the owner, 8 November 2026). */
+  transition: background-color 160ms ease;
+
+  &:hover {
+    background-color: var(--k-green) !important;
+    box-shadow: 0 14px 28px -12px rgba(14, 63, 46, 0.7) !important;
+    transition: background-color 160ms ease; /* not widget-hover's 0.5s */
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--k-ink);
+    outline-offset: 3px;
+  }
+
+  .v-icon {
+    color: var(--bk-on-brand) !important;
+  }
+
+  &.-bump {
+    animation: k-compare-bump 1.3s ease;
+  }
+}
+
+.k-compare-fab__n {
+  display: inline-grid;
+  place-items: center;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--k-card);
+  color: var(--k-green-deep-t);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+/* Selldone's scoped style shrinks the old ring to 0.7; the pill keeps its
+   size (no !important here, or the bump could not move it). */
+button.k-compare-fab.s--storefront-products-comparison-circle-progress {
+  transform: none;
+}
+
+@keyframes k-compare-bump {
+  0% { transform: translateY(0) scale(1); }
+  15% { transform: translateY(-8px) scale(1.08); }
+  30% { transform: translateY(0) scale(1); }
+  45% { transform: translateY(-4px) scale(1.04); }
+  60%, 100% { transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .k-compare-fab.-bump {
+    animation: none;
+  }
+}
+
+@media (max-width: 960px) {
+  body:has(.sticky-buy-widget:not(.-hide)) .s--storefront-products-comparison-circle-progress {
+    bottom: calc(78px + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* ── A card's rating line (KalioCardRating, 7 November 2026) ── */
+.k-card-rate {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  margin-top: 5px;
+  font-family: var(--k-body);
+  font-size: 13px;
+  line-height: 1;
+  color: var(--k-muted);
+  white-space: nowrap;
+
+  b {
+    color: var(--k-ink-2);
+    font-weight: 600;
+  }
+}
+
+/* A phone's rail cards are ~140px wide: smaller stars, and below that the
+   count goes (the score and stars stay). */
+@container (max-width: 160px) {
+  .k-card-rate {
+    gap: 4px;
+    font-size: 12.5px;
+  }
+
+  .k-card-rate .k-stars {
+    --k-star: 12px;
+  }
+}
+
+@container (max-width: 112px) {
+  .k-card-rate__n {
+    display: none;
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ States that do not lean on colour alone ▆▆▆▆▆▆▆▆
+
+   A tester asked for hover and selection that colour-blind shoppers can
+   see too (7 November 2026). Colour still changes; each state now also
+   changes shape or weight:
+   - keyboard focus: a dark ring around anything that can be pressed;
+   - hover on a filled button: its colour deepens (no underline: the owner,
+     8 November 2026);
+   - a chosen size or option: a thicker ring, bold words and a tick. */
+:where(a, button, summary, [role="button"], [role="radio"], [role="tab"], .v-btn):focus-visible {
+  outline: 3px solid var(--k-ink) !important;
+  outline-offset: 2px !important;
+}
+
+
+.s-product-variants__options .var-sel.selected {
+  position: relative;
+  box-shadow: 0 0 0 2px rgb(var(--v-theme-primary)) !important;
+  font-weight: 700 !important;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--k-ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center / 13px no-repeat;
+  }
+}
+
+.k-offer.-on .k-offer__name,
+.v-chip--selected {
+  font-weight: 800 !important;
+}
+
+/* ▆▆▆▆▆▆▆▆ The Layout's logo (kalio-brand.ts, 7 November 2026) ▆▆▆▆▆▆▆▆
+   The mark stands before the wordmark in the header, the phone menu and the
+   footer, in place of the small dot or leaf drawn in CSS before it. */
+.k-header__brand.-logo,
+.k-footer__mark.-logo {
+  align-items: center !important;
+  gap: 9px !important;
+}
+
+.k-brand-mark {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+}
+
+.k-drawer .k-brand-mark,
+.k-footer .k-brand-mark {
+  width: 30px;
+  height: 30px;
+}
+
+@media (max-width: 760px) {
+  .k-header .k-brand-mark {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Compare under the card (7 November 2026) ▆▆▆▆▆▆▆▆
+   The owner found the "Comparing" pill on the picture hid the sale tag. Big
+   shops (Best Buy, Home Depot, Lowe's) and Baymard's research put "Compare"
+   as a small tick box under the product, quieter than Add to cart, with a
+   "Compare n" button once something is picked. Here: "☐ Compare" in grey at
+   the foot of the card, "☑ Comparing" in bold action colour once picked, and
+   the "⇄ Compare n" pill at the window's foot. A touch screen has no compare
+   (as before), so a phone's cards keep their height. */
+@media (hover: hover) {
+  /* The room under the foot is in the card's own frame (.card-wrap), which
+     the compare line is placed in. */
+  .s--product-card .card-wrap:has(> .quick-buy .k-compare-toggle) {
+    padding-bottom: 38px !important;
+  }
+
+  .s--product-card .quick-buy:has(.k-compare-toggle) {
+    inset: 0 !important;
+    height: auto !important;
+  }
+
+  .s--product-card .quick-buy .v-btn.k-compare-toggle {
+    inset: auto auto 6px 6px !important;
+    width: auto !important;
+    height: 30px !important;
+    padding: 0 8px 0 4px !important;
+    border-radius: 6px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: var(--k-muted) !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    opacity: 1 !important;
+    transform: none !important;
+
+    .v-btn__content {
+      gap: 5px;
+    }
+
+    .v-icon {
+      font-size: 19px !important;
+    }
+
+    &:hover {
+      color: var(--k-ink) !important;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    &.-on {
+      color: var(--k-green-t) !important;
+      font-weight: 800 !important;
+    }
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ No line under words or icons ▆▆▆▆▆▆▆▆
+
+   The owner, 8 November 2026, after a line showed under the product page's
+   "Compare" and its box icon: "never put these lines under text or icons".
+   Links, buttons, menus, tabs and chips say they can be pressed by their
+   colour, shape and the pointer, never by an underline: not at rest, not
+   on hover, focus or press. The rule is set on the pressable thing itself
+   (a line drawn by a parent runs under every word inside it) and on the
+   pieces Vuetify and Selldone put inside a button; it never touches a
+   struck-through old price. Links inside an article's own text (.k-prose,
+   the shop's writing) keep theirs, so they stand out from the words. */
+:where(a, button, summary, label, [role="button"], [role="link"], [role="tab"], .v-btn, .v-tab, .v-chip, .v-list-item),
+:where(a, button, [role="button"], .v-btn, .v-tab, .v-chip, .v-list-item) :where(.v-icon, i, .v-btn__content, .v-list-item-title, .single-line) {
+  text-decoration: none !important;
+}
+
+.k-prose a {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}

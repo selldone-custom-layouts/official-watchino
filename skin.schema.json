@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "skin.schema.json",
+  "title": "A Layout skin (skins/<name>/skin.json)",
+  "description": "Everything that makes one custom Selldone Layout different from the base. scripts/skin-apply.mjs validates it (and the home against components/ly/home/sections.json) and writes the generated files.",
+  "type": "object",
+  "required": ["name", "package", "title", "description", "shop", "palettes", "fonts", "home"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "name": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,30}$", "description": "Short name: the skin folder, <name>-layout, storage keys <name>-theme etc., official-<name>" },
+    "package": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,60}$", "description": "manifest package; permanent after the first upload" },
+    "title": { "type": "string", "minLength": 8, "description": "The Layout's name on Selldone (at least 8 characters)" },
+    "description": { "type": "string", "minLength": 40, "description": "The Layout's description on Selldone: right on the FIRST upload (later uploads do not change it)" },
+    "summary": { "type": "string" },
+    "tagline": { "type": "string", "description": "One line: README lead and the GitHub description (≤ 340 characters)" },
+    "kind": { "type": "string" },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "status": { "type": "string", "enum": ["draft", "live", "base"] },
+    "version": { "type": "string" },
+    "shop": {
+      "type": "object",
+      "required": ["xapi", "domain"],
+      "properties": {
+        "name": { "type": "string" },
+        "id": { "type": "integer" },
+        "xapi": { "type": "string", "description": "The shop's public xapi name (the dev server reads it)" },
+        "domain": { "type": "string", "description": "The Layout's own domain, e.g. name.selldone.shop" },
+        "currency": { "type": "string" },
+        "country": { "type": "string" },
+        "language": { "type": "string" }
+      }
+    },
+    "github": { "type": "object", "properties": { "org": { "type": "string" }, "repo": { "type": "string" }, "topics": { "type": "array", "items": { "type": "string" } } } },
+    "dev": { "type": "object", "properties": { "port": { "type": "integer" }, "themeColors": { "type": "object" } } },
+    "palettes": {
+      "type": "object",
+      "required": ["brand", "list"],
+      "properties": {
+        "brand": { "type": "string" },
+        "mode": { "type": "string", "enum": ["light", "dark"] },
+        "list": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "seed"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+              "name": { "type": "string" },
+              "seed": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$", "description": "The family is built from this colour (OKLCH, hue kept)" },
+              "light": { "type": "object", "description": "Optional override of the computed action colours (primary, deep, soft, onPrimary, text)" },
+              "dark": { "type": "object" }
+            }
+          }
+        },
+        "showcaseShops": { "type": "array", "items": { "type": "object", "properties": { "id": { "type": "integer" }, "name": { "type": "string" } } } }
+      }
+    },
+    "fonts": {
+      "type": "object",
+      "required": ["display", "text"],
+      "properties": {
+        "display": { "$ref": "#/definitions/font" },
+        "text": { "$ref": "#/definitions/font" },
+        "headingWeight": { "type": "integer" },
+        "h1Weight": { "type": "integer" }
+      }
+    },
+    "shape": { "type": "object", "properties": { "panel": { "type": "number", "minimum": 0, "maximum": 40 }, "inner": { "type": "number", "minimum": 0, "maximum": 40 } } },
+    "wordmark": {
+      "type": "object",
+      "properties": {
+        "case": { "type": "string", "enum": ["first", "upper", "lower", "title", "asis"] },
+        "italic": { "type": "boolean" },
+        "dot": { "type": "boolean" },
+        "sub": { "type": "string", "description": "\"city\", \"none\" or a short text" },
+        "font": { "type": "string", "enum": ["display", "text"] },
+        "weight": { "type": "integer" },
+        "tracking": { "type": "string" },
+        "size": { "type": "number" }
+      }
+    },
+    "basket": { "oneOf": [{ "type": "string" }, { "type": "object", "properties": { "one": { "type": "string" }, "many": { "type": "string" } } }] },
+    "home": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["section"],
+        "properties": {
+          "section": { "type": "string", "enum": ["hero", "about", "counters", "collections", "how", "offer", "gallery", "selection", "photoband", "marquee", "journal"] },
+          "variant": { "type": "string" },
+          "band": { "type": "boolean" }
+        }
+      }
+    },
+    "photos": { "type": "object", "additionalProperties": { "type": "object", "properties": { "size": { "type": "array", "items": { "type": "integer" } }, "art": { "type": "string" }, "note": { "type": "string" }, "pattern": { "type": "string" } } } },
+    "loading": { "type": "object" },
+    "splash": { "type": "object", "properties": { "art": { "type": "string", "enum": ["croissant", "cupcake", "tart", "whisk", "none"] } } },
+    "mark": { "type": "object", "properties": { "ink": { "type": "string" } } },
+    "words": { "type": "object", "additionalProperties": { "type": "object", "additionalProperties": { "type": "string" } } },
+    "checks": { "type": "object" },
+    "photoCredit": { "type": "string" }
+  },
+  "definitions": {
+    "font": {
+      "type": "object",
+      "required": ["family"],
+      "properties": {
+        "family": { "type": "string" },
+        "google": { "type": "string", "description": "The Google Fonts css2 family spec, e.g. Mulish:wght@400;500;600;700" },
+        "stack": { "type": "string" },
+        "generic": { "type": "string", "enum": ["serif", "sans-serif"] }
+      }
+    }
+  }
+}

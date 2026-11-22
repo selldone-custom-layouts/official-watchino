@@ -1,0 +1,1706 @@
+/* ▆▆▆▆▆▆▆▆▆▆▆▆▆▆ Kalio — the product page ▆▆▆▆▆▆▆▆▆▆▆▆▆▆
+
+   Styles for pages/product/StorefrontPageProduct.vue and
+   components/kalio/product: the breadcrumb, the overview (packshot panel
+   and buy column), the seller offers, and the sections under it. The
+   Selldone parts placed inside — price, sizes, buy button, compare/save,
+   assurances, gallery — are styled here by their own public hooks, scoped
+   under .k-pdp so the quick-buy sheet (still Selldone's overview) keeps
+   the general skin from kalio-platform.scss. */
+
+/* Kalio's own rows and aisle row sit inside the product page's column,
+   which is already padded. */
+.k-product .k-wrap {
+  padding-inline: 0;
+}
+
+/* ▆▆▆▆▆▆▆▆ Breadcrumb ▆▆▆▆▆▆▆▆ */
+
+.k-crumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  padding: 18px 0 16px;
+  font-family: var(--k-body);
+  font-size: 14px;
+  color: var(--k-muted);
+  text-align: start;
+
+  a {
+    color: var(--k-green-t) !important;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+
+  > .v-icon {
+    color: var(--bk-deco, var(--k-line-strong));
+  }
+
+  &__here {
+    max-width: 44ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--k-ink-2);
+  }
+
+  &__tools {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-inline-start: auto;
+
+    .v-btn {
+      color: var(--k-muted) !important;
+    }
+
+    /* The product QR code: a quiet icon, not a black tile. */
+    img,
+    svg {
+      max-width: 24px;
+      max-height: 24px;
+      opacity: 0.55;
+    }
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Overview ▆▆▆▆▆▆▆▆ */
+
+.k-pdp {
+  font-family: var(--k-body);
+  text-align: start;
+  color: var(--k-ink);
+
+  &__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    gap: clamp(28px, 4vw, 56px);
+    align-items: start;
+  }
+
+  /* The packshot stays in view while the buy column scrolls past it. */
+  &__media {
+    position: sticky;
+    top: 136px; /* clear of the sticky header and its aisle strip */
+    min-width: 0;
+  }
+
+  &__stage {
+    padding: clamp(16px, 2.4vw, 30px);
+    border-radius: var(--k-radius-lg);
+    background: var(--k-tint, var(--k-wash));
+  }
+
+  &__buy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding-top: 6px;
+  }
+
+  &__kicker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+    margin: 0 0 12px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+
+    a {
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+    }
+  }
+
+  &__aisle {
+    color: var(--k-green-t) !important;
+  }
+
+  &__brand {
+    color: var(--k-muted) !important;
+  }
+
+  &__dot {
+    color: var(--k-line-strong);
+  }
+
+  &__title {
+    margin: 0;
+    font-family: var(--k-display);
+    font-size: clamp(32px, 3.4vw, 46px);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--k-ink);
+  }
+
+  &__sub {
+    margin: 10px 0 0;
+    font-size: 16px;
+    color: var(--k-muted);
+  }
+
+  &__rating {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    margin-top: 12px;
+    font-size: 15px;
+
+    .k-stars {
+      --k-star: 19px;
+    }
+
+    b {
+      font-weight: 700;
+      color: var(--k-ink);
+    }
+  }
+
+  &__rating-link {
+    color: var(--k-green-t);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(var(--bk-blue-rgb), 0.3);
+
+    &:hover {
+      border-bottom-color: var(--k-green-t);
+    }
+  }
+
+  &__warn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 12px 0 0;
+    padding: 6px 12px;
+    border-radius: var(--k-pill);
+    background: var(--k-coral-soft);
+    color: var(--k-coral-t);
+    font-size: 13.5px;
+    font-weight: 600;
+    width: max-content;
+  }
+
+  /* Price: the figure large, the unit beside it, Selldone's price-tracking
+     prompt as one quiet line under it. */
+  &__price {
+    margin-top: 22px;
+    padding: 16px 0 14px;
+    border-top: 1px solid var(--k-line);
+    border-bottom: 1px solid var(--k-line);
+
+    .s-product-section-price {
+      display: flex !important;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 14px;
+      padding: 0 !important;
+      margin: 0 !important;
+      background: transparent !important;
+      border: 0 !important;
+
+      > .v-spacer {
+        display: none;
+      }
+
+      .price {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+      }
+
+      .price-value {
+        font-size: 38px !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.02em;
+      }
+
+      .price > small {
+        margin: 0 !important;
+        font-size: 15px;
+        color: var(--k-muted);
+      }
+
+      .discount-percent {
+        padding: 5px 10px !important;
+        background: var(--k-coral) !important;
+        color: #fff !important;
+        font-size: 13px !important;
+      }
+
+      .min-width-200 {
+        flex: 1 1 100%;
+        min-width: 0 !important;
+        margin: 4px 0 0 !important;
+      }
+
+      .min-width-200 > .v-sheet {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        font-size: 13px;
+        color: var(--k-muted);
+
+        img {
+          width: 18px;
+          height: 18px;
+          margin: 0 !important;
+        }
+
+        .font-weight-black {
+          font-weight: 600 !important;
+          color: var(--k-ink-2);
+        }
+
+        /* Selldone's second line ("Waiting for the auction?"); "Track
+           price" alone says what the control does. */
+        .text-body-2 {
+          display: none;
+        }
+      }
+
+      /* The discount chip carries a smiley icon in Selldone's design. */
+      .discount-percent .v-icon {
+        display: none;
+      }
+
+      /* Selldone's magenta "Discount" over the chip: the coral "-20%" says
+         it alone (5 November 2026). */
+      .discount-text {
+        display: none;
+      }
+
+      /* The old price struck through whole: Selldone struck the dollars
+         only, and its raised cents sat under the line, so ".04" looked
+         underlined. */
+      .discount-value {
+        position: relative;
+        display: inline-flex;
+        align-items: baseline;
+
+        // one line across "$6.04": Selldone's price is boxes, which a
+        // text decoration does not cross
+        &::after {
+          content: "";
+          position: absolute;
+          top: 55%;
+          right: -2px;
+          left: -2px;
+          height: 1.5px;
+          border-radius: 1px;
+          background: currentColor;
+        }
+
+        .line-through {
+          text-decoration: none !important;
+        }
+
+        .small {
+          vertical-align: baseline !important;
+        }
+      }
+    }
+
+    .s--product-section-tax {
+      padding: 0 !important;
+      margin: 4px 0 0 !important;
+      font-size: 13px;
+      color: var(--k-muted);
+    }
+  }
+
+  /* Size and other options. */
+  &__options {
+    margin-top: 20px;
+
+    .s--product-variants {
+      margin: 0 !important;
+    }
+
+    .s-product-variants__options .var-sel {
+      height: 44px !important;
+      min-height: 0 !important;
+      padding-block: 0 !important;
+      margin: 0 !important;
+    }
+
+    .s-product-variants__caption {
+      margin: 0 0 10px !important;
+      font-size: 14px;
+      color: var(--k-muted);
+
+      .v-icon {
+        display: none;
+      }
+
+      b {
+        color: var(--k-ink);
+        font-weight: 600;
+      }
+    }
+  }
+
+  /* The basket button, full width. */
+  &__basket {
+    margin: 22px 0 0 !important;
+
+    > .widget-buttons {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .s--shop-buy-button {
+      width: 100% !important;
+      min-height: 58px !important;
+      font-size: 17px !important;
+      border-radius: var(--k-pill) !important;
+    }
+  }
+
+  .s--product-section-incentivise {
+    padding-inline: 0 !important;
+    margin-top: 10px;
+    font-size: 13.5px;
+    color: var(--k-ink-2);
+  }
+
+  /* Compare, save, share: one row of quiet pills. */
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+
+    > .v-row {
+      flex: 0 0 auto !important;
+      margin: 0 !important;
+
+      > .v-spacer {
+        display: none;
+      }
+    }
+
+    .btn-fav {
+      height: 44px;
+      background: var(--k-card);
+    }
+
+    /* Selldone caps the compare label at 20vw inline — 78px on a phone,
+       which cut "Add to Compare" to "Add to Com…". */
+    .btn-fav .single-line {
+      max-width: none !important;
+      font-size: 14.5px !important;
+      font-weight: 600;
+    }
+  }
+
+  &__share {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 44px;
+    padding: 0 18px 0 14px;
+    border: 1px solid var(--k-line);
+    border-radius: var(--k-pill);
+    background: var(--k-card);
+    color: var(--k-ink);
+    font-family: var(--k-body);
+    font-size: 14.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 140ms ease;
+
+    &:hover {
+      border-color: var(--k-green-t);
+    }
+  }
+
+  &__share-sheet {
+    padding: 16px 18px;
+    border: 1px solid var(--k-line);
+    border-radius: var(--k-radius);
+    background: var(--k-card);
+    box-shadow: var(--k-shadow);
+
+    .k-eyebrow {
+      margin-bottom: 10px;
+    }
+  }
+
+  /* The shop's assurances (delivery, support, guarantee) on one soft strip. */
+  &__assurances {
+    margin: 22px 0 0 !important;
+    padding: 14px 18px !important;
+    max-width: none !important;
+    border-radius: 18px;
+    background: var(--k-wash);
+
+    .-badge {
+      justify-content: flex-start !important;
+      gap: 10px 24px;
+      margin: 0 !important;
+
+      > div {
+        display: inline-flex !important;
+        align-items: center;
+        gap: 8px;
+        flex: 0 0 auto !important;
+        width: auto !important;
+        max-width: none !important;
+        padding: 0 !important;
+      }
+
+      img {
+        width: 22px !important;
+        height: 22px !important;
+        margin: 0 !important;
+      }
+    }
+
+    /* Selldone sets each title 100px wide, which broke "Working hours
+       support" onto two lines; the title takes its own width and a whole
+       badge wraps to the next line when the column is narrow. */
+    .-badge-title {
+      width: auto !important;
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      min-height: 0 !important;
+      font-size: 13.5px !important;
+      font-weight: 500;
+      line-height: 1.3 !important;
+      white-space: nowrap;
+      color: var(--k-ink-2) !important;
+      text-align: start !important;
+    }
+  }
+
+  &__note {
+    margin-top: 28px !important;
+  }
+
+  /* ―― Gallery: big packshot on the tint, thumbnails under it. ―― */
+  .s--product-images {
+    display: flex !important;
+    flex-direction: column-reverse;
+    gap: 14px;
+  }
+
+  .gallery-top {
+    background: transparent !important;
+    border-radius: var(--k-radius) !important;
+
+    .v-img__img {
+      object-fit: contain !important;
+      mix-blend-mode: multiply;
+    }
+
+    /* Selldone's arrows are 84px discs holding the next picture, laid over
+       the packshot. Here: a small white button with a chevron, and none on
+       a touch screen, where a swipe and the thumbnails do the job. */
+    .v-window__controls {
+      padding: 0 14px;
+
+      .v-avatar {
+        width: 40px !important;
+        height: 40px !important;
+        border: 1px solid var(--k-line);
+        background: #fff !important;
+        box-shadow: 0 4px 12px -6px rgba(20, 20, 20, 0.3);
+        backdrop-filter: none !important;
+        cursor: pointer;
+
+        img,
+        .v-icon {
+          display: none !important;
+        }
+
+        &::after {
+          content: "";
+          width: 9px;
+          height: 9px;
+          border: solid var(--k-ink);
+          border-width: 0 2px 2px 0;
+        }
+
+        &.v-window__right::after {
+          margin-inline-end: 3px;
+          transform: rotate(-45deg);
+        }
+
+        &.v-window__left::after {
+          margin-inline-start: 3px;
+          transform: rotate(135deg);
+        }
+      }
+
+      @media (hover: none) {
+        display: none !important;
+      }
+    }
+  }
+
+  .gallery-thumbs {
+    width: auto !important;
+    height: auto !important;
+
+    .gallery-thumbs-wrap {
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: center;
+      gap: 10px;
+
+      > div {
+        width: 64px !important;
+        height: 64px !important;
+        margin: 0 !important;
+        border: 1px solid var(--k-line);
+        border-radius: 14px !important;
+        background: #fff !important;
+        overflow: hidden;
+        cursor: pointer;
+        transition: border-color 140ms ease;
+
+        &:hover {
+          border-color: var(--k-ink-2);
+        }
+
+        /* One frame: Selldone's thumbnail drew its own 1px frame with a
+           10px side margin inside this box, so the two sat apart. */
+        > .-slide {
+          width: 100% !important;
+          height: 100% !important;
+          margin: 0 !important;
+          padding: 5px;
+          border: 0 !important;
+          border-radius: 0 !important;
+        }
+
+        img,
+        .v-img__img {
+          mix-blend-mode: multiply;
+          object-fit: contain !important;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 960px) {
+    &__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    &__media {
+      position: static;
+    }
+
+    /* One column: the square packshot was as wide as the page (700px on a
+       portrait tablet) and pushed the name, price and basket button below
+       the fold. The tint keeps the page's width; the picture is capped. */
+    .s--product-images {
+      width: min(100%, 420px, 42vh);
+      margin-inline: auto;
+    }
+
+    .gallery-thumbs .gallery-thumbs-wrap > div {
+      width: 54px !important;
+      height: 54px !important;
+    }
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Seller offers ▆▆▆▆▆▆▆▆ */
+
+.k-offers {
+  margin-top: 24px;
+
+  &__title {
+    margin: 0;
+    font-family: var(--k-display);
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--k-ink);
+  }
+
+  &__hint {
+    margin: 4px 0 0;
+    font-size: 13.5px;
+    color: var(--k-muted);
+  }
+
+  &__list {
+    display: grid;
+    gap: 10px;
+    margin-top: 12px;
+  }
+}
+
+.k-offer {
+  display: grid;
+  grid-template-columns: 20px 42px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1.5px solid var(--k-line);
+  border-radius: 16px;
+  background: var(--k-card);
+  cursor: pointer;
+  transition: border-color 140ms ease, background-color 140ms ease;
+
+  &:hover {
+    border-color: var(--k-line-strong);
+  }
+
+  &.-on {
+    border-color: var(--k-green-t);
+    background: var(--k-green-soft);
+  }
+
+  &.-disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  &__dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--k-line-strong);
+    background: #fff;
+  }
+
+  &.-on &__dot {
+    border-color: var(--k-green-t);
+    background: var(--k-green);
+    box-shadow: inset 0 0 0 3px #fff;
+  }
+
+  &__mark {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--k-line);
+    background: #fff;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
+
+  &__name {
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--k-ink);
+  }
+
+  &__link {
+    width: max-content;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--k-green-t) !important;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+  }
+
+  &__pickup {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12.5px;
+    color: var(--k-muted);
+  }
+
+  &__price {
+    font-size: 18px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--k-ink);
+  }
+}
+
+/* Selldone's floating buy bar (shown once the main button scrolls away),
+   as one compact Kalio row: packshot, name, add. */
+.sticky-buy-widget {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  width: min(460px, calc(100vw - 24px)) !important;
+  padding: 10px 10px 10px 12px !important;
+  border: 1px solid var(--k-line) !important;
+  border-radius: var(--k-radius) !important;
+  background: var(--k-card) !important;
+  box-shadow: 0 18px 40px -18px rgba(20, 20, 20, 0.45) !important;
+  font-family: var(--k-body);
+
+  .sticky-product {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .sticky-content {
+    min-width: 0;
+  }
+
+  // the name on two lines at most, so a phone shows all of it
+  .sticky-title {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 14.5px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--k-ink);
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .sticky-title-en {
+    overflow: hidden;
+    font-size: 12.5px;
+    color: var(--k-muted);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .v-avatar {
+    width: 44px !important;
+    height: 44px !important;
+    margin-inline-end: 10px !important;
+    background: var(--k-tint, var(--k-wash));
+    border-radius: 12px !important;
+
+    img {
+      mix-blend-mode: multiply;
+    }
+  }
+
+  .sticky-action {
+    flex: 0 0 auto;
+
+    .widget-buttons {
+      min-height: 0 !important; // Selldone sets 72px inline
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    // Selldone's button keeps 220px at least: on a phone that left the
+    // name "Dairy…" (5 November 2026); here it is as wide as its words.
+    .s--shop-buy-button {
+      min-width: 0 !important;
+      min-height: 44px !important;
+      height: 44px !important;
+      padding: 0 18px !important;
+      font-size: 14.5px !important;
+    }
+  }
+
+  /* Below a laptop it is a bar across the page at the foot of the window,
+     not a card floating over the right half of the price. */
+  @media (max-width: 960px) {
+    left: 12px !important;
+    right: 12px !important;
+    bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+    width: auto !important;
+    max-width: none !important;
+    border-radius: var(--k-radius) !important;
+
+    &.-hide {
+      bottom: 0 !important;
+    }
+
+    &.-in-cart {
+      left: auto !important;
+      width: min(460px, calc(100vw - 24px)) !important;
+    }
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Under the overview ▆▆▆▆▆▆▆▆ */
+
+.k-pdp-block {
+  margin-top: 64px;
+  text-align: start;
+  font-family: var(--k-body);
+
+  &__title {
+    margin: 0 0 18px;
+    font-family: var(--k-display);
+    font-size: clamp(26px, 2.6vw, 34px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--k-ink);
+  }
+
+  > .v-container,
+  .v-container {
+    max-width: none !important;
+    padding-inline: 0 !important;
+  }
+}
+
+.k-highlights {
+  &__cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    gap: 16px;
+  }
+
+  &__list {
+    display: grid;
+    gap: 14px;
+    margin: 0;
+    padding: 22px 24px;
+    border-radius: 22px;
+    background: var(--k-green-soft);
+    list-style: none;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--k-ink-2);
+    }
+
+    b {
+      display: block;
+      font-weight: 600;
+      color: var(--k-ink);
+    }
+
+    .v-icon {
+      flex: 0 0 auto;
+      margin-top: 1px;
+      color: var(--k-green-t);
+    }
+
+    &.-cons {
+      background: var(--k-wash);
+
+      .v-icon {
+        color: var(--k-muted);
+      }
+    }
+  }
+}
+
+/* The description: a readable column in the body face. */
+.k-about {
+  max-width: 820px;
+
+  p,
+  li {
+    font-family: var(--k-body) !important;
+    font-size: 16.5px !important;
+    line-height: 1.7 !important;
+    color: var(--k-ink-2) !important;
+    text-align: start !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--k-display) !important;
+    color: var(--k-ink) !important;
+    text-align: start !important;
+  }
+
+  /* Selldone's article viewer nests four padded wrappers and a 64px top
+     margin; under Kalio's heading the text starts at the column edge. */
+  .master-article-container,
+  .samin-article-widget,
+  .s-article-editor,
+  .review-style,
+  .v-container,
+  .container,
+  article {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .u-article-body-view {
+    padding-top: 0 !important;
+  }
+}
+
+/* Reviews (design A of the reviews options, 7 November 2026; KalioReviews):
+   a summary column — the score, the stars, how many rated it, the shop's
+   criteria, and the sign-in prompt or a buyer's own rating — beside
+   Selldone's comments, restyled as a quiet list: name, date, the buyer
+   badge, the writer's stars, the text and the shop's reply. */
+.k-reviews {
+  h1,
+  h2,
+  h3,
+  .text-h1,
+  .text-h2,
+  .text-h3,
+  .text-h4 {
+    font-family: var(--k-display) !important;
+    color: var(--k-ink) !important;
+    text-align: start;
+  }
+
+  .v-btn {
+    border-radius: var(--k-pill) !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+  }
+
+  .text-uppercase {
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+  }
+}
+
+.k-rv {
+  display: grid;
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+  margin-top: 20px;
+
+  @media (max-width: 959px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  /* ── the summary column ── */
+  &__sum {
+    position: sticky;
+    top: 20px;
+    padding: 24px;
+    border-radius: 24px;
+    background: var(--k-wash);
+
+    @media (max-width: 959px) {
+      position: static;
+    }
+
+    .k-stars {
+      --k-star: 22px;
+      margin-top: 8px;
+    }
+  }
+
+  &__big {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+
+    b {
+      font-family: var(--k-display);
+      font-size: 56px;
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--k-green-deep-t);
+    }
+
+    span {
+      font-size: 16px;
+      color: var(--k-muted);
+    }
+  }
+
+  &__count {
+    margin: 8px 0 0;
+    font-size: 14px;
+    color: var(--k-muted);
+  }
+
+  &__none,
+  &__note {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--k-ink-2);
+  }
+
+  &__note {
+    margin-top: 18px;
+    color: var(--k-muted);
+    font-size: 14px;
+  }
+
+  /* the h3 also gets the display face from .k-reviews; this is a label */
+  & &__h {
+    margin: 22px 0 10px;
+    font-family: var(--k-body) !important;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--k-muted) !important;
+  }
+
+  &__crit {
+    display: grid;
+    gap: 10px;
+
+    > div {
+      display: grid;
+      grid-template-columns: minmax(0, 96px) minmax(0, 1fr) 30px;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    span:first-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--k-ink-2);
+    }
+
+    b {
+      font-size: 13.5px;
+      text-align: end;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  &__track {
+    height: 8px;
+    border-radius: 99px;
+    background: #ebe6db;
+    overflow: hidden;
+
+    i {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--k-green);
+    }
+  }
+
+  &__guest {
+    display: grid;
+    gap: 12px;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid var(--k-line);
+
+    p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--k-ink-2);
+    }
+
+    .k-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  &.-rated &__sum > .k-rv__guest:first-child,
+  &:not(.-rated) &__guest {
+    margin-top: 18px;
+  }
+
+  /* A buyer's own rating: Selldone's input rows, and its summary of the
+     product (stars and bars, already shown above) hidden. */
+  &__rate {
+    .s--shop-product-rating-view {
+      position: relative;
+    }
+
+    .s--shop-product-rating-view .justify-center {
+      display: none !important;
+    }
+
+    .v-btn {
+      border-radius: var(--k-pill) !important;
+    }
+
+    .v-btn--variant-elevated {
+      background: var(--k-green) !important;
+      color: var(--bk-on-brand) !important;
+      box-shadow: none !important;
+    }
+
+    p.small {
+      margin: 0 0 8px;
+      font-size: 14px;
+      color: var(--k-muted);
+      opacity: 1 !important;
+    }
+  }
+
+  /* ── the reviews ── */
+  &__list {
+    min-width: 0;
+
+    /* Selldone's list keeps a fifth of the screen for an empty list. */
+    .min-height-20vh {
+      min-height: 0 !important;
+    }
+
+    > div > .mx-auto {
+      padding: 0 !important;
+    }
+
+    /* Selldone's empty list says "Write first comment..." in grey capitals,
+       also to a guest, who cannot write until signing in (the prompt is in
+       the summary column): a plain "No reviews yet." instead. */
+    .text-subtitle-2.text-muted.text-center {
+      padding: 4px 0 18px;
+      text-align: start !important;
+      font-size: 0 !important;
+      font-weight: 400 !important;
+      color: var(--k-muted) !important;
+
+      &::after {
+        content: "No reviews yet.";
+        font-size: 15px;
+      }
+    }
+
+    /* The writing box. */
+    .comment-form {
+      margin-bottom: 8px;
+      border: 1px solid var(--k-line);
+      border-radius: 18px;
+      background: var(--k-paper);
+    }
+
+    .comment-placeholder > div {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 18px !important;
+      font-weight: 600;
+      color: var(--k-green-deep-t);
+      cursor: pointer;
+
+      .v-icon {
+        color: var(--k-green-t);
+      }
+    }
+
+    .comment-form .pa-5 {
+      padding: 14px 18px !important;
+    }
+
+    .widget-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+
+      .v-btn {
+        height: 42px !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+      }
+
+      .v-btn.bg-primary,
+      .v-btn[class*="primary"] {
+        background: var(--k-green) !important;
+        color: var(--bk-on-brand) !important;
+      }
+    }
+
+    /* The guest's slot (the prompt is in the summary) keeps no space. */
+    > div > .mx-auto > .mb-16 {
+      display: none;
+    }
+
+    /* Each review: a row on the page, not a floating card. */
+    .comment-item {
+      margin: 0 !important;
+      padding: 18px 0 !important;
+      border: 0;
+      border-radius: 0;
+      background: none;
+      box-shadow: none !important;
+    }
+
+    /* Each comment sits in its own wrapper, so the rule goes between
+       wrappers. */
+    :has(> .comment-item) + :has(> .comment-item) > .comment-item {
+      border-top: 1px solid var(--k-line);
+    }
+
+    [class*="mb-6"] > .comment-item,
+    .mb-6 {
+      margin-bottom: 0 !important;
+    }
+
+    .comment-item > .v-row {
+      flex-wrap: nowrap;
+      margin-bottom: 4px !important;
+    }
+
+    .comment-item .v-avatar {
+      width: 36px !important;
+      height: 36px !important;
+      flex: none;
+    }
+
+    .comment-author-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+
+      b {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 4px 8px;
+        font-size: 15px;
+        color: var(--k-ink);
+      }
+
+      time {
+        font-size: 13px;
+        color: var(--k-muted);
+      }
+    }
+
+    /* "Verified buyer" in Kalio's green, as words. */
+    .comment-author-info .v-chip {
+      height: auto !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: none !important;
+      color: var(--k-green-t) !important;
+      font-size: 12.5px !important;
+      font-weight: 600;
+
+      .v-chip__underlay,
+      .v-chip__overlay {
+        display: none;
+      }
+
+      .v-icon {
+        font-size: 14px !important;
+        margin-inline-end: 3px !important;
+      }
+    }
+
+    /* The writer's own ratings: their stars stay, at the start of the
+       review; the per-criterion bars are folded away. */
+    .comment-body > .v-row {
+      margin: 6px 0 0 !important;
+
+      /* Vuetify's v-col with breakpoints has no plain .v-col class. */
+      > [class*="v-col"] {
+        flex: 0 0 auto !important;
+        max-width: none !important;
+        width: auto !important;
+        padding: 0 !important;
+        justify-content: flex-start !important;
+      }
+
+      > [class*="v-col"]:first-child {
+        display: none !important;
+      }
+
+      .v-rating__item .v-icon {
+        color: var(--k-amber) !important;
+      }
+
+      .v-rating__item .v-btn {
+        width: 18px !important;
+        height: 18px !important;
+      }
+
+      .v-rating__item .v-icon {
+        font-size: 18px !important;
+      }
+    }
+
+    .comment-body p.typo-body {
+      margin: 8px 0 0 !important;
+      font-size: 15px;
+      line-height: 1.55;
+      text-align: start !important;
+      color: var(--k-ink-2);
+    }
+
+    /* The shop's reply. */
+    .comment-body .v-sheet {
+      margin-top: 12px !important;
+      padding: 12px 14px !important;
+      border-radius: 14px !important;
+      background: var(--k-green-soft) !important;
+      font-size: 14px;
+      color: var(--k-ink-2);
+
+      > b {
+        font-size: 13px;
+        color: var(--k-green-deep-t);
+      }
+
+      .v-avatar {
+        width: 22px !important;
+        height: 22px !important;
+        background: transparent !important;
+      }
+
+      .v-icon {
+        color: var(--k-green-t) !important;
+      }
+
+      p.typo-body {
+        margin-top: 4px !important;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+// Selldone paints the spec table cold grey (#e5e5e5); here the warm well
+// the rest of the page uses (5 November 2026).
+.k-pdp-spec .s--product-spec,
+.s--product-spec.u--product-spec-table {
+  border: 1px solid var(--k-line);
+  border-radius: var(--k-radius);
+  background: var(--k-well) !important;
+  overflow: hidden;
+}
+
+.k-pdp-aisles {
+  margin-top: 56px;
+  margin-bottom: 64px; // clear of the footer band (it touched it, 5 Nov 2026)
+}
+
+/* The aisle index that closes the product page (KalioAisleIndex): a
+   directory, four lines across. */
+.k-aisle-index {
+  text-align: start;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px 20px;
+  }
+
+  &__item {
+    display: grid;
+    grid-template-columns: 60px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 10px 10px 8px;
+    border-radius: 18px;
+    color: var(--k-ink) !important;
+    text-decoration: none;
+    transition: background-color 140ms ease;
+
+    &:hover {
+      background: var(--k-well);
+
+      .k-aisle-index__go {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    &.-skeleton .k-aisle-index__well,
+    &.-skeleton .k-aisle-index__bar {
+      background: var(--k-well);
+    }
+  }
+
+  &__well {
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: var(--k-well);
+
+    img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+  }
+
+  &__item:hover &__well {
+    background: #fff;
+  }
+
+  &__bar {
+    height: 14px;
+    border-radius: 7px;
+  }
+
+  &__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  &__name {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  &__lede {
+    overflow: hidden;
+    font-size: 13px;
+    line-height: 1.35;
+    color: var(--k-muted);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &__go {
+    color: var(--k-muted);
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 140ms ease, transform 140ms ease;
+  }
+
+  @media (max-width: 1100px) {
+    &__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 760px) {
+    &__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2px 8px;
+    }
+
+    &__item {
+      grid-template-columns: 48px minmax(0, 1fr);
+      gap: 10px;
+      padding: 8px 6px;
+    }
+
+    &__well {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+
+      img {
+        width: 36px;
+        height: 36px;
+      }
+    }
+
+    &__name {
+      font-size: 14px;
+    }
+
+    &__lede,
+    &__go {
+      display: none !important; /* Vuetify's .v-icon sets its own display */
+    }
+  }
+}
+
+@media (max-width: 760px) {
+  .k-crumbs__here {
+    max-width: 24ch;
+  }
+
+  /* The product's name is the heading just below; on a phone the trail
+     ends at its aisle and keeps to one line. */
+  .k-crumbs {
+    flex-wrap: nowrap;
+    padding: 12px 0 10px;
+
+    .k-crumbs__here,
+    .k-crumbs__here + .v-icon,
+    > .v-icon:has(+ .k-crumbs__here) {
+      display: none;
+    }
+  }
+
+  .k-pdp-block {
+    margin-top: 44px;
+  }
+
+  .k-offer {
+    grid-template-columns: 20px 38px minmax(0, 1fr) auto;
+    padding: 12px;
+
+    &__mark {
+      width: 38px;
+      height: 38px;
+    }
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ In the basket (KalioBasketLine) ▆▆▆▆▆▆▆▆
+
+   Design C: how many are in the basket and from whom, then the quantity
+   in an outlined stepper beside a solid "Checkout · total". */
+
+.k-basket-line {
+  margin-top: 16px;
+  font-family: var(--k-body);
+
+  &__cap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: var(--k-ink-2);
+
+    i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--k-green);
+    }
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 172px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  &__qty {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr) 52px;
+    align-items: center;
+    height: 58px;
+    border: 1.5px solid var(--k-line-strong);
+    border-radius: var(--k-pill);
+    background: var(--k-card);
+    text-align: center;
+
+    button {
+      display: grid;
+      place-items: center;
+      height: 100%;
+      border-radius: var(--k-pill);
+      color: var(--k-green-deep-t) !important;
+      cursor: pointer;
+      transition: background-color 140ms ease;
+
+      &:hover:not(:disabled) {
+        background: var(--k-wash);
+      }
+
+      &:disabled {
+        opacity: 0.4;
+        cursor: default;
+      }
+    }
+
+    output {
+      font-size: 18px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--k-ink);
+    }
+  }
+
+  &.-busy &__qty output {
+    opacity: 0.55;
+  }
+
+  &__go {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 58px;
+    padding: 0 20px;
+    border-radius: var(--k-pill);
+    background: var(--k-green-deep);
+    color: var(--bk-on-brand) !important;
+    font-size: 16.5px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 140ms ease;
+
+    &:hover {
+      background: var(--k-green);
+    }
+
+    span[aria-hidden] {
+      opacity: 0.55;
+      font-weight: 500;
+    }
+
+    .u--price {
+      color: var(--bk-on-brand) !important;
+    }
+  }
+
+  @media (max-width: 420px) {
+    &__row {
+      grid-template-columns: 140px minmax(0, 1fr);
+    }
+
+    &__qty {
+      grid-template-columns: 44px minmax(0, 1fr) 44px;
+    }
+
+    &__go {
+      gap: 6px;
+      padding: 0 14px;
+      font-size: 15px;
+    }
+  }
+}
+
+
+/* "About this product" ends where its text ends: Selldone's article box
+   keeps a 64 px margin under it, which doubled the gap before Reviews
+   (176 px) (5 November 2026). */
+.k-pdp-block .master-article-container.my-16 {
+  margin-bottom: 0 !important;
+}
+
+/* A product block with nothing in it (the shipping block when the shop has
+   no shipping notes) kept its 64 px of margin as a hole in the page. */
+.k-pdp-block:empty {
+  display: none !important;
+}
