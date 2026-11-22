@@ -37,7 +37,7 @@
               type="button"
               @click="at = i"
             >
-              <img :src="ph.thumb" alt="" loading="lazy" />
+              <img :src="ph.thumb" alt="" decoding="async" loading="eager" />
             </button>
           </li>
         </ul>
@@ -91,7 +91,7 @@
               type="button"
               @click="current_variant = tl.v"
             >
-              <span class="opt-ph"><img v-if="tl.img" :src="tl.img" alt="" loading="lazy" /><i v-else-if="tl.swatch" :style="{ background: tl.swatch }" aria-hidden="true" class="ly-opt-sw"></i></span>
+              <span class="opt-ph"><img v-if="tl.img" :src="tl.img" alt="" decoding="async" loading="eager" /><i v-else-if="tl.swatch" :style="{ background: tl.swatch }" aria-hidden="true" class="ly-opt-sw"></i></span>
               <span class="opt-n">{{ tl.label }}</span>
               <small v-if="tl.price !== null" class="opt-p money">{{ money(tl.price) }}</small>
             </button>
