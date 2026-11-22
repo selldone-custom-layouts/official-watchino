@@ -294,3 +294,48 @@ html .ly .wt-ticks { border-radius: var(--ly-r-in); }
 }
 html .ly .pc .pc-t { overflow-wrap: break-word; word-break: normal; hyphens: manual; }
 @media (max-width: 600px) { html .ly .pc { padding: 14px; } }
+
+/* ── 1.0.2: the product tabs in the static site's language — one container, one start edge, hairline rules ── */
+html .ly .pd-tabs .tl { justify-content: flex-start; gap: 0; margin: 0 0 32px; padding: 0; box-shadow: inset 0 -1px 0 var(--ly-line); }
+html .ly .pd-tabs .tl-b { min-height: 48px; padding: 12px 22px; border-radius: var(--ly-r-in) var(--ly-r-in) 0 0; background: transparent; box-shadow: none; color: var(--ly-muted); font: 500 12px/1.2 var(--ly-sans); letter-spacing: .14em; text-transform: uppercase; }
+html .ly .pd-tabs .tl-b:first-child { padding-inline-start: 0; }
+html .ly .pd-tabs .tl-b:hover { color: var(--ly-ink); }
+html .ly .pd-tabs .tl-b[aria-selected="true"] { color: var(--ly-ink); background: transparent; font-weight: 600; }
+html .ly .pd-tabs .tp { max-width: none; margin-inline: 0; }
+html .ly .pd-tabs .tl-b:first-child:focus-visible { padding-inline-start: 12px; }
+/* Description: the product's own text, one reading column from the same edge */
+html .ly .wt-desc { display: block; }
+html .ly .wt-read, html .ly .pd-tabs .ly-pd-article.wt-read { max-width: 68ch; margin: 0; padding: 0; border: 0; color: var(--ly-ink); font: 400 16.5px/1.72 var(--ly-sans); }
+html .ly .wt-read p { margin: 0 0 1em; color: var(--ly-muted); }
+html .ly .wt-read :is(h2, h3) { font: 400 22px/1.25 var(--ly-serif); color: var(--ly-ink); margin: 1.4em 0 .5em; }
+html .ly .wt-read :is(h2, h3):first-child { margin-top: 0; }
+html .ly .wt-read img { max-width: 100%; height: auto; border-radius: var(--ly-r-pn); }
+html .ly .wt-sub, html .ly .pd-tabs .pd-sub { font: 600 11px/1.4 var(--ly-sans); letter-spacing: .18em; text-transform: uppercase; color: var(--ly-muted); margin: 40px 0 6px; }
+/* pros: an even list, one row each, the rows on hairlines */
+html .ly .wt-pros { display: block; max-width: 920px; }
+html .ly .wt-pros li { display: grid; grid-template-columns: 22px minmax(140px, 260px) minmax(0, 1fr); gap: 14px 18px; align-items: baseline; padding: 14px 0; box-shadow: inset 0 -1px 0 var(--ly-line); }
+html .ly .wt-pros .ck { width: 22px; height: 22px; align-self: start; display: grid; place-items: center; color: var(--ly-act-text); }
+html .ly .wt-pros .ck .i { width: 14px; height: 14px; }
+html .ly .wt-pros b { font-weight: 600; font-size: 14.5px; }
+html .ly .wt-pro-p { color: var(--ly-muted); font-size: 14px; line-height: 1.55; }
+@media (max-width: 640px) {
+  html .ly .wt-pros li { grid-template-columns: 22px minmax(0, 1fr); }
+  html .ly .wt-pro-p { grid-column: 2; }
+}
+/* Additional information: the shop's own groups as hairline tables */
+html .ly .pd-tabs .spec { gap: 8px 56px; max-width: none; }
+html .ly .pd-tabs .spec-g { background: transparent; border-radius: 0; padding: 0; }
+html .ly .pd-tabs .spec-g .pd-sub { margin: 0 0 6px; }
+html .ly .pd-tabs .spec-t > div { border-top: 0; box-shadow: inset 0 -1px 0 var(--ly-line); padding: 12px 0; font-size: 14px; }
+html .ly .pd-tabs .spec-t dt { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ly-muted); }
+html .ly .pd-tabs .spec-t dd { font-family: var(--wt-mono); font-size: 13px; }
+/* Reviews: the honest empty state at the same edge */
+html .ly .pd-tabs .revs, html .ly .pd-tabs .revs.ly-solo { max-width: 680px; margin: 0; }
+html .ly .pd-tabs .revs .empty, html .ly .pd-tabs .crit { background: var(--wt-pure); box-shadow: inset 0 0 0 1px var(--ly-line); border-radius: var(--ly-r-pn); }
+html .ly .pd-tabs .revs .empty { align-items: flex-start; text-align: start; }
+/* finishes: a variant with its own photo shows it (contain); one without shows its colour as a circle
+   ("#a/#b" a hard 135° split, swatchBg()), with a visible inset edge so white still reads; never an empty box */
+html .ly .opt .opt-ph:has(.ly-opt-sw) { display: grid; place-items: center; padding: 0; }
+html .ly .opt .ly-opt-sw { display: block; width: 58%; aspect-ratio: 1; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(15, 23, 41, .34); }
+html.ly-dark .ly .opt .ly-opt-sw { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .45); }
+html .ly .opts-l .wt-ord { margin-inline-start: 12px; font: 400 11px/1 var(--wt-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ly-muted); }

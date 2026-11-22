@@ -73,6 +73,7 @@ export function deliveryLines(shop: any): DeliveryLine[] {
   const open = f.hours ? (f.everyDay ? t("ly.hdr.openEvery", "Open every day {hours}", { hours: f.hours }) : f.hours) : "";
   for (const w of f.ways) {
     if (w.pickup) {
+      if (!w.pickups.length) continue; /* no pickup point: checkout cannot offer it */
       out.push({
         key: "pickup-" + w.id,
         icon: "store",
@@ -99,7 +100,7 @@ export function deliveryLines(shop: any): DeliveryLine[] {
       });
     }
   }
-  if (f.gateway) out.push({ key: "pay", icon: "cash", title: f.gateway.name, line: f.gateway.description });
+  if (f.gateway) out.push({ key: "pay", icon: "cash", title: f.gateway.cod ? t("wt.hdr.cod", "Cash on delivery") : f.gateway.name, line: f.gateway.description });
   return out;
 }
 

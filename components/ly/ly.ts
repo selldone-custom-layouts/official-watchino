@@ -265,7 +265,8 @@ export function shopFacts(shop: any): ShopFacts {
   const ready = !!shop?.info;
   const info = shop?.info || {};
   const ways = deliveryWays(shop);
-  const pickup = ways.find((w) => w.pickup) || null;
+  /* a pickup way counts only with a pickup point: without one, checkout cannot offer it (Watchino 1.0.2) */
+  const pickup = ways.find((w) => w.pickup && w.pickups.length) || null;
   const point = pickup?.pickups?.[0] || null;
   const note = String(point?.message || "");
   const days: string[] = Array.isArray(info.days_open) ? info.days_open : [];

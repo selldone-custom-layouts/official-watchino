@@ -31,24 +31,23 @@
       </div>
 
       <div id="tp-desc" :hidden="cur !== 'desc'" aria-labelledby="tb-desc" class="tp" role="tabpanel">
-        <div :class="['pd-desc', { 'ly-solo': !pros.length }]">
-          <div class="pd-lead">
+        <!-- Watchino: the product's own text in one reading column, then its pros as an even list on hairlines -->
+        <div class="wt-desc">
+          <div v-if="articleBody" class="ly-pd-article wt-read" v-html="articleBody"></div>
+          <div v-else class="wt-read">
             <p v-for="(l, i) in lead" :key="i">{{ l }}</p>
           </div>
           <template v-if="pros.length">
-            <h3 class="pd-sub">{{ t("ly.pd.love", "Why you’ll love it") }}</h3>
-            <ul class="pros">
+            <h3 class="wt-sub">{{ t("ly.pd.love", "Why you’ll love it") }}</h3>
+            <ul class="wt-pros">
               <li v-for="(x, i) in pros" :key="i">
                 <span class="ck"><ly-icon name="check" /></span>
-                <div>
-                  <b>{{ x[0] }}</b>
-                  <p v-if="x[1]">{{ x[1] }}</p>
-                </div>
+                <b>{{ x[0] }}</b>
+                <span v-if="x[1]" class="wt-pro-p">{{ x[1] }}</span>
               </li>
             </ul>
           </template>
         </div>
-        <div v-if="articleBody" class="ly-pd-article" v-html="articleBody"></div>
       </div>
 
       <div id="tp-info" :hidden="cur !== 'info'" aria-labelledby="tb-info" class="tp" role="tabpanel">
@@ -99,8 +98,7 @@
 import LyIcon from "../LyIcon.vue";
 import LyEmpty from "../ui/LyEmpty.vue";
 import KalioReviews from "../../kalio/product/KalioReviews.vue";
-import { percentOff } from "../../kalio/kalio-catalog";
-import { prosOf, ratingNames, specGroups, specValue, unitOf } from "../ly";
+import { prosOf, ratingNames, specGroups, specValue } from "../ly";
 import { numberWord } from "./pd";
 import { EventBus } from "@selldone/components-vue/utils/events/EventBus.ts";
 import { t } from "../../kalio/i18n/kalio-i18n";
@@ -140,11 +138,8 @@ export default {
       const out = [];
       const finish = specValue(p, "Visual Finish") || specValue(p, "Surface");
       if (finish) out.push(finish.charAt(0).toUpperCase() + finish.slice(1).replace(/\.?$/, "."));
-      const pairing = specValue(p, "Suggested Pairing");
-      const unit = unitOf(p).toLowerCase();
-      const off = percentOff(this.$store.getters.getShop, p);
-      const sold = pairing ? t("ly.pd.soldPair", "Sold as one {unit}, and good with {pairing}.", { unit, pairing: pairing.toLowerCase() }) : t("ly.pd.sold", "Sold as one {unit}.", { unit });
-      out.push(off > 0 ? `${sold} ${t("ly.pd.offIn", "{off}% off, already in the price.", { off })}` : sold);
+      /* Watchino: no "Sold as one <unit>" (a bakery line); without the shop's own text, an honest pointer */
+      if (!out.length) out.push(t("wt.pd.noText", "The shop has not written a description for this reference yet. Its specification is under Additional information."));
       return out;
     },
     articleBody() {

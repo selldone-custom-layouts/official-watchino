@@ -51,6 +51,8 @@ const fr: Record<string, string> = {
   "wt.spot.eb": "La référence la plus précieuse",
   "wt.spot.view": "Voir la référence",
   "wt.ls.log": "Échelle logarithmique",
+  "wt.pd.noText": "La boutique n’a pas encore rédigé de description pour cette référence. Ses caractéristiques figurent sous « Informations complémentaires ».",
+  "wt.pd.finishOf": "Finition {i} sur {n}",
 };
 
 export default fr;

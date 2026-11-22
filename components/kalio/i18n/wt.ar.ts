@@ -55,6 +55,8 @@ const ar: Record<string, string> = {
   "wt.spot.eb": "الطراز الأثمن",
   "wt.spot.view": "شاهد الطراز",
   "wt.ls.log": "مقياس لوغاريتمي",
+  "wt.pd.noText": "لم يكتب المتجر وصفًا لهذا الطراز بعد. مواصفاته في «معلومات إضافية».",
+  "wt.pd.finishOf": "اللمسة {i} من {n}",
 };
 
 export default ar;

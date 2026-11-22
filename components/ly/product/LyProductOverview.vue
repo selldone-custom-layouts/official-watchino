@@ -79,7 +79,7 @@
         <!-- Options: only for a product that really has them. -->
         <div v-if="tiles.length" class="opts">
           <p class="opts-l">
-            {{ dimWord }}<span v-if="currentLabel" class="opts-v">{{ currentLabel }}</span>
+            {{ dimWord }}<span v-if="currentLabel" class="opts-v">{{ currentLabel }}</span><span v-if="tiles.length > 1 && tileIndex > 0" class="wt-ord">{{ t("wt.pd.finishOf", "Finish {i} of {n}", { i: tileIndex, n: tiles.length }) }}</span>
           </p>
           <div :aria-label="dimWord" class="opts-g" role="radiogroup">
             <button
@@ -262,6 +262,10 @@ export default {
           price: own ? moneyOf(this.shop, this.$product, v, this.currency).now : null,
         };
       });
+    },
+    /* the static site's ordinal: colour is never the only indicator */
+    tileIndex() {
+      return this.tiles.findIndex((y) => this.current_variant && y.v.id === this.current_variant.id) + 1;
     },
     currentLabel() {
       const x = this.tiles.find((y) => this.current_variant && y.v.id === this.current_variant.id);
