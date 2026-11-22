@@ -259,3 +259,12 @@ html .ly .hdr .nav-a { font-size: 11.5px; letter-spacing: .12em; padding-inline:
   .ly .wt-cat-art { height: 88px; margin-bottom: 14px; }
   .ly .wt-cat b { font-size: 17px; }
 }
+
+/* ── product page: the static site's details column ── */
+html .ly .pd .pc-off, html .ly .pd-price .save { display: none !important; } /* no badge, no "save" chip: the struck figure says it */
+html .ly .pd-price .now { font: 500 clamp(26px, 2.4vw, 34px)/1.1 var(--wt-mono); letter-spacing: -.01em; }
+html .ly .pd-price .was { font-size: 15px; }
+html .ly .pd .pd-t { font-weight: 400; letter-spacing: -.01em; }
+html .ly .pd .pd-main { background: var(--wt-pure); box-shadow: inset 0 0 0 1px var(--wt-rule); border-radius: var(--ly-r-pn); }
+html .ly .pd .pd-th { background: var(--wt-pure); }
+html .ly .opt .opt-ph { background: var(--wt-pure); }
