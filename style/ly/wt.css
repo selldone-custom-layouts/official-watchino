@@ -344,3 +344,7 @@ html .ly .wt-read :is(b, strong) { color: var(--ly-ink); }
 html .ly .pd-tabs .revs, html .ly .pd-tabs .revs.ly-solo { max-width: 980px; }
 html .ly .pd-tabs .crit li { grid-template-columns: minmax(0, 1fr) 72px auto; }
 html .ly .pd-tabs .crit-bar { background: var(--ly-line); }
+/* a finish with both a photo and a colour: the colour circle under the photo until the photo is in */
+html .ly .opt .opt-ph { display: grid; place-items: center; }
+html .ly .opt .opt-ph > * { grid-area: 1 / 1; }
+html .ly .opt .opt-ph:has(.ly-opt-sw) img { width: 84%; height: 84%; position: relative; }

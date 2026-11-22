@@ -91,7 +91,7 @@
               type="button"
               @click="current_variant = tl.v"
             >
-              <span class="opt-ph"><img v-if="tl.img" :src="tl.img" alt="" decoding="async" loading="eager" /><i v-else-if="tl.swatch" :style="{ background: tl.swatch }" aria-hidden="true" class="ly-opt-sw"></i></span>
+              <span class="opt-ph"><!-- Watchino: the colour holds the place until the finish photo has loaded, so a tile is never empty --><i v-if="tl.swatch && !(tl.img && wtLoaded[tl.v.id])" :style="{ background: tl.swatch }" aria-hidden="true" class="ly-opt-sw"></i><img v-if="tl.img" :src="tl.img" alt="" decoding="async" loading="eager" @load="wtLoaded[tl.v.id] = true" /></span>
               <span class="opt-n">{{ tl.label }}</span>
               <small v-if="tl.price !== null" class="opt-p money">{{ money(tl.price) }}</small>
             </button>
@@ -191,7 +191,7 @@ export default {
   emits: ["reviews"],
 
   data() {
-    return { at: 0, barOn: false, ly };
+    return { at: 0, barOn: false, ly, wtLoaded: {} };
   },
 
   computed: {
