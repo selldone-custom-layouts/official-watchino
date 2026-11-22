@@ -19,4 +19,7 @@ export const EN: Record<string, string> = withSkinWords({ ...baseEn, ...bakiniEn
 
 export const LOADERS: Record<string, () => Promise<any>> = {
   ar: () => import("./lang-ar"),
+  de: () => import("./lang-de"),
+  es: () => import("./lang-es"),
+  fr: () => import("./lang-fr"),
 };

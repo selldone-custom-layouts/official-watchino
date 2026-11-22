@@ -75,24 +75,9 @@
   },
   "home_sections": [
     {
-      "section": "hero",
-      "variant": "split",
+      "section": "wt-home",
+      "variant": "static",
       "band": false
-    },
-    {
-      "section": "about",
-      "variant": "numbers",
-      "band": true
-    },
-    {
-      "section": "collections",
-      "variant": "rows",
-      "band": false
-    },
-    {
-      "section": "journal",
-      "variant": "photo",
-      "band": true
     }
   ],
   "photo_slots": [

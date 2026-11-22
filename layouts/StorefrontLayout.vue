@@ -51,6 +51,8 @@
   <div class="s--storefront-layout">
     <!-- The in-app splash, the domain loading frame's picture kept until the page is ready (first load of a session) -->
     <ly-splash></ly-splash>
+    <!-- Watchino: the chapter-ring index rail (fixed, from 1024 px) -->
+    <wt-rail></wt-rail>
     <!-- ▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆ Primary Header ▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆ -->
     <!-- This is the primary header at the top of the website, where you can display your site's name, logo, user avatar, and navigation menu. -->
 
@@ -187,6 +189,7 @@
 
 <script lang="ts">
 import LyHeader from "../components/ly/shell/LyHeader.vue";
+import WtRail from "../components/ly/watchino/WtRail.vue";
 import LySplash from "../components/ly/shell/LySplash.vue";
 import LyFooter from "../components/ly/shell/LyFooter.vue";
 import SStorefrontTopMenu from "@selldone/components-vue/storefront/menu/header/SStorefrontTopMenu.vue";
@@ -222,6 +225,7 @@ export default {
     SStorefrontTopMenu,
 
     LyHeader,
+    WtRail,
     LySplash,
     LyFooter,
 

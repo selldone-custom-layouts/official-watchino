@@ -569,6 +569,8 @@ export default {
 <style lang="scss" src="./style/ly-sd.scss"></style>
 <style lang="scss" src="./style/ly-layout.scss"></style>
 <style src="./style/ly/variants.css"></style>
+<!-- Watchino: the static site's look (shell, rail, home, card, listing, product) -->
+<style src="./style/ly/wt.css"></style>
 
 <style lang="scss">
 /*

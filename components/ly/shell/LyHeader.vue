@@ -28,11 +28,7 @@
 
     <div class="topbar">
       <div class="wrap tb-in">
-        <ul v-if="facts.ready" :aria-label="t('ly.hdr.facts', 'Shop facts')" class="tb-l">
-          <li v-if="openLine">{{ openLine }}</li>
-          <li v-if="facts.gateway?.name">{{ facts.gateway.name }}</li>
-          <li v-if="facts.pickup && street">{{ t("ly.hdr.pickupAt", "Pickup at {street}", { street }) }}</li>
-        </ul>
+        <p v-if="facts.ready && announce" class="tb-l wt-ann">{{ announce }}</p>
         <ul :aria-label="t('ly.hdr.contact', 'Contact')" class="tb-r">
           <li v-if="regionOn" class="tb-rg">
             <button
@@ -47,8 +43,7 @@
               <ly-icon name="globe" /><span dir="ltr">{{ regionShort }}</span><ly-icon cls="chev" name="down" />
             </button>
           </li>
-          <li v-if="facts.ready && facts.phone" class="tb-tel"><a :href="tel" dir="ltr">{{ facts.phone }}</a></li>
-          <li v-if="facts.ready && facts.email" class="tb-mail"><a :href="'mailto:' + facts.email">{{ facts.email }}</a></li>
+
         </ul>
       </div>
     </div>
@@ -70,7 +65,7 @@
           <ul>
             <li class="has-dd">
               <button :aria-expanded="is('dd-shop') ? 'true' : 'false'" aria-controls="dd-shop" class="nav-a" type="button" @click="toggle('dd-shop', $event)">
-                {{ t("ly.hdr.shop", "Shop") }}<ly-icon cls="chev" name="down" />
+                {{ t("wt.hdr.collections", "Collections") }}<ly-icon cls="chev" name="down" />
               </button>
               <div id="dd-shop" :class="['dd', { open: is('dd-shop') }]">
                 <div class="dd-main">
@@ -78,7 +73,7 @@
                 <ul class="dd-list">
                   <li v-for="c in cats" :key="c.id">
                     <router-link :to="catTo(c)">
-                      <span class="dd-th"><img v-if="topImg(c)" :src="topImg(c)" alt="" loading="lazy" /></span>
+                      <span class="dd-th"><img v-if="topImg(c, null)" :src="topImg(c, null)" alt="" loading="lazy" /></span>
                       <span class="dd-tx"
                         ><b><bdi>{{ catTitle(c) }}</bdi></b><small v-if="fromPrice(c)">{{ t("ly.hdr.from", "From {price}", { price: fromPrice(c) }) }}</small></span
                       >
@@ -94,17 +89,14 @@
                 </router-link>
               </div>
             </li>
-            <li>
-              <router-link :aria-current="onDeals ? 'page' : undefined" :to="dealsTo" class="nav-a">{{ t("ly.hdr.deals", "Deals") }}</router-link>
+            <li v-if="topCol">
+              <router-link :to="catTo(topCol)" class="nav-a"><bdi>{{ catTitle(topCol) }}</bdi></router-link>
             </li>
             <li>
               <router-link :aria-current="onJournal ? 'page' : undefined" :to="blogTo" class="nav-a">{{ t("ly.hdr.journal", "Journal") }}</router-link>
             </li>
             <li>
-              <router-link :to="aboutTo" class="nav-a">{{ t("ly.hdr.about", "About") }}</router-link>
-            </li>
-            <li>
-              <router-link :to="contactTo" class="nav-a">{{ t("ly.hdr.contact", "Contact") }}</router-link>
+              <router-link :to="contactTo" class="nav-a">{{ t("wt.hdr.care", "Client care") }}</router-link>
             </li>
           </ul>
         </nav>
@@ -126,7 +118,7 @@
           >
             <ly-icon name="bag" /><span v-if="units" class="count">{{ units > 99 ? "99+" : units }}</span>
           </button>
-          <a :href="orderHref" class="btn sm alt order" @click.prevent="orderNow">{{ t("ly.hdr.orderNow", "Order now") }}</a>
+
         </div>
       </div>
 
@@ -321,6 +313,27 @@ export default {
       return this.ly.cats;
     },
     /* The most-ordered collection with its own photo (the Shop menu's feature card); none without a photo. */
+    /* the most precious collection (the static site's second link) */
+    topCol() {
+      void this.region.currency;
+      const ranked = this.cats
+        .map((c) => {
+          const now = inCat(c.id).map((p) => priceView(this.shop, p).now).sort((a, b) => a - b);
+          return { c, m: now.length ? now[Math.floor(now.length / 2)] : 0 };
+        })
+        .filter((x) => x.m > 0)
+        .sort((a, b) => b.m - a.m);
+      return ranked.length > 1 ? ranked[0].c : null;
+    },
+    /* the announcement bar: the shop's own delivery ways and payment */
+    announce() {
+      const f = this.facts;
+      const bits = [];
+      if (f.courier) bits.push(f.courier.distance ? t("wt.hdr.courier", "{name} within {km} km", { name: f.courier.title, km: f.courier.distance }) : f.courier.title);
+      if (f.shipping) bits.push(f.shipping.title);
+      if (f.gateways.some((g) => g.cod || g.type === "cod" || /cod/i.test(g.code || ""))) bits.push(t("wt.hdr.cod", "Cash on delivery"));
+      return bits.join(" · ");
+    },
     feature() {
       const ranked = this.cats
         .map((c, i) => ({ c, i, sold: inCat(c.id).reduce((s, p) => s + (p.sells || 0), 0) }))
@@ -525,9 +538,9 @@ export default {
       toggleLayer(id, e?.currentTarget || null);
     },
     /* The collection's best seller, as its thumbnail. */
-    topImg(c) {
+    topImg(c, size = 128) {
       const top = bySells(inCat(c.id))[0];
-      return top ? productImage(top, 128) : null;
+      return top ? productImage(top, size) : null;
     },
     /* The collection's lowest price now, in the visitor's currency. */
     fromPrice(c) {

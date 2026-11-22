@@ -125,12 +125,13 @@ export function family(input: string): { light: Family; dark: Family } {
   const dSoftInk = walk(0.86, 0.06, 0.004, (x) => contrast(x, dSoft) >= 4.6);
 
   const light: Family = {
-    bg: "#ffffff", band: l50, surface: l50, paper: "#ffffff", card: l50, "card-2": "#ffffff", plate: f(0.966, 0.018), tint2: l200,
+    /* Watchino: the page is the cool dial (a low-chroma tint of the hue), cards and tiles white */
+    dial: f(0.945, 0.012), bg: f(0.945, 0.012), band: l50, surface: l50, paper: "#ffffff", card: "#ffffff", "card-2": "#ffffff", plate: f(0.966, 0.018), tint2: l200,
     ink: lInk, muted: lMuted, line: f(0.905, 0.025), "line-2": f(0.86, 0.04), field: "#ffffff", "field-line": lField,
     "act-soft": lSoft, "act-dk": onAct, "soft-ink": lSoftInk,
     alt: lInk, "alt-on": "#ffffff", "alt-deep": f(0.16, 0.02),
     "top-bg": lInkBg, "top-ink": onInk, "top-hover": onAct,
-    "hdr-bg": "#ffffff", "hdr-ink": lInk, "hdr-hover": "var(--ly-act-text)", "hdr-line": f(0.93, 0.02),
+    "hdr-bg": f(0.945, 0.012), "hdr-ink": lInk, "hdr-hover": "var(--ly-act-text)", "hdr-line": f(0.93, 0.02),
     dark: lInkBg, "dark-2": f(0.31, 0.035), "dark-ink": onInk, "dark-muted": onMuted, "dark-line": rgba(onInk, 0.16),
     art: l200, ph: l100, "ph-2": l50, "ph-3": l200, "ph-line": l300, phd: f(0.38, 0.04), "phd-2": f(0.44, 0.04), "phd-3": f(0.3, 0.035),
     "on-photo": "#ffffff", "on-photo-hover": l200, "phd-ink-btn": lInkBg,
@@ -141,7 +142,7 @@ export function family(input: string): { light: Family; dark: Family } {
     scrim: rgba(f(0.16, 0.02), 0.5), "brand-sw": "var(--ly-act)",
   };
   const dark: Family = {
-    bg: dBg, band: dBand, surface: dSurf, paper: dSurf, card: dSurf, "card-2": dSurf, plate: dPlate, tint2: d300,
+    dial: dBg, bg: dBg, band: dBand, surface: dSurf, paper: dSurf, card: dSurf, "card-2": dSurf, plate: dPlate, tint2: d300,
     ink: dInk, muted: dMuted, line: f(0.3, 0.02), "line-2": f(0.36, 0.025), field: dBand, "field-line": dField,
     "act-soft": dSoft, "act-dk": onAct, "soft-ink": dSoftInk,
     alt: dInk, "alt-on": dBg, "alt-deep": "#ffffff",

@@ -23,7 +23,7 @@
           @error="dropSrcset"
         />
       </router-link>
-      <span v-if="pv.off > 0" ref="off" :aria-label="t('ly.card.offAria', '{off} percent off', { off: pv.off })" class="pc-off"><span dir="ltr">−{{ pv.off }}%</span></span>
+      <!-- Watchino: no badge on a card (a gallery, not a funnel); a reduction is the muted struck figure by the price -->
       <button :aria-label="t('ly.card.quick', 'Quick view: {name}', { name: product.title })" aria-controls="qv" class="pc-qv" type="button" @click="quick($event)">
         <ly-icon name="eye" />
       </button>
@@ -33,12 +33,9 @@
       <h3 class="pc-t">
         <router-link :to="to">{{ product.title }}</router-link>
       </h3>
-      <p class="pc-u">
-        {{ t("ly.card.per", "Per {unit}", { unit }) }}<template v-if="low">{{ " · " }}<span class="low">{{ t("ly.card.onlyLeft", "only {n} left", { n: product.quantity }) }}</span></template>
-      </p>
       <p class="pc-ly">
         <span class="now money">{{ money(pv.now) }}</span><template v-if="pv.was">{{ " " }}<s class="was money">{{ money(pv.was) }}</s></template
-        ><span v-if="pv.save > 0" class="pc-sv">{{ t("ly.card.save", "Save {amount}", { amount: money(pv.save) }) }}</span>
+        >
       </p>
       <div class="pc-add"><ly-add :product="product" /></div>
     </div>

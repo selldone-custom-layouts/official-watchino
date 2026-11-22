@@ -14,11 +14,12 @@
   --ly-wm-track: .14em;
   --ly-wm-style: normal;
   --ly-wm-size: 23px;
-  --ly-bg: #ffffff;
+  --ly-dial: #e9edf5;
+  --ly-bg: #e9edf5;
   --ly-band: #f8faff;
   --ly-surface: #f8faff;
   --ly-paper: #ffffff;
-  --ly-card: #f8faff;
+  --ly-card: #ffffff;
   --ly-card-2: #ffffff;
   --ly-plate: #eef4ff;
   --ly-tint2: #dae7ff;
@@ -37,7 +38,7 @@
   --ly-top-bg: #161f30;
   --ly-top-ink: #f3f7ff;
   --ly-top-hover: #84a9f1;
-  --ly-hdr-bg: #ffffff;
+  --ly-hdr-bg: #e9edf5;
   --ly-hdr-ink: #1d222b;
   --ly-hdr-hover: var(--ly-act-text);
   --ly-hdr-line: #e1e8f6;
@@ -89,6 +90,7 @@
 }
 
 html.ly-dark {
+  --ly-dial: #0d0f15;
   --ly-bg: #0d0f15;
   --ly-band: #12151b;
   --ly-surface: #171c24;

@@ -26,6 +26,7 @@ import SelectionSection from "./sections/SelectionSection.vue";
 import PhotoBand from "./sections/PhotoBand.vue";
 import MarqueeSection from "./sections/MarqueeSection.vue";
 import JournalSection from "./sections/JournalSection.vue";
+import WtHome from "../watchino/WtHome.vue";
 
 /* section id (sections.json) -> its component; the variant is a prop the component draws */
 const REGISTRY = {
@@ -40,6 +41,7 @@ const REGISTRY = {
   photoband: PhotoBand,
   marquee: MarqueeSection,
   journal: JournalSection,
+  "wt-home": WtHome,
 };
 
 export default {

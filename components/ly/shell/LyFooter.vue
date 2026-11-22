@@ -13,23 +13,13 @@
 <template>
   <div class="ly ly-ftrwrap">
     <footer class="ftr">
-      <ly-photo aria-hidden="true" art="croissant" class="ftr-tex" deep name="footer">
-        <template #fallback><span aria-hidden="true" class="ph-art"></span></template>
-      </ly-photo>
       <div class="wrap ftr-in">
         <div class="ftr-brand">
           <span class="ftr-wm"><bdi>{{ shopName }}</bdi></span>
           <p class="ftr-line">{{ line }}</p>
         </div>
-        <div v-if="facts.ready && (facts.address || openLine)" class="ftr-col">
-          <h3>{{ t("ly.ftr.visit", "Visit") }}</h3>
-          <p v-if="addressLines.length">
-            <template v-for="(l, i) in addressLines" :key="i"><bdi>{{ l }}</bdi><br v-if="i < addressLines.length - 1" /></template>
-          </p>
-          <p v-if="openLine" class="ftr-h">{{ openLine }}</p>
-        </div>
         <div v-if="cats.length" class="ftr-col">
-          <h3>{{ t("ly.ftr.shop", "Shop") }}</h3>
+          <h3>{{ t("wt.hdr.collections", "Collections") }}</h3>
           <ul class="ftr-l">
             <li v-for="c in cats.slice(0, 8)" :key="c.id">
               <router-link :to="catTo(c)"><bdi>{{ catTitle(c) }}</bdi></router-link>
@@ -37,7 +27,7 @@
           </ul>
         </div>
         <div v-if="facts.ready && (facts.email || facts.phone)" class="ftr-col">
-          <h3>{{ t("ly.ftr.contact", "Contact") }}</h3>
+          <h3>{{ t("wt.hdr.care", "Client care") }}</h3>
           <p v-if="facts.email">
             <a :href="'mailto:' + facts.email">{{ facts.email }}</a>
           </p>
@@ -46,7 +36,9 @@
             <li><router-link :to="blogTo">{{ t("ly.ftr.journal", "Journal") }}</router-link></li>
             <li><router-link :to="{ name: r.SHOP_PROFILE_PAGE_ABOUT_US }">{{ t("ly.ftr.about", "About") }}</router-link></li>
             <li><router-link :to="{ name: r.SHOP_CONTACT_US }">{{ t("ly.ftr.contactPage", "Contact") }}</router-link></li>
+            <li><router-link :to="faqTo">{{ t("ly.ftr.faq", "FAQ") }}</router-link></li>
           </ul>
+          <p v-if="addressLines.length" class="ftr-h"><template v-for="(l, i) in addressLines" :key="i"><bdi>{{ l }}</bdi><br v-if="i < addressLines.length - 1" /></template></p>
         </div>
       </div>
 
@@ -66,7 +58,7 @@
           </nav>
           <div class="fb-end">
             <s-storefront-social-buttons class="ly-social"></s-storefront-social-buttons>
-            <span>© {{ year }} <bdi>{{ shopName }}</bdi><template v-if="facts.city"> · <bdi>{{ facts.city }}</bdi></template></span>
+            <span>© {{ year }} <bdi>{{ shopName }}</bdi><template v-if="payNames"> · {{ payNames }}</template></span>
             <s-footer-section-selldone class="ly-made"></s-footer-section-selldone>
           </div>
         </div>
@@ -136,6 +128,9 @@ export default {
       const region = US[f.region] || f.region || "";
       const cityLine = [f.city, [region, f.postal].filter(Boolean).join(" ")].filter(Boolean).join(", ");
       return [street, cityLine, f.country].filter(Boolean);
+    },
+    payNames() {
+      return [...new Set((this.facts.gateways || []).map((g) => g.name).filter(Boolean))].slice(0, 4).join(" · ");
     },
     openLine() {
       return openLineOf(this.facts);
