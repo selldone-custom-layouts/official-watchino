@@ -42,4 +42,6 @@
 
 | Version | Date | Layout | Deploy | What |
 | --- | --- | --- | --- | --- |
+| 1.0.2 | 2026-11-22 | 50 | 792 | Product tabs on one edge with hairlines (no "Sold as one" line, the product's own text in one reading column, pros as an even list, hairline spec tables in the shop's groups, the reviews' honest empty state); colour-only finishes drawn as swatches with "Finish i of n"; no Pickup row without a pickup point. PROD-CHECK OK through watchino.selldone.shop; server js/css match. |
+| 1.0.1 | 2026-11-22 | 50 | 789 | Logarithmic price track; chapter-ring cover for posts without one; cash on delivery named in the visitor's language; Custom colours read on the dial; focus and tick corners on the 4/2 scale; narrow card names smaller; loading screen without an empty sub line. |
 | 1.0.0 | 2026-11-22 | 50 | 787 | First release: the static Watchino site's look on the base (dial ground, index rail, minute markers, header with the collections mega menu, the home, badge-free cards, footer, product details column); en, de, es, fr and ar. 279 files; PROD-CHECK OK through rino.selldone.shop (same shop 8460); server extracting:false, error:null, js/css match. Not pinned yet. |
