@@ -85,6 +85,21 @@
   .k-addr__search {
     border-radius: var(--ly-r-in) !important;
   }
+  /* the country: the Layout's own chevron, 16px in from the edge (the browser's sat on the edge) */
+  .k-addr__field select {
+    appearance: none !important;
+    padding-inline-end: 44px !important;
+    background:
+      linear-gradient(45deg, transparent 50%, var(--ly-ink) 50%) calc(100% - 22px) 50% / 6px 6px no-repeat,
+      linear-gradient(135deg, var(--ly-ink) 50%, transparent 50%) calc(100% - 16px) 50% / 6px 6px no-repeat,
+      var(--ly-field) !important;
+  }
+  &:is([dir="rtl"] *) .k-addr__field select {
+    background:
+      linear-gradient(45deg, transparent 50%, var(--ly-ink) 50%) 16px 50% / 6px 6px no-repeat,
+      linear-gradient(135deg, var(--ly-ink) 50%, transparent 50%) 22px 50% / 6px 6px no-repeat,
+      var(--ly-field) !important;
+  }
   .k-addr__field input:focus,
   .k-addr__field select:focus,
   .k-addr__field textarea:focus,
@@ -113,6 +128,10 @@
     letter-spacing: 0.12em !important;
     text-transform: uppercase;
     box-shadow: none !important;
+    /* capitals only: the line box trimmed to the capitals and the baseline, so they sit in the middle (the owner,
+       23 Nov 2026: one pixel high); the indent balances the spacing after the last letter */
+    text-box: trim-both cap alphabetic;
+    text-indent: 0.12em;
   }
   .k-sheet__go:hover {
     background: var(--ly-act-deep) !important;
@@ -331,5 +350,93 @@ html.ly-dark .s--storefront-master-payment-dialog,
   }
   .v-avatar {
     border-radius: var(--ly-r-in) !important;
+  }
+}
+
+/* A Vuetify field draws its own outline (and its focus); the input inside it never draws a second box. The Layout's
+   ring on every focused element put a rectangle inside the country search (the owner, 23 Nov 2026). */
+.v-field .v-field__input input,
+.v-field .v-field__input textarea {
+  box-shadow: none !important;
+  border: 0 !important;
+  outline: none !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+
+/* The billing form (Selldone's SShopBillingAddressForm under "Different billing address"): no cream card of its own,
+   the Layout's grounds, lines and corners on the Business / Personal rows and every field (the owner, 23 Nov 2026:
+   the country field was square, the rows too round, the cream off the theme, the first line ran out of the card). */
+.ly-billform.s--shop-billing-address-form {
+  margin-top: 14px;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-family: var(--ly-sans);
+  color: var(--ly-ink);
+
+  > .small {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ly-muted);
+  }
+  > .v-container {
+    padding: 0 !important;
+    margin-top: 14px;
+  }
+  .s--smart-select {
+    margin-bottom: 4px !important;
+  }
+  .s--smart-select .rounded-card {
+    border: 0 !important;
+    border-radius: var(--ly-r-in) !important;
+    background: var(--ly-bg) !important;
+    box-shadow: inset 0 0 0 1.5px var(--ly-field-line) !important;
+    overflow: hidden;
+  }
+  .s--smart-select .border-between-vertical > * + * {
+    border-top: 1px solid var(--ly-line) !important;
+  }
+  .s--smart-select .row-hover {
+    color: var(--ly-ink) !important;
+  }
+  .s--smart-select .row-hover:hover {
+    background: var(--ly-band) !important;
+  }
+  .s--smart-select .v-icon {
+    color: var(--ly-ink) !important;
+  }
+  .s--smart-select .avatar-gradient .circle-check,
+  .s--smart-select .circle-check {
+    border-radius: 50% !important;
+  }
+  .s--smart-select small,
+  .s--smart-select .small {
+    color: var(--ly-muted) !important;
+  }
+  .v-field {
+    border-radius: var(--ly-r-in) !important;
+    background: var(--ly-field) !important;
+    color: var(--ly-ink) !important;
+  }
+  .v-field__outline {
+    --v-field-border-opacity: 1;
+    color: var(--ly-field-line) !important;
+  }
+  .v-field--focused .v-field__outline {
+    color: var(--ly-act-text) !important;
+  }
+  .v-field--error:not(.v-field--disabled) .v-field__outline {
+    color: var(--ly-err) !important;
+  }
+  .v-label.v-field-label {
+    color: var(--ly-muted) !important;
+    opacity: 1 !important;
+  }
+  .v-field__append-inner {
+    padding-inline-end: 6px;
   }
 }

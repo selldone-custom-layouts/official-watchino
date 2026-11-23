@@ -883,6 +883,8 @@ const ar: Record<string, string> = {
   "ly.strip.ship": "نشحن إلى أي مكان.",
   "ly.strip.shipFree": "نشحن إلى أي مكان؛ مجانًا للطلبات فوق {amount}.",
   "ly.strip.within": "توصيل محلي ضمن {km} كم من المخبز.",
+  "ly.co.toPay": "المتابعة إلى الدفع",
+  "ly.co.placeOrder": "تأكيد الطلب",
 };
 
 export default ar;

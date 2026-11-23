@@ -29,13 +29,13 @@
             <div v-if="body" class="art-body" @click="bodyClick" v-html="body"></div>
             <ly-sample-tag v-else :text="t('ly.rd.onlySummary', 'Only this post’s summary is in the shop for now.')" />
 
-            <section v-if="products.length" aria-labelledby="ap-h" class="ap">
+            <section v-if="products.length" :class="['ap', { one: products.length === 1 }]" aria-labelledby="ap-h">
               <div class="ap-hd">
                 <div>
                   <p class="eyebrow">{{ t("ly.rd.named", "Named in this post") }}</p>
                   <h2 id="ap-h" class="ap-t">{{ t("ly.rd.shopPost", "Shop this post") }}</h2>
                 </div>
-                <button :aria-disabled="adding ? 'true' : undefined" class="btn sm" type="button" @click="adding || addAll()">
+                <button v-if="products.length > 1" :aria-disabled="adding ? 'true' : undefined" class="btn sm" type="button" @click="adding || addAll()">
                   <ly-icon :name="added ? 'check' : 'bag'" /><span>{{ added ? t("ly.rd.inBag", "In your bag") : t("ly.rd.addAll", "Add all") }}</span>
                 </button>
               </div>

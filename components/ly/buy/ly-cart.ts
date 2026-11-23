@@ -120,12 +120,12 @@ export default {
       const n = this.$shop?.title || "";
       return n.charAt(0).toUpperCase() + n.slice(1);
     },
-    /* "Place order · pay $13.42 on delivery" (or "at pickup"). */
+    /* "Place order" (cash on delivery or at pickup) or "Continue to payment". */
     pr_place_label(this: any): string {
-      const total = this.nx_money(this.nx_rc.total);
       if (this.is_service_need_pricing) return this.$t("basket_page.pre_confirm_service");
-      if (!this.nx_cod_only) return t("ly.co.place", "Place order · pay {total}", { total });
-      return this.nx_is_pickup ? t("ly.co.placePickup", "Place order · pay {total} at pickup", { total }) : t("ly.co.placeCod", "Place order · pay {total} on delivery", { total });
+      /* short and plain (the owner, 23 Nov 2026: "Place order · pay $5,250" read crooked): the total is on the receipt
+         right above; cash on delivery or at pickup only places the order, any other way goes on to the payment */
+      return this.nx_cod_only ? t("ly.co.placeOrder", "Place order") : t("ly.co.toPay", "Continue to payment");
     },
     nx_stage(this: any): "bag" | "checkout" {
       return this.$route?.query?.step === "checkout" ? "checkout" : "bag";
@@ -254,9 +254,10 @@ export default {
       return !!this.payment_ways && !this.payment_ways.length && this.nx_rc.total > 0 && !this.is_service_need_pricing && !this.isSubscription;
     },
     nx_place_label(this: any): string {
-      const total = this.nx_money(this.nx_rc.total);
       if (this.is_service_need_pricing) return this.$t("basket_page.pre_confirm_service");
-      return this.nx_cod_only ? t("bakini.n.co.placeCod", "Place order · pay {total} on delivery", { total }) : t("bakini.n.co.place", "Place order · pay {total}", { total });
+      /* short and plain (the owner, 23 Nov 2026: "Place order · pay $5,250" read crooked): the total is on the receipt
+         right above; cash on delivery only places the order, any other way goes on to the payment */
+      return this.nx_cod_only ? t("ly.co.placeOrder", "Place order") : t("ly.co.toPay", "Continue to payment");
     },
     nx_way_line(this: any): string {
       const way = this.nx_way;

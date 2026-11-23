@@ -310,6 +310,7 @@ html.ly-dark .tri.photo:is(.ly,.ly *) img { filter: brightness(.84) saturate(.95
 .deal-top:is(.ly,.ly *) { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; gap: 24px; align-items: center; padding-block: 14px 14px; padding-inline: 14px 28px; margin-bottom: 28px; background: var(--ly-dark); color: var(--ly-dark-ink); border-radius: var(--ly-r-card); }
 .deal-top:hover:is(.ly,.ly *) { color: var(--ly-dark-ink); }
 .deal-top:hover:is(.ly,.ly *) b { color: var(--ly-act-dk); }
+.deal-top:hover:is(.ly,.ly *) .dt-sv b { color: var(--ly-dark); }
 .dt-pl:is(.ly,.ly *) { aspect-ratio: 1; border-radius: var(--ly-r-in); background: var(--ly-plate); display: grid; place-items: center; overflow: hidden; }
 .dt-pl:is(.ly,.ly *) img { width: 82%; height: 82%; object-fit: contain; }
 .dt-tx:is(.ly,.ly *) { display: grid; gap: 4px; min-width: 0; }
@@ -1173,6 +1174,13 @@ select.inp:is(.ly,.ly *) { -webkit-appearance: none; appearance: none; backgroun
 .apc-a:is(.ly,.ly *) .btn { min-height: 38px; padding: 8px 10px; }
 .apc-a:is(.ly,.ly *) .qb { justify-content: space-between; min-height: 38px; }
 .apc-a:is(.ly,.ly *) .qb button { width: 34px; height: 36px; }
+/* one product named in the post: one wide row (photo, name and price, Add), no "Add all" (the owner, 23 Nov 2026) */
+.ap.one:is(.ly,.ly *) .ap-l { grid-template-columns: minmax(0, 1fr); }
+.ap.one:is(.ly,.ly *) .apc { display: grid; grid-template-columns: 132px minmax(0, 1fr) minmax(170px, auto); grid-template-areas: "pl n a" "pl p a"; align-items: center; column-gap: 22px; padding-block: 12px; padding-inline: 12px 22px; }
+.ap.one:is(.ly,.ly *) .apc-pl { grid-area: pl; }
+.ap.one:is(.ly,.ly *) .apc-n { grid-area: n; align-self: end; margin-top: 0; min-height: 0; font-size: 22px; }
+.ap.one:is(.ly,.ly *) .apc-p { grid-area: p; align-self: start; margin: 6px 0 0; font-size: 15px; }
+.ap.one:is(.ly,.ly *) .apc-a { grid-area: a; margin-top: 0; }
 .share:is(.ly,.ly *) { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 34px; padding-top: 24px; border-top: 1px solid var(--ly-line); }
 .share-k:is(.ly,.ly *) { font: 500 11px/1.4 var(--ly-sans); letter-spacing: .18em; text-transform: uppercase; color: var(--ly-muted); margin-inline-end: 6px; }
 .auth:is(.ly,.ly *) { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px; align-items: start; margin-top: 28px; padding: 22px; border-radius: var(--ly-r-pn); background: var(--ly-dark); color: var(--ly-dark-ink); }
@@ -1341,6 +1349,9 @@ html.ly-dark .acc-ph:is(.ly,.ly *) img { filter: brightness(.84) saturate(.95); 
   .ap:is(.ly,.ly *) { padding: 14px; margin-inline: calc(var(--ly-gut) * -.5); }
   .ap-l:is(.ly,.ly *) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ap-hd:is(.ly,.ly *) .btn { width: 100%; }
+  .ap.one:is(.ly,.ly *) .apc { grid-template-columns: 96px minmax(0, 1fr); grid-template-areas: "pl n" "pl p" "a a"; column-gap: 14px; padding: 10px; }
+  .ap.one:is(.ly,.ly *) .apc-n { font-size: 18px; }
+  .ap.one:is(.ly,.ly *) .apc-a { margin-top: 12px; }
   .auth:is(.ly,.ly *) { grid-template-columns: 44px minmax(0, 1fr); padding: 18px; }
   .auth:is(.ly,.ly *) .mark { width: 44px; height: 44px; }
   .acg:is(.ly,.ly *) { grid-template-columns: 1fr; }

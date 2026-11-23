@@ -817,7 +817,9 @@ const fr: Record<string, string> = {
   "ly.strip.pickupT": "Retrait en boutique",
   "ly.strip.ship": "Expédition partout.",
   "ly.strip.shipFree": "Expédition partout ; offerte dès {amount} d’achat.",
-  "ly.strip.within": "Livraison locale dans un rayon de {km} km autour de la boutique."
+  "ly.strip.within": "Livraison locale dans un rayon de {km} km autour de la boutique.",
+  "ly.co.toPay": "Continuer vers le paiement",
+  "ly.co.placeOrder": "Passer la commande",
 };
 
 export default fr;

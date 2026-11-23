@@ -4,7 +4,7 @@
  * out of the pink circle and other amounts touched its edge; words in a circle stay inside it.
  *
  * Copy this file into a Layout. Give the circle's lines a max-width (about 80% of the circle) and pass the
- * amount through breakable() so a long one may take two lines, and call fitInCircle(circle) after it is drawn, when its words change (a
+ * amount through breakable() (a whole amount loses ".00"; a long one may take two lines), and call fitInCircle(circle) after it is drawn, when its words change (a
  * currency or language pick, new data), after the fonts load and on resize (the circle may change size
  * at a breakpoint). Every child of the circle is a line; each line's font shrinks by the same factor until
  * every line of text lies inside the circle with `pad` px to spare (measured with the circle's own
@@ -15,23 +15,41 @@
  * Check a Layout with circle-fit-check.cjs (this folder): CURRENCIES=all and in Arabic, TOTAL 0.
  */
 
-/** An amount that may take two lines in a circle ("AED" over "1,837", "SAR" over "2,000"): the no-break
- *  spaces Intl and Selldone put between sign and number become plain spaces. Use it for the words in the
- *  circle only. */
+/** An amount for a circle. A whole amount drops its zero cents ("€7,738.00" -> "€7,738", "7.738,00 €" ->
+ *  "7.738 €", Arabic "٫٠٠" too; the owner, 23 Nov 2026: ".00" fell to a line of its own). Exactly two zeros
+ *  after the separator, never followed by a digit, so a thousands group ("7.000 €") is never touched. The
+ *  no-break spaces Intl and Selldone put between sign and number become plain spaces, so a long amount may
+ *  still take two lines ("AED" over "1,837"). Use it for the words in the circle only. */
 export function breakable(text: string): string {
-  return String(text).replace(/[\u00a0\u202f]/g, " ");
+  return String(text)
+    .replace(/([.,])00(?!\d)/g, "")
+    .replace(/\u066b\u0660\u0660(?![\u0660-\u0669])/g, "")
+    .replace(/[\u00a0\u202f]/g, " ");
 }
 
-export function fitInCircle(circle: HTMLElement | null | undefined, pad = 4, min = 0.45): void {
+export function fitInCircle(circle: HTMLElement | null | undefined, pad = 4, min = 0.45, oneLine = 0.6): void {
   if (!circle || !circle.isConnected) return;
   const lines = [...circle.children] as HTMLElement[];
-  lines.forEach((l) => (l.style.fontSize = ""));
+  lines.forEach((l) => {
+    l.style.fontSize = "";
+    l.style.whiteSpace = "";
+  });
   const sizes = lines.map((l) => parseFloat(getComputedStyle(l).fontSize) || 0);
   const keep = circle.style.transform;
   circle.style.transform = "none";
-  for (let s = 1; s >= min; s -= 0.04) {
-    if (s < 1) lines.forEach((l, i) => (l.style.fontSize = (sizes[i] * s).toFixed(2) + "px"));
-    if (inside(circle, pad)) break;
+  const shrink = (floor: number): boolean => {
+    for (let s = 1; s >= floor - 1e-9; s -= 0.04) {
+      lines.forEach((l, i) => (l.style.fontSize = s < 1 ? (sizes[i] * s).toFixed(2) + "px" : ""));
+      if (inside(circle, pad)) return true;
+    }
+    return false;
+  };
+  /* every line on one line first (an amount never breaks inside "7,738"); two lines only when one line
+     would need the words below 60% of their size */
+  lines.forEach((l) => (l.style.whiteSpace = "nowrap"));
+  if (!shrink(oneLine)) {
+    lines.forEach((l) => (l.style.whiteSpace = ""));
+    shrink(min);
   }
   circle.style.transform = keep;
 }

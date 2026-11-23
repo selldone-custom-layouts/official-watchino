@@ -14,7 +14,7 @@
   - the grid of cards; a change dims the cards in place with "Updating
     results…", then the new ones fade up in steps (no motion when the
     visitor asks for less); fewer results than columns keep the card width
-    and centre the row;
+    and start the row (never centred);
   - deals: the biggest saving today as a cocoa band with its round "Save";
   - search: the collections it found as tabs, posts from the journal, and a
     calm card with suggestions when nothing matches;
@@ -614,7 +614,7 @@ export default {
       this.min = this.lo;
       this.max = this.hi;
     },
-    /* Fewer results than columns: the cards keep their width and the row is centred. */
+    /* Fewer results than columns: the cards keep their width and start the row (the owner, 23 Nov 2026: a lone result sat in the middle). */
     fit() {
       const g = this.$refs.grid;
       if (!g) return;
@@ -622,7 +622,7 @@ export default {
       const cs = getComputedStyle(g);
       const cols = parseInt(cs.getPropertyValue("--ly-cols"), 10) || 5;
       const gap = parseFloat(cs.columnGap) || 0;
-      this.fitStyle = n && n < cols ? { gridTemplateColumns: `repeat(${n}, calc((100% - ${(cols - 1) * gap}px) / ${cols}))`, justifyContent: "center" } : null;
+      this.fitStyle = n && n < cols ? { gridTemplateColumns: `repeat(${n}, calc((100% - ${(cols - 1) * gap}px) / ${cols}))`, justifyContent: "start" } : null;
     },
     /* Dim, say "Updating results…", then draw the new list fading up. */
     update() {
